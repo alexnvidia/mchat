@@ -1,23 +1,18 @@
-<html>
-    <head>
-        <title>Mchat/r test developing</title>
-    </head>
-    <body>
-        <div>
-            <h1><a href="/">Mchat/rf</a></h1>
-        </div>
-       {% for post in posts %} 
-       <div><p>
-       	publicado: {{ post.published_date }}
+{% extends 'testM/base.html' %}
+		{% block content %}
+			{% for post in posts %} 
+				  <div class="post">
+					<div class="date">
+				       		<p>
+				   		publicado: {{ post.published_date }}
 
-       </p>
-       	<h1><a href= "" > {{ post.title }}</a></h1>
-       	<p>
-       		{{ post.text|linebreaksbr }} 
-       	</p>
+				       		</p>
+				       		</div>
+				       			<h1><a href= "{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+				       		<p>
+				       			{{ post.text|linebreaksbr }} 
+				       		</p>
 
-       </div>
-       {% endfor %}
-       
-    </body>
-</html>
+				    </div>
+			{% endfor %}
+		{% endblock %}
