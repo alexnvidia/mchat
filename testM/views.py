@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
 from .models import Post
 from .forms import PostForm
+from .forms import SignUpForm
 # Create your views here.
 
 def post_list(request):
@@ -52,3 +54,21 @@ def post_remove(request, pk):
 	post = get_object_or_404(Post, pk=pk)
 	post.delete()
 	return redirect('post_list')
+
+
+def signup(request):
+	if request.method == 'POST':
+		form = SignUpForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			user.refresh_from_db()
+			user.profile.birth_date = form.cleaned_data.get('birth_date')
+			user.save()
+			raw_pasword = form.cleaned_data.get('password1')
+			user = authenticate(username=user.username, password=raw_pasword)
+			login(request,user)
+			return redirect('post_list')
+
+	else:
+		form = SignUpForm()
+	return render(request, 'signup.html',{'form':form})
