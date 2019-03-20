@@ -27,6 +27,24 @@ class Post(models.Model):
 	def __str__(self):
 		return self.title
 
+
+class Mchat(models.Model):
+
+	SI_NO_CHOICES = ((None,''),(True,'Si'),(False,'No'))
+	author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+	question = models.CharField(max_length=400)
+	option = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,default=None)
+	examples = models.CharField(max_length=400,null=True)
+	puntuacion_mchat = models.IntegerField(null=True,blank=True)
+
+	def puntuacion(self):
+		self.puntuacion_mchat = 0
+		self.save()
+
+	def __str__(self):
+		return self.question
+
+		
 		
 		
 
@@ -47,4 +65,6 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+    
+
     
