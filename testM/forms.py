@@ -28,8 +28,10 @@ class mchatForm(forms.ModelForm):
 	"""docstring for mchatForm"forms.ModelFormf __init__(self, arg):
 		super(mchatForm,forms.ModelForm.__init__()
 		self.arg = arg"""
-	question= forms.CharField(disabled=True)
-
+	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
+	question= forms.CharField(disabled=True,label=False)
+	option= forms.NullBooleanField(widget=forms.RadioSelect(choices=SI_NO_CHOICES),label=False,required=True)
+	examples= forms.CharField(label=False)
 
 	class Meta:
 		model = Mchat

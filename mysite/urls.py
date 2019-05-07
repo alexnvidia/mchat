@@ -20,8 +20,8 @@ from django.contrib.auth import views
 from testM import views as core_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/login/$', views.login, name='login'),
-    url(r'^accounts/logout/$', views.logout, name='logout', kwargs={'next_page': '/'}),
+    url(r'^accounts/login/$', views.LoginView.as_view(), name='login'),
+    url(r'^accounts/logout/$', views.LogoutView.as_view(next_page='/'), name='logout'),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'', include('testM.urls')),
 ]
