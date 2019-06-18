@@ -1,11 +1,40 @@
 {% extends 'testM/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
+
+ 
     
-    <h1> Mchat </h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="button button1">Save</button>
-        <button type="reset" class="button button1">Reset</button>
-    </form> 
+    
+    <form method="POST" class="form-group">{% csrf_token %}
+    	{{ formset.management_form }}       
+        {% for form in formset.forms %}
+        {{ form.question.value }}
+        {{ form.option }}
+        {% endfor %}      
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+
+{% if objects.has_other_pages %}
+  <ul class="pagination">
+    {% if objects.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ objects.previous_page_number }}">Atras</a></li>
+    {% else %}
+      <li class="page-item disabled"><span></span></li>
+    {% endif %}
+    {% for i in objects.paginator.page_range %}
+      {% if objects.number == i %}
+        <li class="page-item active"><a class="page-link"> <span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if objects.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ objects.next_page_number }}">Siguiente</a></li>
+    {% else %}
+      <li class="page-item disabled"><span></span></li>
+    {% endif %}
+  </ul>
+{% endif %}     
 {% endblock %}

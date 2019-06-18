@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import Post,Profile, Mchat
+from .models import Post,Profile, Mchat,Item,Patient
 # Register your models here.
 
 admin.site.register(Post)
 admin.site.register(Profile)
 admin.site.register(Mchat)
+admin.site.register(Item)
+admin.site.register(Patient)
 
 
 class ProfileInLine(admin.StackedInline):

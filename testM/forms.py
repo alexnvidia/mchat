@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post,Mchat
+from .models import Post,Mchat,Item,Patient
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -28,19 +28,27 @@ class mchatForm(forms.ModelForm):
 	"""docstring for mchatForm"forms.ModelFormf __init__(self, arg):
 		super(mchatForm,forms.ModelForm.__init__()
 		self.arg = arg"""
-	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
-	question= forms.CharField(disabled=True,label=False)
-	option= forms.NullBooleanField(widget=forms.RadioSelect(choices=SI_NO_CHOICES),label=False,required=True)
-	examples= forms.CharField(label=False)
+	
+	
 
 	class Meta:
 		model = Mchat
-		fields = ('question','option','examples')
+		fields = ('name','author',)	
 
+
+
+class mchatTest(forms.ModelForm):
+	"""docstring for mchatTest
+	def __init__(self, arg):
+		super(mchatTest, self).__init__()
+		self.arg = arg"""
+	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
+	option= forms.BooleanField(widget=forms.RadioSelect(choices=SI_NO_CHOICES),label=False,required=False)
+
+	class Meta:
+		model = Item
+		fields = ('question','option',)
 		
 
-			
-
-
-	
+		
 		

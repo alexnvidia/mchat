@@ -2,19 +2,16 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .models import Post, Mchat
-from .forms import PostForm,mchatForm
+from .models import Post, Mchat , Item, Patient
+from .forms import PostForm,mchatForm,mchatTest
 from .forms import SignUpForm
+from django.forms import formset_factory
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 # Create your views here.
 
-def post_list(request):
-	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-	return render(request, 'testM/post_list.html' , {'posts': posts})
-@login_required
-def post_detail (request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	return render(request, 'testM/post_detail.html', {'post': post})
+
+
 
 
 def mchat_test(request):
@@ -22,7 +19,7 @@ def mchat_test(request):
 	return render(request, 'testM/mchat.html', {'mchats': mchats})
 
 @login_required
-def mchat_start (request, pk):
+def mchat_edit (request, pk):
 	mchat = get_object_or_404(Mchat, pk=pk)
 	if request.method == "POST":
 		form = mchatForm(request.POST, instance=mchat)
@@ -34,7 +31,31 @@ def mchat_start (request, pk):
 
 	else:
 		form = mchatForm(instance=mchat)
-	return render(request, 'testM/mchatStart.html', {'form': form})
+	return render(request, 'testM/mchatEdit.html', {'form': form})
+
+@login_required
+def mchat_start (request):
+	item = Item.objects.order_by('pk') # Ordeno en base al autonumerico de cada objeto
+	mchatFormSet = formset_factory(mchatTest,extra=0)
+	if request.method == "POST":
+		formset = mchatFormSet(request.POST,initial=[{'question': l.question,} for l in item])
+		if formset.is_valid():
+			for f in formset:
+				cd = f.cleaned_data
+				option = cd.get('option')
+			return redirect('mchat')
+
+	else:
+		paginator = Paginator(item, 3)
+		page = request.GET.get('page')
+		try:
+			objects = paginator.page(page)
+		except PageNotAnInteger:
+			objects = paginator.page(1)
+		except EmptyPage:
+			objects = paginator.page(paginator.num_pages)	
+		formset = mchatFormSet(initial=[{'question': l.question,} for l in item])
+	return render(request, 'testM/mchatStart.html', {'formset': formset,'objects': objects})
 
 		
 

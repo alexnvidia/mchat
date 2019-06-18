@@ -30,22 +30,46 @@ class Post(models.Model):
 
 class Mchat(models.Model):
 
-	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
+	name = models.CharField(max_length=50,default='')
 	author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-	question = models.CharField(max_length=400)
-	option = models.NullBooleanField(choices=SI_NO_CHOICES,max_length=3,default=True)
-	examples = models.CharField(max_length=400,null=True)
 	puntuacion_mchat = models.IntegerField(null=True,blank=True)
+	start_date = models.DateTimeField(default=timezone.now)
+	
+	
 
 	def puntuacion(self):
 		self.puntuacion_mchat = 0
 		self.save()
 
 	def __str__(self):
+		return self.name
+
+
+
+class Item(models.Model):
+
+	SI_NO_CHOICES = ((None,''),(True,'Si'),(False,'No'))
+	question = models.CharField(max_length=400,default='')
+	option = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)
+	mchat = models.ForeignKey(Mchat, on_delete=models.CASCADE)
+
+	def __str__(self):
 		return self.question
+
 
 		
 		
+class Patient(models.Model):
+
+	name = models.CharField(max_length=150,default='')
+	subname = models.CharField(max_length=150)
+	birth_date = models.DateField(null=True,blank=True)
+	supervisor = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.name
+
+
 		
 
 class Profile(models.Model):

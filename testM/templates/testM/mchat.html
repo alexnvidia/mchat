@@ -7,12 +7,13 @@
 							
 
 				    </div>
-				       		<h1><a href="{% url 'mchat_start' pk=mchat.pk %}" class="button button2">Empezar test</a></h1>
-                            		
+				       		{% if user.is_staff %}
+				       		<a href="{% url 'mchat_edit' pk=mchat.pk %}" class="btn"><span class="fas fa-pencil-alt">Editar Test</a>	
+				       		               		
                     
-    						
+    						{% endif %}
 
     			</div>
 			{% endfor %}
-			
+			<a href="{% url 'mchat_start' %}" class="btn"><span class="fas fa-pencil-alt">Empezar Test</a>
 		{% endblock %}

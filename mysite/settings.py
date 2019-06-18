@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'testM'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,6 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+#Fixture dir 
+FIXTURE_DIRS = (
+   '/mchat/testM/fixtures/',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
