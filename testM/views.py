@@ -1,18 +1,15 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .models import Post, Mchat , Item, Patient
 from .forms import PostForm,mchatForm,mchatTest
 from .forms import SignUpForm
-from django.forms import formset_factory
+from django.forms import formset_factory, modelformset_factory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
+# Pdb Import
 # Create your views here.
-
-
-
-
 
 def mchat_test(request):
 	mchats = Mchat.objects.all()
@@ -36,28 +33,24 @@ def mchat_edit (request, pk):
 @login_required
 def mchat_start (request):
 	item = Item.objects.order_by('pk') # Ordeno en base al autonumerico de cada objeto
-	mchatFormSet = formset_factory(mchatTest,extra=0)
+	mchatFormSet = modelformset_factory(Item,form=mchatTest,extra=0)
 	if request.method == "POST":
-		formset = mchatFormSet(request.POST,initial=[{'question': l.question,} for l in item])
+		formset = mchatFormSet(request.POST,queryset=item,initial={'option':''})
 		if formset.is_valid():
-			for f in formset:
-				cd = f.cleaned_data
-				option = cd.get('option')
+			instances = formset.save(commit=False)
+			print("hola")		#for f in formset:				
+			for instance in instances:
+				instance.save()
+			return redirect('mchat')
+		else:
+			#print(formset)
+			print(formset.errors)
 			return redirect('mchat')
 
-	else:
-		paginator = Paginator(item, 3)
-		page = request.GET.get('page')
-		try:
-			objects = paginator.page(page)
-		except PageNotAnInteger:
-			objects = paginator.page(1)
-		except EmptyPage:
-			objects = paginator.page(paginator.num_pages)	
-		formset = mchatFormSet(initial=[{'question': l.question,} for l in item])
-	return render(request, 'testM/mchatStart.html', {'formset': formset,'objects': objects})
+	else:			
+		formset = mchatFormSet(initial='')
+	return render(request,'testM/mchatStart.html', {'formset': formset})
 
-		
 
 @login_required
 def post_new(request):

@@ -43,11 +43,12 @@ class mchatTest(forms.ModelForm):
 		super(mchatTest, self).__init__()
 		self.arg = arg"""
 	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
+	question=forms.CharField(required=False)
 	option= forms.BooleanField(widget=forms.RadioSelect(choices=SI_NO_CHOICES),label=False,required=False)
 
 	class Meta:
 		model = Item
-		fields = ('question','option',)
+		fields = ('option','question')
 		
 
 		

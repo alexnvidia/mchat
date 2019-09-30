@@ -8,11 +8,12 @@
     
     
     <form method="POST" class="form-group">{% csrf_token %}
-    	{{ formset.management_form }}       
-        {% for form in formset.forms %}
+    	{{ formset.management_form }}
+    	{% for form in formset.forms %}
         {{ form.question.value }}
         {{ form.option }}
-        {% endfor %}      
+        {{ form.id }}        
+        {% endfor %}
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 
