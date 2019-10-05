@@ -17,6 +17,11 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 
+    {% if formset.errors %}
+    {{ formset.errors}}
+
+	{% endif %}
+
 {% if objects.has_other_pages %}
   <ul class="pagination">
     {% if objects.has_previous %}

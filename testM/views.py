@@ -35,20 +35,18 @@ def mchat_start (request):
 	item = Item.objects.order_by('pk') # Ordeno en base al autonumerico de cada objeto
 	mchatFormSet = modelformset_factory(Item,form=mchatTest,extra=0)
 	if request.method == "POST":
-		formset = mchatFormSet(request.POST,queryset=item,initial={'option':''})
+		formset = mchatFormSet(request.POST)
 		if formset.is_valid():
 			instances = formset.save(commit=False)
 			print("hola")		#for f in formset:				
 			for instance in instances:
 				instance.save()
 			return redirect('mchat')
-		else:
-			#print(formset)
-			print(formset.errors)
-			return redirect('mchat')
+			
 
-	else:			
-		formset = mchatFormSet(initial='')
+	else:
+		print("estoy en el get")			
+		formset = mchatFormSet()
 	return render(request,'testM/mchatStart.html', {'formset': formset})
 
 
@@ -104,7 +102,7 @@ def signup(request):
 			raw_pasword = form.cleaned_data.get('password1')
 			user = authenticate(username=user.username, password=raw_pasword)
 			login(request,user)
-			return redirect('post_list')
+			return redirect('mchat')
 
 	else:
 		form = SignUpForm()
