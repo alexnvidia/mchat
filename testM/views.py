@@ -33,7 +33,7 @@ def mchat_edit (request, pk):
 @login_required
 def mchat_start (request):
 	item = Item.objects.order_by('pk') # Ordeno en base al autonumerico de cada objeto
-	mchatFormSet = modelformset_factory(Item,form=mchatTest,extra=0)
+	mchatFormSet = modelformset_factory(Item,form=mchatTest ,extra=0)
 	if request.method == "POST":
 		formset = mchatFormSet(request.POST)
 		if formset.is_valid():
@@ -46,7 +46,7 @@ def mchat_start (request):
 
 	else:
 		print("estoy en el get")			
-		formset = mchatFormSet()
+		formset = mchatFormSet(initial=Item.objects.values('question','option'))
 	return render(request,'testM/mchatStart.html', {'formset': formset})
 
 

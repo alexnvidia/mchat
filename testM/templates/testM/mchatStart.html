@@ -9,18 +9,15 @@
     
     <form method="POST" class="form-group">{% csrf_token %}
     	{{ formset.management_form }}
-    	{% for form in formset.forms %}
+    	{% for form in formset.forms %}        
         {{ form.question.value }}
         {{ form.option }}
-        {{ form.id }}        
+        {{ form.id }}               
         {% endfor %}
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 
-    {% if formset.errors %}
-    {{ formset.errors}}
-
-	{% endif %}
+    
 
 {% if objects.has_other_pages %}
   <ul class="pagination">
