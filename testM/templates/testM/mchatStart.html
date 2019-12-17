@@ -12,10 +12,13 @@
     	{% for form in formset.forms %}        
         {{ form.question.value }}
         {{ form.option }}
-        {{ form.id }}               
+        {{ form.id }}
+        {{ form.option.errors }}               
         {% endfor %}
         <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
+    </form>	
+
+    	
 
     
 

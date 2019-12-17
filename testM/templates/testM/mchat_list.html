@@ -1,6 +1,6 @@
 {% extends 'testM/base.html' %}
 		{% block content %}
-			{% for mchat in mchats %} 
+			{% for mchat in mchat_list %} 
 				  <div class="post">
 					<div class="date">
 
@@ -8,12 +8,13 @@
 
 				    </div>
 				       		{% if user.is_staff %}
-				       		<a href="{% url 'mchat_edit' pk=mchat.pk %}" class="btn"><span class="fas fa-pencil-alt">Editar Test</a>	
+				       		<a href="{% url 'mchats:update' mchat.id %}" class="btn"><span class="fas fa-pencil-alt">Editar Test</a>	
 				       		               		
                     
     						{% endif %}
 
     			</div>
 			{% endfor %}
-			<a href="{% url 'mchat_start' %}" class="btn"><span class="fas fa-play">Empezar Test</a>
+			
+			<a href="{% url 'mchats:mchat_start' %}" class="btn"><span class="fas fa-play">Empezar Test</a>			
 		{% endblock %}

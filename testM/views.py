@@ -8,27 +8,44 @@ from .forms import SignUpForm
 from django.forms import formset_factory, modelformset_factory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
+
 # Pdb Import
 # Create your views here.
 
-def mchat_test(request):
-	mchats = Mchat.objects.all()
-	return render(request, 'testM/mchat.html', {'mchats': mchats})
+"""
+class StaffRequiredMixin(object):
+	
+	Mixin que solo permite acceso a los usuarios que son
+	de tipo staff
 
-@login_required
-def mchat_edit (request, pk):
-	mchat = get_object_or_404(Mchat, pk=pk)
-	if request.method == "POST":
-		form = mchatForm(request.POST, instance=mchat)
-		if form.is_valid():
-			mchat = form.save(commit=False)
-			mchat.author = request.user
-			mchat.save()
-			return redirect('mchat')
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_staff:
+			return redirect(rever)
+"""
 
-	else:
-		form = mchatForm(instance=mchat)
-	return render(request, 'testM/mchatEdit.html', {'form': form})
+class MchatListView(ListView):
+
+    model = Mchat        
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class MchatUpdate(UpdateView):
+    model = Mchat
+    form_class = mchatForm
+    template_name_suffix = '_update_form'
+
+    def get_success_url(self):
+        return reverse_lazy('mchats:update', args=[self.object.id])
 
 @login_required
 def mchat_start (request):
@@ -41,54 +58,19 @@ def mchat_start (request):
 			print("hola")		#for f in formset:				
 			for instance in instances:
 				instance.save()
-			return redirect('mchat')
+			return redirect('mchats:mchats')
 			
 
 	else:
 		print("estoy en el get")			
-		formset = mchatFormSet(initial=Item.objects.values('question','option'))
+		formset = mchatFormSet()
 	return render(request,'testM/mchatStart.html', {'formset': formset})
 
-
 @login_required
-def post_new(request):
-	if request.method == "POST":
-		form = PostForm(request.POST)
-		if form.is_valid():
-			post = form.save(commit=False)
-			post.author = request.user
-			post.published_date = timezone.now()
-			post.save()
-		return redirect('post_detail', pk=post.pk)
-
-	else:
-		form = PostForm()
-		return render(request, 'testM/post_edit.html', {'form': form})
+def resultados(request):
+	return render(request,'testM/resultados_mchat.html',)
 
 
-@login_required
-def post_edit(request,pk):
-	post = get_object_or_404(Post, pk=pk)
-	if request.method == "POST":
-		form = PostForm(request.POST, instance=post)
-		if form.is_valid():
-			post = form.save(commit=False)
-			post.author = request.user
-			post.published_date = timezone.now()
-			post.save()
-			return redirect('post_detail', pk=post.pk)
-
-	else:
-		form = PostForm(instance=post)
-	return render(request, 'testM/post_edit.html', {'form': form})
-
-
-
-@login_required
-def post_remove(request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	post.delete()
-	return redirect('post_list')
 
 
 def signup(request):

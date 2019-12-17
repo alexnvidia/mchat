@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import include,url
 from django.contrib.auth import views
+from testM.urls import mchats_patterns
 
 from testM import views as core_views
 urlpatterns = [
@@ -23,5 +24,5 @@ urlpatterns = [
     url(r'^accounts/login/$', views.LoginView.as_view(), name='login'),
     url(r'^accounts/logout/$', views.LogoutView.as_view(next_page='/'), name='logout'),
     url(r'^signup/$', core_views.signup, name='signup'),
-    url(r'', include('testM.urls')),
+    url(r'', include(mchats_patterns)),
 ]

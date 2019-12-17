@@ -1,13 +1,12 @@
 from django.urls import path
 from . import views
+from .views import MchatListView, MchatUpdate
 
-urlpatterns = [
+mchats_patterns = ([
 	
 	
-	path('', views.mchat_test, name='mchat'),
-	path('mchat/<int:pk>/edit', views.mchat_edit, name='mchat_edit'),
+	path('', MchatListView.as_view(), name='mchats'),
+	path('update/<int:pk>', MchatUpdate.as_view(), name='update'),
 	path('mchat/start', views.mchat_start, name='mchat_start'),
-	path('post/new' , views.post_new, name='post_new'),
-	path('post/<int:pk>/edit/', views.post_edit , name='post_edit'),
-	path('post/<pk>/remove/', views.post_remove, name='post_remove'),	
-	]
+		
+	], 'mchats')
