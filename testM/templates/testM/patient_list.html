@@ -1,0 +1,24 @@
+{% extends 'testM/base.html' %}
+		{% block content %}
+			{% for patient in patient_list %} 
+				  <div class="post">
+					<div class="date">
+
+							
+
+				    </div>
+				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn"><span class="fas fa-play">iniciar m-chat para {{ patient.name }}</a>
+
+
+    			</div>
+			{% endfor %}
+					
+
+			
+
+			<a href="{% url 'mchats:patient_create' %}" class="btn"><span class="fas fa-play">Añadir Paciente</a>
+
+			
+
+
+		{% endblock %}

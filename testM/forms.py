@@ -1,13 +1,7 @@
 from django import forms
-from .models import Post,Mchat,Item,Patient
+from .models import Mchat,Item,Patient,FollowUpItem
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
-class PostForm(forms.ModelForm):
-
-	class Meta:
-		model = Post
-		fields = ('title','text',)
 
 
 
@@ -45,10 +39,29 @@ class mchatTest(forms.ModelForm):
 	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
 	question=forms.CharField(required=False,label=False,disabled=True)
 	option= forms.ChoiceField(widget=forms.RadioSelect(),choices=SI_NO_CHOICES,label=False,required=True)
+	question_id = forms.CharField(label=False,required=False,disabled=True)
+	
 
 	class Meta:
 		model = Item
-		fields = ('question','option')
+		fields = ('question','option','question_id',)
+
+
+
+class PatientForm(forms.ModelForm):
+	""" filtro el supervisor para que salga el que esta autenticado en ese momento ya que ese sera el 
+	supervisor"""
+	birth_date = forms.DateField(widget=forms.SelectDateWidget(years=range(1980, 2060)))
+	supervisor = forms.ModelChoiceField(queryset=None, empty_label="...")
+
+	def __init__(self,username, *args, **kwargs):								
+		super(PatientForm, self).__init__(*args, **kwargs)		
+		self.fields['supervisor'].queryset = User.objects.filter(username=username)
+
+
+	class Meta:
+		model = Patient
+		fields = ('name','subname','birth_date','supervisor',)
 		
 
 		
