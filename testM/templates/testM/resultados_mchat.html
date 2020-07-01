@@ -11,6 +11,8 @@
 
 
     	<p> La puntuación final ha sido: {{ total_score }} </p>
-    	<p>{{ messagefinal }}</p>
+    	<p>{{ messagefinal }}</p> 
+    	<a href="{% url 'mchats:followup_mchat' pk %}" class="btn"><span class="fas fa-play"> Continue el 
+    	seguimiento para: {{ patient.name }} aquí</a>
  
 {% endblock %}

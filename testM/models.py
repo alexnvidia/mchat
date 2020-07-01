@@ -37,6 +37,7 @@ class Item(models.Model):
 
 class FollowUpItem(models.Model):	
 	item= models.ForeignKey(Item, on_delete=models.CASCADE)
+	question_item = models.CharField(max_length=400,default='')
 	question_group = models.CharField(max_length=50,default='none')
 	question = models.CharField(max_length=400,default='')
 	option = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)

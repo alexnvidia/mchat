@@ -6,7 +6,7 @@
   <script>
     $.noConflict();
     jQuery(document).ready(function(){
-      jQuery("#id_form-19-option_1").click(function(){
+      jQuery("#id_form-0-option_1").click(function(){
         jQuery("div").removeClass('d-none');
   });
 });
@@ -17,6 +17,7 @@
 
 {% block content %}
 
+{%  if request.user == patient.supervisor %} 
  <p> {{ patient.name }} </p>
     
     
@@ -36,7 +37,16 @@
 
     </div>
         <button type="submit" class="btn btn-primary">Obtener Resultado</button>        
-    </form>	    
+    </form>
+
+
+{% else %}
+
+  <p> No tiene permisos para realizar este test</p>	   
+
+{% endif %} 
+
+
 
 
     

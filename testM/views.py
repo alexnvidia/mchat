@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .models import Mchat , Item, Patient
-from .forms import mchatForm,mchatTest,PatientForm
+from .models import Mchat , Item, Patient, FollowUpItem
+from .forms import mchatForm,mchatTest,PatientForm,mchatFollowup
 from .forms import SignUpForm
 from django.forms import formset_factory, modelformset_factory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -14,6 +14,7 @@ from django.views.generic.base import TemplateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
+from django.core import serializers
 
 # Pdb Import
 # Create your views here.
@@ -52,7 +53,7 @@ class MchatListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()                        
+        context['now'] = timezone.now()
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -136,6 +137,26 @@ def construct_followup_list(question_id,followup_list):
 		followup_list+=str(question_id)
 		return followup_list
 	return followup_list
+
+def char_to_list(followup_list):
+	listf=[]
+	charBak=""
+
+	for c in followup_list:
+		charBak+=c
+		if(len(charBak) == 2):
+			listf.append(int(charBak))
+			charBak=""
+	return listf
+
+def objetc_to_list(listaFollowUp):
+	followup_object=[]
+
+	for l in listaFollowUp:
+		followup_object.append(Item.objects.get(question_id=l))
+	return followup_object
+
+
 
 
 
@@ -230,18 +251,7 @@ def mchat_start (request, pk):
 				total_score+=MchatScore(question_id,option)
 				if(MchatScore(question_id,option) == 1):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
-
-				Item.objects.update_or_create(question_id = question_id,defaults={'option': option})
-				
-
-
-				"""Aqui debo de tratar cada uno de los datos para discernir
-				el resultado del mchat que se pasará el formset
-				a otra plantilla para ver los resultados y decidir si es necesario 
-				un seguimiento
-				ademas debo guardar antes los datos en BBDD puesto que no puedo pasar el formset a al vista
-				con los valores , para ello debo utilizar Item.objects.update_or_create()
-				 """
+					
 			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp})
 			
 			#return render(request,'testM/resultados_mchat.html', {'formset': formset,'total_score': total_score})			
@@ -251,7 +261,7 @@ def mchat_start (request, pk):
 				print("dentro del dict")
 				return redirect('mchats:mchats')
 			else:
-				return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'messagefinal': messagefinal})
+				return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'messagefinal': messagefinal, 'pk': pk, 'patient': patient})
 			return redirect('mchats:mchats')
 			
 
@@ -263,8 +273,75 @@ def mchat_start (request, pk):
 
 
 @login_required
-def followup_mchat(request):
-	return render(request,'testM/followUp_mchat.html',)
+def followup_mchat(request, pk):
+	patient=Patient.objects.get(pk=pk)
+	item_score=patient.item_score
+	followup_array=patient.followup_list
+	followup_object=[]
+	objects = ""
+	list_pk_followup = []
+
+	#transformo el char followup_array a lista
+	followup_list=char_to_list(followup_array)
+	
+	#recorro la lista anterior y genero la lista de item que tienen seguimiento
+	followup_object=objetc_to_list(followup_list)
+
+	#utilizo la lista de item para filtrar los objetos followup que corresponden
+	followUpItem=FollowUpItem.objects.filter(item__in=followup_object)
+
+	#genero queryset item para paginacion 
+	item=Item.objects.order_by('pk').filter(question_id__in=followup_list)
+	
+	mchatFollowUpFormset = formset_factory(mchatFollowup ,extra=0)
+	#print(request.session.items())
+	
+
+
+	if request.method == "POST":
+		data_des = request.session['page_query']
+		for obj in serializers.deserialize("json", data_des):
+			list_pk_followup.append(obj.object.pk)
+		followUpItem=FollowUpItem.objects.filter(pk__in=list_pk_followup)
+		formset = mchatFollowUpFormset(request.POST,initial=[{'question_group': l.question_group, 'question': l.question} for l in followUpItem])
+		if formset.is_valid():
+			for f in formset:
+				print("valido")
+				option=f.cleaned_data['option']
+			n_pages=request.session['num_pages']
+			a_page=request.session['actual_page']
+			if(int(a_page) + 1 <= n_pages):
+				return redirect('/mchat/followup/' + str(pk) + '?page=' + str(int(a_page)+1))
+			else:
+				return redirect('mchats:mchats')
+			return redirect('mchats:mchats')
+		else:
+			print(followUpItem)
+	else:
+		print("hola")
+		paginator = Paginator(item, 1)
+
+		page = request.GET.get('page')
+		request.session['num_pages']=paginator.num_pages
+		if(page == None):
+			page = '1'
+		request.session['actual_page']=page
+
+		try:
+			objects = paginator.page(page)
+
+		except PageNotAnInteger:
+			objects = paginator.page(1)
+
+		except EmptyPage:
+			objects = paginator.page(paginator.num_pages)
+		#creo otro filtro para los item de siguimiento y asi en cada pagina solo salen los del item correspondiente
+		page_query = followUpItem.filter(item__pk__in=[object.pk for object in objects])		
+		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group, 'question': l.question} for l in page_query])
+		data = serializers.serialize("json", page_query)
+		request.session['page_query'] = data
+
+	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects})
 
 
 

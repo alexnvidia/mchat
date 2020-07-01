@@ -4,10 +4,59 @@
 
 {% block content %}
 
- 
+ {%  if request.user == patient.supervisor %} 
     <p> in progress follow up </p>
+
+    {% for object in objects %}
+      <p>{{ object.question }}</p>
+    {% endfor %}
+
+    <form method="POST" class="form-group">{% csrf_token %}
+    	{{ formset.management_form }}
+    	{% for form in formset %}        
+        {{ form.question.value }}
+        {{ form.option }}
+        {{ form.id }}        
+        {{ form.option.errors }}               
+        {% endfor %}
+
+        <div class="d-none">
+      
+        <p> debuggueando jquery </p>
+
+
+    </div>
+        <button type="submit" class="btn btn-primary">Obtener Resultado</button>        
+    </form>
     
     
+ {% else %}
+
+ 	<p> No tiene permisos para realizar este test</p>
+
+ {% endif %}
+
+ {% if objects.has_other_pages %}
+  <ul class="pagination">
+    {% if objects.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ objects.previous_page_number }}">Atras</a></li>
+    {% else %}
+      <li class="page-item disabled"><span></span></li>
+    {% endif %}
+    {% for i in objects.paginator.page_range %}
+      {% if objects.number == i %}
+        <li class="page-item active"><a class="page-link"> <span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if objects.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ objects.next_page_number }}">Siguiente</a></li>
+    {% else %}
+      <li class="page-item disabled"><span></span></li>
+    {% endif %}
+  </ul>
+{% endif %}
 
 
     	

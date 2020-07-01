@@ -3,7 +3,8 @@ from .models import Mchat,Item,Patient,FollowUpItem
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-
+#constantes
+SI_NO_CHOICES = ((True,'Si'),(False,'No'))
 
 class SignUpForm(UserCreationForm):
 	"""docstring for SignUpForm"""
@@ -36,15 +37,28 @@ class mchatTest(forms.ModelForm):
 	def __init__(self, arg):
 		super(mchatTest, self).__init__()
 		self.arg = arg"""
-	SI_NO_CHOICES = ((True,'Si'),(False,'No'))
-	question=forms.CharField(required=False,label=False,disabled=True)
-	option= forms.ChoiceField(widget=forms.RadioSelect(),choices=SI_NO_CHOICES,label=False,required=True)
+	
+	question = forms.CharField(required=False,label=False,disabled=True)
+	option = forms.ChoiceField(widget=forms.RadioSelect(),choices=SI_NO_CHOICES,label=False,required=True)
 	question_id = forms.CharField(label=False,required=False,disabled=True)
 	
 
 	class Meta:
 		model = Item
 		fields = ('question','option','question_id',)
+
+
+class mchatFollowup(forms.ModelForm):
+	
+	question =forms.CharField(required=False,label=False,disabled=True)
+	question_group = forms.CharField(label=False,required=False,disabled=True)
+	option = forms.ChoiceField(widget=forms.RadioSelect(),choices=SI_NO_CHOICES,label=False,required=True)
+
+	class Meta:
+		model = FollowUpItem
+		fields = ('question_group','question','option',)
+
+
 
 
 
