@@ -13,11 +13,27 @@
 
     <form method="POST" class="form-group">{% csrf_token %}
     	{{ formset.management_form }}
-    	{% for form in formset %}        
-        {{ form.question.value }}
-        {{ form.option }}
-        {{ form.id }}        
-        {{ form.option.errors }}               
+    	{% for form in formset %}
+    	{% if form.question_group.value == "TRIGGER" %}
+    		<div class="d-none" id="{{ form.question.id_for_label }}" >
+    		{{ form.question.value }}
+	        {{ form.option }}        
+	        {{ form.option.errors }}
+    		</div>
+
+    	{% elif form.question_group.value == "AUDIT" %}
+    		<div class="d-none" id="{{ form.question_group.value }}">
+    		{{ form.question.value }}
+	        {{ form.extra_option }}       
+	        {{ form.option.errors }}
+	        </div>
+	    {% else %}
+	    	{{ form.question.value }}
+	        {{ form.option }}      
+	        {{ form.option.errors }}
+
+	    {% endif %} 
+                       
         {% endfor %}
 
         <div class="d-none">
@@ -28,37 +44,123 @@
     </div>
         <button type="submit" class="btn btn-primary">Obtener Resultado</button>        
     </form>
-    
+    {% if request.session.actual_page  != request.session.post_send %}
+    	<div class="container">		  
+		  <div class="alert alert-warning alert-dismissible" id="myAlert">
+		    <button type="button" class="close">&times;</button>
+		    <strong>Ojo!</strong> Se ha olvidado de responder a las preguntas de la pagina anterior.
+		  </div>
+		  <a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn"><span class="fas fa-play"> Reinicie 
+    		el seguimiento para {{ patient.name }} aquí</a>
+		</div>
+{% block javascript %}
+		<script>
+		$.noConflict();
+		jQuery(document).ready(function(){
+			var count = 0;
+			var element = jQuery("div");
+		  jQuery(".close").click(function(){
+		    jQuery("#myAlert").alert("close");
+		  });
+		  switch({{ request.session.question_id }}){
+
+		  	case 2:
+		  	jQuery("#id_form-2-option_0").click(function(){
+        		jQuery("#AUDIT").removeClass('d-none');
+  			});  			
+		  	break;
+
+		  	case 5:
+		  	jQuery("#id_form-0-option_0,#id_form-1-option_0").click(function(){
+        		jQuery("#id_form-7-question").removeClass('d-none');
+  			});		  	
+		  	break;
+
+		  	case 6:
+		  	jQuery("input[value='True']").click(function(){
+        		jQuery("#id_form-4-question").removeClass('d-none');
+  			});
+		  	break;
+
+		  	case 7:
+		  	jQuery("input[value='True']").click(function(){
+        		jQuery("#id_form-4-question").removeClass('d-none');
+  			});
+
+  			jQuery("#id_form-4-option_0").click(function(){
+        		jQuery("#id_form-5-question").removeClass('d-none');
+  			});
+		  	break;
+
+		  	case 8:
+		  	jQuery("input[value='True']").parent("label[for!=id_form-0-option_0]").click(function(){
+        		jQuery("#id_form-8-question").removeClass('d-none');
+  			});
+		  	break;
+
+		  	case 9:
+		  	jQuery("input[value='True']").click(function(){
+        		jQuery("#id_form-6-question").removeClass('d-none');
+  			});
+		  	break;
+
+		  	case 14:
+		  	jQuery("input[value='True']").parent("label[for!=id_form-6-option_0][for!=id_form-7-option_0]").click(function(){
+		  		if(count == 0 && element != jQuery(this).attr("for")){
+		  		count++;
+		  		element = jQuery(this).attr("for");
+		  		}
+		  		if(count == 1){
+        		jQuery("#id_form-6-question").removeClass('d-none');
+        		count++;
+        		}
+        		else if (count >= 2 && element != jQuery(this).attr("for")){
+        		jQuery("#id_form-6-question").addClass('d-none');
+        		}
+
+        		else {
+
+
+        		}
+  			});
+
+  			jQuery("#id_form-6-option_0").click(function(){
+        		jQuery("#id_form-7-question").removeClass('d-none');
+  			});
+
+
+		  	break;
+
+		  	case 18:
+
+		  	jQuery("#id_form-0-option_1").click(function(){
+        		jQuery("#id_form-1-question").removeClass('d-none');
+  			});
+		  	break;
+
+		  	case 19:
+		  	jQuery("#id_form-0-option_1").click(function(){
+        		jQuery("#id_form-1-question").removeClass('d-none');
+  			});
+
+  			jQuery("#id_form-1-option_1").click(function(){
+        		jQuery("#id_form-2-question").removeClass('d-none');
+  			});
+		  	break;
+
+		  	default:
+		  }
+		  	
+		});
+		</script>
+{% endblock %}
+    {% endif %}
     
  {% else %}
 
  	<p> No tiene permisos para realizar este test</p>
 
  {% endif %}
-
- {% if objects.has_other_pages %}
-  <ul class="pagination">
-    {% if objects.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page={{ objects.previous_page_number }}">Atras</a></li>
-    {% else %}
-      <li class="page-item disabled"><span></span></li>
-    {% endif %}
-    {% for i in objects.paginator.page_range %}
-      {% if objects.number == i %}
-        <li class="page-item active"><a class="page-link"> <span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></a></li>
-      {% else %}
-        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if objects.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ objects.next_page_number }}">Siguiente</a></li>
-    {% else %}
-      <li class="page-item disabled"><span></span></li>
-    {% endif %}
-  </ul>
-{% endif %}
-
-
     	
  
 {% endblock %}

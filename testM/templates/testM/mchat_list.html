@@ -8,7 +8,7 @@
 
 				    </div>
 				       		{% if user.is_staff %}
-				       		<a href="{% url 'mchats:update' mchat.id %}" class="btn"><span class="fas fa-pencil-alt">Editar Test</a>	
+				       		<a href="{% url 'mchats:update' mchat.id %}" class="btn btn-outline-primary"><span class="fas fa-pencil-alt">Editar Test</a>	
 				       		               		
                     
     						{% endif %}
@@ -18,7 +18,7 @@
 
 			{% if mchat_list %}		
 
-			<a href="{% url 'mchats:patients' %}" class="btn"><span class="fas fa-play">Empezar Test</a>
+			<a href="{% url 'mchats:patients' %}" class="btn btn-outline-primary"><span class="fas fa-play">Empezar Test</a>
 
 			{% endif %}		
 		{% endblock %}

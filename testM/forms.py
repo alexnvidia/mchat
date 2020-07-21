@@ -5,6 +5,11 @@ from django.contrib.auth.models import User
 
 #constantes
 SI_NO_CHOICES = ((True,'Si'),(False,'No'))
+AUDIT_INFO = [
+    (1, 'Audicion normal'),
+    (2, 'Audicion por debajo de lo normal'),
+    (3, 'Resultados no concluyentes'),
+]
 
 class SignUpForm(UserCreationForm):
 	"""docstring for SignUpForm"""
@@ -52,11 +57,12 @@ class mchatFollowup(forms.ModelForm):
 	
 	question =forms.CharField(required=False,label=False,disabled=True)
 	question_group = forms.CharField(label=False,required=False,disabled=True)
-	option = forms.ChoiceField(widget=forms.RadioSelect(),choices=SI_NO_CHOICES,label=False,required=True)
+	option = forms.ChoiceField(widget=forms.RadioSelect(),choices=SI_NO_CHOICES,label=False,required=False)
+	extra_option = forms.ChoiceField(widget=forms.RadioSelect(),choices=AUDIT_INFO,label=False,required=False)
 
 	class Meta:
 		model = FollowUpItem
-		fields = ('question_group','question','option',)
+		fields = ('question_group','question','option','extra_option')
 
 
 

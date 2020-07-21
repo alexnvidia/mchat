@@ -34,6 +34,16 @@ class StaffRequiredMixin(object):
 messageFinalScoreNoFollow = "No es necesario hacer seguimiento"
 messageFinalScoreFollow = "Es necesario hacer la entrevista de Seguimiento"
 messageFinalScoreNoFollowRisk = "No es necesario hacer seguimiento, por favor es necesario llevar a diagnóstico avanzado"
+TRIGGER = "TRIGGER"
+GROUP = "GROUP"
+SINGLE = "SINGLE"
+PASA = "PASA"
+NOPASA = "NOPASA"
+GROUP = "GROUP"
+AUDIT = "AUDIT"
+
+
+""" Constants """
 
 class HomePageView(TemplateView):
 
@@ -127,6 +137,15 @@ def option_to_score_list(option,lista_score):
 		lista_score+='0'
 		return lista_score
 	return lista_score
+def option_to_n(option):
+	n = 0
+	if(option == "True"):
+		n = 1
+		return n
+	else:
+		n = 0
+		return n
+	return n
 
 def construct_followup_list(question_id,followup_list):
 	
@@ -181,53 +200,133 @@ def IfMchatFollowUp(puntuacion_mchat):
 		return resultDict
 	return resultDict 
 
-"""def MchatScoreRf(question_group,option):
-		contTrue=0
-	if (question_group == "PASA" and option == True):
-		contTrue+=1
-		
+def MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single):
+	score = 1 # 0 es PASA y 1 es NOPASA
+	if (question_id == 1 or question_id == 10 or question_id == 11 or question_id == 16):
+		if(count_pasa > count_nopasa):
+			score = 0
+			return score
+		elif (count_pasa < count_nopasa):
+			score = 1
+			return score
+		else:
+			return score
+	elif (question_id == 2):
+		if(count_group == 0):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 3 or question_id == 4):
+		if (count_pasa > 0):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 5):
+		if (count_pasa > 0 or count_nopasa == 0):
+			score = 0
+			return score
+		elif (count_nopasa > 0 and list_trigger[0] == 0):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 6):
+		if (count_group > 0 and list_trigger[0] == 1):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 7):
+		if (count_pasa > 0 and list_trigger[0] == 1 and list_trigger[1] == 1):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 8):
+		if (list_single[0] == 1 and count_pasa > 0 and list_trigger[0] == 1):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 9):
+		if (count_pasa > 0 and list_trigger[0] == 1):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 12):
+		if (count_group >= 2 and count_pasa > count_nopasa):
+			score = 0
+			return score
+		elif (count_group < 2):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 13):
+		if (list_single[0] == 1):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 14):
+		if (count_pasa >= 2):
+			score = 0
+			return score
+		elif (count_pasa == 1 and list_trigger[0] == 1 and list_trigger[1] == 1):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 15):
+		if (count_group >= 2):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 17 or question_id == 20):
+		if (count_group > 0 ):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 18):
+		if (list_single[0] == 0 and list_trigger[0] == 1 and count_group > 0):
+			score = 0
+			return score
+		elif (list_single[0] == 1 and count_group > 0):
+			score = 0
+			return score
+		else:
+			score = 1
+			return score
+	elif (question_id == 19):
+		if (list_single[0] == 1):
+			score = 0
+			return score
+		elif (list_single[0] == 0 and list_trigger[0] == 0 and list_trigger[1] == 0):
+			score = 1
+			return score
+		else:
+			score = 0
+			return score
+	return score
+	
 
-	elif ():
-
-
-	elif ():
-
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-	elif ():
-
-"""
 
 @login_required
 def mchat_start (request, pk):
@@ -237,7 +336,7 @@ def mchat_start (request, pk):
 	contador=0
 	
 	
-	item = Item.objects.order_by('pk') # Ordeno en base al autonumerico de cada objeto	
+	item = Item.objects.order_by('question_id') # Ordeno en base al numero de item	
 	patient=Patient.objects.get(pk=pk)
 
 	mchatFormSet = formset_factory(mchatTest ,extra=0)
@@ -248,7 +347,7 @@ def mchat_start (request, pk):
 				option=f.cleaned_data['option']
 				lista_score=option_to_score_list(option,lista_score)
 				question_id=int(f.cleaned_data['question_id'])
-				total_score+=MchatScore(question_id,option)
+				total_score+=MchatScore(question_id,option)				
 				if(MchatScore(question_id,option) == 1):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
 					
@@ -280,6 +379,13 @@ def followup_mchat(request, pk):
 	followup_object=[]
 	objects = ""
 	list_pk_followup = []
+	count_pasa = 0
+	count_nopasa = 0
+	count_group = 0
+	list_trigger = []
+	list_single = []
+
+	
 
 	#transformo el char followup_array a lista
 	followup_list=char_to_list(followup_array)
@@ -303,29 +409,64 @@ def followup_mchat(request, pk):
 		for obj in serializers.deserialize("json", data_des):
 			list_pk_followup.append(obj.object.pk)
 		followUpItem=FollowUpItem.objects.filter(pk__in=list_pk_followup)
-		formset = mchatFollowUpFormset(request.POST,initial=[{'question_group': l.question_group, 'question': l.question} for l in followUpItem])
+		formset = mchatFollowUpFormset(request.POST,initial=[{'question_group': l.question_group, 'question': l.question, 'extra_option': l.extra_option} for l in followUpItem])
 		if formset.is_valid():
 			for f in formset:
 				print("valido")
 				option=f.cleaned_data['option']
+				group=f.cleaned_data['question_group']
+				if (group == TRIGGER):
+					list_trigger.append(option_to_n(option))
+					request.session['n_trigger'] +=1
+
+				elif (group == SINGLE):
+					list_single.append(option_to_n(option))
+
+				elif (group == GROUP):
+					count_group+=option_to_n(option)
+
+				elif (group == PASA):
+					count_pasa+=option_to_n(option)
+
+				elif (group == NOPASA):
+					count_nopasa+=option_to_n(option)
+				elif (group == AUDIT):
+					extra_option = f.cleaned_data['extra_option']
+					print("esto es " + extra_option)
+			question_id = request.session['question_id']
+			request.session['score_rf']+=MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single)
+			print("entro al contador " + str(MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single)))
+
+			if (question_id == 2):
+				request.session['audit_info'] = 0
+				request.session['audit_info'] = extra_option
 			n_pages=request.session['num_pages']
 			a_page=request.session['actual_page']
-			if(int(a_page) + 1 <= n_pages):
-				return redirect('/mchat/followup/' + str(pk) + '?page=' + str(int(a_page)+1))
+			request.session['post_send'] = a_page + 1
+			if(a_page + 1 <= n_pages):
+				return redirect('/mchat/followup/' + str(pk) + '?page=' + str(a_page+1))
 			else:
+				score_rf = request.session['score_rf']
+				audit_info = request.session['audit_info']
+				positive=FinalMchatRfScore(score_rf)
+				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,})
 				return redirect('mchats:mchats')
 			return redirect('mchats:mchats')
 		else:
-			print(followUpItem)
+			print("Not Valid")
+			print(formset.errors)
 	else:
 		print("hola")
 		paginator = Paginator(item, 1)
-
 		page = request.GET.get('page')
-		request.session['num_pages']=paginator.num_pages
 		if(page == None):
-			page = '1'
-		request.session['actual_page']=page
+			request.session['post_send'] = 1
+			request.session['actual_page']= 1
+			request.session['score_rf'] = 0
+			request.session['n_trigger'] = 0
+		else:
+			request.session['actual_page']= int(page)
+		request.session['num_pages']=paginator.num_pages		
 
 		try:
 			objects = paginator.page(page)
@@ -336,12 +477,15 @@ def followup_mchat(request, pk):
 		except EmptyPage:
 			objects = paginator.page(paginator.num_pages)
 		#creo otro filtro para los item de siguimiento y asi en cada pagina solo salen los del item correspondiente
-		page_query = followUpItem.filter(item__pk__in=[object.pk for object in objects])		
-		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group, 'question': l.question} for l in page_query])
+		page_query = followUpItem.filter(item__pk__in=[object.pk for object in objects])
+		for o in objects:
+			request.session['question_id'] = o.question_id
+
+		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group, 'question': l.question, 'extra_option': l.extra_option} for l in page_query])
 		data = serializers.serialize("json", page_query)
 		request.session['page_query'] = data
 
-	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects})
+	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects,})
 
 
 

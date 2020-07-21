@@ -17,7 +17,7 @@ class Mchat(models.Model):
 	id = models.AutoField(primary_key=True,)
 	name = models.CharField(max_length=50,default='M-CHAT-R/F',)
 	author = models.OneToOneField('auth.User', on_delete=models.CASCADE,)	
-	start_date = models.DateTimeField(default=timezone.now)	
+	start_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return self.name
@@ -29,6 +29,9 @@ class Item(models.Model):
 	question = models.CharField(max_length=400,default='')
 	option = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)
 	mchat = models.ForeignKey(Mchat, on_delete=models.CASCADE)
+
+	class Meta:
+		ordering = ["question_id"]
 	
 
 	def __str__(self):
@@ -41,6 +44,7 @@ class FollowUpItem(models.Model):
 	question_group = models.CharField(max_length=50,default='none')
 	question = models.CharField(max_length=400,default='')
 	option = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)
+	extra_option = models.CharField(max_length=40,null=True,default=None,blank=True)
 
 	def __str__(self):
 		return self.question
@@ -58,6 +62,7 @@ class Patient(models.Model):
 	positive = 	models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)
 	item_score = models.CharField(max_length=21, default='00000000000000000000')
 	followup_list = models.CharField(max_length=20, default='00000000000000')
+	audit_info = models.CharField(max_length=30, default='none')
 
 
 
