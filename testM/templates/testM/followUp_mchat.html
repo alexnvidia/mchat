@@ -53,7 +53,10 @@
 		  <a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn"><span class="fas fa-play"> Reinicie 
     		el seguimiento para {{ patient.name }} aquí</a>
 		</div>
-{% block javascript %}
+
+    {% endif %}
+
+    {% block javascript %}
 		<script>
 		$.noConflict();
 		jQuery(document).ready(function(){
@@ -71,7 +74,7 @@
 		  	break;
 
 		  	case 5:
-		  	jQuery("#id_form-0-option_0,#id_form-1-option_0").click(function(){
+		  	jQuery("input[value='True']").parent("label[for!=id_form-0-option_0][for!=id_form-1-option_0]").click(function(){
         		jQuery("#id_form-7-question").removeClass('d-none');
   			});		  	
 		  	break;
@@ -154,7 +157,6 @@
 		});
 		</script>
 {% endblock %}
-    {% endif %}
     
  {% else %}
 

@@ -133,10 +133,14 @@ def option_to_score_list(option,lista_score):
 	if (option == "True"):
 		lista_score+='1'
 		return lista_score
-	else:
+	elif (option == "False"):
 		lista_score+='0'
 		return lista_score
+	else:
+		lista_score+='X'
+		return lista_score
 	return lista_score
+
 def option_to_n(option):
 	n = 0
 	if(option == "True"):
@@ -325,6 +329,44 @@ def MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,li
 			score = 0
 			return score
 	return score
+
+def set_option_to_rf(queryset,item_scoreRF):
+	i = 0
+	j = 0
+	lista_rf_def = []
+	lista_option = []
+	for q in queryset:
+		if (item_scoreRF[i] == '1'):
+			lista_rf_def.append(q.pk)
+			lista_option.append(True)
+			i+=1
+		elif (item_scoreRF[i] == '0'):
+			lista_rf_def.append(q.pk)
+			lista_option.append(False)
+			i+=1
+		else:
+			i+=1
+	queryset = queryset.filter(pk__in=lista_rf_def)
+
+	for q in queryset:		
+		q.option = lista_option[j]
+		j+=1
+
+	return queryset
+
+
+def set_option_to_item(mchat_item,item_score):
+	i = 0
+
+	for m in mchat_item:
+		if (item_score[i] == '1'):
+			m.option = True
+			i+=1
+		else:
+			m.option = False
+			i+=1
+	return mchat_item
+
 	
 
 
@@ -355,13 +397,8 @@ def mchat_start (request, pk):
 			
 			#return render(request,'testM/resultados_mchat.html', {'formset': formset,'total_score': total_score})			
 			dictr = IfMchatFollowUp(total_score)
-			messagefinal = dictr["message"]
-			if(dictr["result"] == False):
-				print("dentro del dict")
-				return redirect('mchats:mchats')
-			else:
-				return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'messagefinal': messagefinal, 'pk': pk, 'patient': patient})
-			return redirect('mchats:mchats')
+			print(dictr["result"])
+			return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'dictr': dictr, 'pk': pk, 'patient': patient})
 			
 
 	else:
@@ -384,6 +421,7 @@ def followup_mchat(request, pk):
 	count_group = 0
 	list_trigger = []
 	list_single = []
+	item_scoreRF = ""
 
 	
 
@@ -415,9 +453,11 @@ def followup_mchat(request, pk):
 				print("valido")
 				option=f.cleaned_data['option']
 				group=f.cleaned_data['question_group']
+				item_scoreRF = request.session['item_scoreRF']
+				item_scoreRF=option_to_score_list(option,item_scoreRF)
+				request.session['item_scoreRF'] = item_scoreRF
 				if (group == TRIGGER):
-					list_trigger.append(option_to_n(option))
-					request.session['n_trigger'] +=1
+					list_trigger.append(option_to_n(option))					
 
 				elif (group == SINGLE):
 					list_single.append(option_to_n(option))
@@ -440,6 +480,7 @@ def followup_mchat(request, pk):
 			if (question_id == 2):
 				request.session['audit_info'] = 0
 				request.session['audit_info'] = extra_option
+
 			n_pages=request.session['num_pages']
 			a_page=request.session['actual_page']
 			request.session['post_send'] = a_page + 1
@@ -449,8 +490,9 @@ def followup_mchat(request, pk):
 				score_rf = request.session['score_rf']
 				audit_info = request.session['audit_info']
 				positive=FinalMchatRfScore(score_rf)
-				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,})
-				return redirect('mchats:mchats')
+				item_scoreRF = request.session['item_scoreRF']
+				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF})
+				return render(request,'testM/resultados_mchatRF.html',{'score_rf': score_rf, 'positive': positive, 'patient': patient,})
 			return redirect('mchats:mchats')
 		else:
 			print("Not Valid")
@@ -463,7 +505,8 @@ def followup_mchat(request, pk):
 			request.session['post_send'] = 1
 			request.session['actual_page']= 1
 			request.session['score_rf'] = 0
-			request.session['n_trigger'] = 0
+			request.session['audit_info'] = "none"
+			request.session['item_scoreRF'] = ""
 		else:
 			request.session['actual_page']= int(page)
 		request.session['num_pages']=paginator.num_pages		
@@ -486,6 +529,41 @@ def followup_mchat(request, pk):
 		request.session['page_query'] = data
 
 	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects,})
+
+def patient_result(request,pk):
+	patient = Patient.objects.get(pk=pk)
+	item_score = patient.item_score
+	item_scoreRF = patient.item_scoreRF
+	followup_array = patient.followup_list
+	mchat_item = Item.objects.all()
+	Item_list = []
+
+	#transformo el char followup_array a lista
+	followup_list = char_to_list(followup_array)
+	
+	#recorro la lista anterior y genero la lista de item que tienen seguimiento
+	Item_list = objetc_to_list(followup_list)
+
+	#utilizo la lista de item para filtrar los objetos followup que corresponden
+	followUpItem = FollowUpItem.objects.filter(item__in=Item_list)
+
+	followUpItem = set_option_to_rf(followUpItem,item_scoreRF)
+
+	mchat_item = set_option_to_item(mchat_item,item_score)
+
+
+	if request.method == 'POST':
+		print("post")
+
+	else:
+		print("GET")
+		for m in mchat_item:
+			print(m.option)
+
+
+	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item})
+
+
 
 
 

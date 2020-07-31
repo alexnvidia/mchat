@@ -47,7 +47,7 @@ class FollowUpItem(models.Model):
 	extra_option = models.CharField(max_length=40,null=True,default=None,blank=True)
 
 	def __str__(self):
-		return self.question
+		return str(self.item)
 
 
 
@@ -61,6 +61,7 @@ class Patient(models.Model):
 	mchat_score = models.IntegerField(default=0,)
 	positive = 	models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)
 	item_score = models.CharField(max_length=21, default='00000000000000000000')
+	item_scoreRF = models.CharField(max_length=128, default='')
 	followup_list = models.CharField(max_length=20, default='00000000000000')
 	audit_info = models.CharField(max_length=30, default='none')
 

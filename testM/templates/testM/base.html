@@ -18,17 +18,17 @@
     <body>
     <div class="jumbotron text-center bg-secondary text-white" style="margin-bottom:0">
         {%  if user.is_authenticated %}        
-        <p class="top-menu">Hello {{ user.username }} <small><a href="{% url 'logout' %}"><span id="s1" class="fas fa-power-off"></span></a></small></p>
+        <p class="top-menu float-right display-4">Hello {{ user.username }} <small><a href="{% url 'logout' %}"><span id="s1" class="fas fa-power-off" style="font-size:48px;color:lightblue;text-shadow:2px 2px 4px #000000;"></span></a></small></p>
         
         {% else %}
-            <a href="{% url 'login' %}" class="top-menu"><span class="fas fa-lock"></span></a>
-            <a href="{% url 'signup' %}" class="top-menu"><span class="fas fa-user"></span></a>
+            <a href="{% url 'login' %}" class="top-menu float-right display-4" style="font-size:48px;color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Iniciar Sesion"><span class="fas fa-lock"></span></a>
+            <a href="{% url 'signup' %}" class="top-menu float-right display-4" style="font-size:48px;color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Registrarme"><span class="fas fa-user"></span></a>
 
         {% endif %}
-        <h1 ><a href="/" class = "text-white">M-CHAT-R/F</a></h1>
+        <h2><span class="badge badge-primary">M-CHAT-R/F</span></h2>
     </div>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-        <a class="navbar-brand" href="/">HOME</a>  
+        <a class="navbar-brand fas fa-home" style="font-size:36px"href="/"></a>  
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,29 +48,26 @@
   </nav>
        
     <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
 
             {% block content %}
 
             {% endblock %}
-
-            </div>
-        </div>
+        
     </div>
-    <div class="jumbotron text-center" style="margin-bottom:0">
+    <div class="jumbotron text-center " style="margin-bottom:0">
   <p>© 2009 Diana Robins, Deborah Fein, & Marianne Barton. Traducción y adaptación en España: Grupo Estudio MCHAT España </p>
 </div>
 
 {% block javascript %}
 <script>
 $(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
   $("#s1").on({
     mouseenter: function(){
       $(this).css("color", "red");
     },  
     mouseleave: function(){
-      $(this).css("color", "RoyalBlue");
+      $(this).css("color", "lightblue");
     } 
   });
 });

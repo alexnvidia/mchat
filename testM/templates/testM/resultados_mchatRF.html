@@ -1,0 +1,21 @@
+{% extends 'testM/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}    
+    
+
+	{% if positive %}
+
+		El resultado final de la entrevista de seguimiento es el siguiente :
+
+			
+				debe llevar a  {{ patient.name }} a un profesional			
+
+
+	{% else %}
+    	{{ patient.name }} no ha dado positivo en la entrevista de seguimiento.
+
+    {% endif %}
+ 
+{% endblock %}

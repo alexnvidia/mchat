@@ -9,6 +9,11 @@
 				    </div>
 				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn"><span class="fas fa-play">iniciar m-chat para {{ patient.name }}</a>
 
+				       		{% if patient.item_scoreRF|length > 0 %}
+
+				       		<a href="{% url 'mchats:patient_result' patient.pk %}" class="btn"><span class="fas fa-play">Ver resultados para {{ patient.name }}</a>
+				       		{% endif %}
+
 
     			</div>
 			{% endfor %}

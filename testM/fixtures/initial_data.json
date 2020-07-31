@@ -1,1 +1,222 @@
-[{"model": "testM.post", "pk": 7, "fields": {"author": 1, "title": "d", "text": "c", "created_date": "2019-06-11T15:18:25.673Z", "published_date": "2019-06-11T15:18:25.673Z"}}, {"model": "testM.post", "pk": 8, "fields": {"author": 5, "title": "d", "text": "c", "created_date": "2019-06-13T15:59:14Z", "published_date": null}}, {"model": "testM.mchat", "pk": 1, "fields": {"name": "M-CHAT-R/F", "author": 1, "puntuacion_mchat": null, "start_date": "2019-06-18T18:09:36Z"}}, {"model": "testM.item", "pk": 6, "fields": {"question": "quest1", "option": null, "mchat": 1}}, {"model": "testM.item", "pk": 7, "fields": {"question": "quest2", "option": null, "mchat": 1}}, {"model": "testM.item", "pk": 8, "fields": {"question": "quest3", "option": null, "mchat": 1}}, {"model": "testM.item", "pk": 9, "fields": {"question": "quest4", "option": null, "mchat": 1}}, {"model": "testM.item", "pk": 10, "fields": {"question": "quest5", "option": null, "mchat": 1}}, {"model": "testM.patient", "pk": 3, "fields": {"name": "clemencio", "subname": "rodriguez rato", "birth_date": "2000-05-04", "supervisor": 5}}, {"model": "testM.profile", "pk": 4, "fields": {"user": 1, "bio": "", "location": "", "birth_date": null}}, {"model": "testM.profile", "pk": 5, "fields": {"user": 5, "bio": "", "location": "", "birth_date": "2000-05-04"}}]
+[
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 1,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "Mira el objeto"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 2,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "Señala el objeto"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 3,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "Mira y dice algo sobre el objeto"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 4,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "Mira si el padre señala y dice \"mira\"!"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 5,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "NOPASA",
+      "question": "Ignora al padre"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 6,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "NOPASA",
+      "question": "Mira alrededor de la habitacion"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 7,
+    "fields": {
+      "item": 29,
+      "question_item": "none",
+      "question_group": "NOPASA",
+      "question": "Mira al dedo del padre"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 8,
+    "fields": {
+      "item": 30,
+      "question_item": "none",
+      "question_group": "GROUP",
+      "question": "¿a menudo ignora los Sonidos?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 9,
+    "fields": {
+      "item": 30,
+      "question_item": "none",
+      "question_group": "GROUP",
+      "question": "¿a menudo ignora a la gente?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 10,
+    "fields": {
+      "item": 30,
+      "question_item": "none",
+      "question_group": "SINGLE",
+      "question": "¿Se ha evaluado la audición de su hijo/a?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 11,
+    "fields": {
+      "item": 30,
+      "question_item": "none",
+      "question_group": "AUDIT",
+      "question": "¿Cuáles fueron los resultados de la prueba de audición?(elija uno):"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 12,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Finge beber de una taza de juguete?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 13,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Finge comer con una cuchara o tenedor de juguete?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 14,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Finge hablar por teléfono?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 15,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Finge dar de comer a un muñeco con comida de juguete o de verdad?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 16,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Empuja un coche haciendo como que va por una carretera imaginaria?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 17,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Finge ser un robot, un avión, una bailarina, o cualquier otro personaje favorito?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 18,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Pone una olla de juguete en una cocina de mentira?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 19,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Revuelve comida imaginaria?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 20,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Pone una figura de acción o muñeca en un coche o camión de juguete como si fuese el conductor o el pasajero?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 21,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "¿Finge pasar la aspiradora a la alfombra, barrer, o cortar el césped?"
+    }
+  },
+  {
+    "model": "testM.FollowUpItem",
+    "pk": 22,
+    "fields": {
+      "item": 33,
+      "question_item": "none",
+      "question_group": "PASA",
+      "question": "Otro(describa)"
+    }
+  }
+]

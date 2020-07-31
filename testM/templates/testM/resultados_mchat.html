@@ -2,17 +2,24 @@
 
 {% load crispy_forms_tags %}
 
-{% block content %}
 
- 
-    
-    
+{% block content %}    
     
 
+	{% if dictr.result %}
 
+		
     	<p> La puntuación final ha sido: {{ total_score }} </p>
-    	<p>{{ messagefinal }}</p> 
+    	<p>{{ dictr.message }}</p>
     	<a href="{% url 'mchats:followup_mchat' pk %}" class="btn btn-outline-primary"><span class="fas fa-play"> Continue el 
     	seguimiento para: {{ patient.name }} aquí</a>
+
+    {% else %}
+
+    	<p> La puntuación final ha sido: {{ total_score }} </p>
+    	<p>{{ dictr.message }}</p>
+    	<p> Puede volver al Inicio haciendo click en home</p>
+
+    {% endif %}
  
 {% endblock %}

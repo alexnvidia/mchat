@@ -6,9 +6,35 @@
   <script>
     $.noConflict();
     jQuery(document).ready(function(){
-      jQuery("#id_form-0-option_1").click(function(){
-        jQuery("div").removeClass('d-none');
+      
+      var almc = 0;   
+      var cont = 0;
+      var element = "";
+      jQuery("input[type='radio']").click(function(){
+        if(element.search(jQuery(this).attr("name")) == -1 ){
+            var width = (jQuery(window).width())/20;            
+            cont+=5;
+            almc+=width
+            jQuery("#animated").width(almc);
+            element += jQuery(this).attr("name");
+            if(cont == 100){
+                jQuery("#divAlert").removeClass("d-none");
+
+            }
+
+        }
+        
+
+        
+
   });
+
+      jQuery( window ).resize(function() {
+        realsize = ((jQuery(window).width())*cont)/100
+        almc = realsize        
+        jQuery("#animated").width(almc);  
+            
+      });
 });
   </script>
 
@@ -18,7 +44,23 @@
 {% block content %}
 
 {%  if request.user == patient.supervisor %} 
- <p> {{ patient.name }} </p>
+ 
+
+ 
+
+ <div class="progress fixed-bottom">
+    <div id="animated" class="progress-bar progress-bar-striped progress-bar-animated " style="width:0%"></div>
+  </div>
+
+  
+  <div class="card float-right" style="width:400px">
+    <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
+    <div class="card-body">
+      <h4 class="card-title">{{ patient.name }}</h4>
+      <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+      <a href="#" class="btn btn-primary">See Profile</a>
+    </div>
+  </div>
     
     
     <form method="POST" class="form-group">{% csrf_token %}
@@ -38,6 +80,14 @@
     </div>
         <button type="submit" class="btn btn-primary">Obtener Resultado</button>        
     </form>
+
+    <div class="d-none" id="divAlert">     
+      <div class="alert alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Atencion!</strong> Ya ha respondido todas las preguntas, revise o haga click en obtener resultado.
+      </div>     
+      
+    </div>
 
 
 {% else %}
