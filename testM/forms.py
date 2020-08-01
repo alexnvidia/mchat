@@ -62,7 +62,7 @@ class mchatFollowup(forms.ModelForm):
 
 	class Meta:
 		model = FollowUpItem
-		fields = ('question_group','question','option','extra_option')
+		fields = ('question_group','question_item','question','option','extra_option')
 
 
 

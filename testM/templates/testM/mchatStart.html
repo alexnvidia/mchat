@@ -10,6 +10,13 @@
       var almc = 0;   
       var cont = 0;
       var element = "";
+      if({{ request.session.form_error }} > 0){
+          nowC = 20 - {{ request.session.form_error }};
+          cont = (20 - {{ request.session.form_error }})*5;
+          var width = (jQuery(window).width())/20;
+          almc = (nowC*width);
+          jQuery("#animated").width(almc);
+      }
       jQuery("input[type='radio']").click(function(){
         if(element.search(jQuery(this).attr("name")) == -1 ){
             var width = (jQuery(window).width())/20;            

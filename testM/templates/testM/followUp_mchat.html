@@ -16,7 +16,7 @@
     	{% for form in formset %}
     	{% if form.question_group.value == "TRIGGER" %}
     		<div class="d-none" id="{{ form.question.id_for_label }}" >
-    		{{ form.question.value }}
+    		{{ form.question.value }}    		
 	        {{ form.option }}        
 	        {{ form.option.errors }}
     		</div>
@@ -28,6 +28,7 @@
 	        {{ form.option.errors }}
 	        </div>
 	    {% else %}
+	    	<p>{{ form.question_item.value }}</p><br>
 	    	{{ form.question.value }}
 	        {{ form.option }}      
 	        {{ form.option.errors }}

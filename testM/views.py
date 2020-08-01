@@ -376,6 +376,7 @@ def mchat_start (request, pk):
 	listaFollowUp = ""
 	lista_score = ""
 	contador=0
+	request.session['form_error'] = 0
 	
 	
 	item = Item.objects.order_by('question_id') # Ordeno en base al numero de item	
@@ -399,12 +400,12 @@ def mchat_start (request, pk):
 			dictr = IfMchatFollowUp(total_score)
 			print(dictr["result"])
 			return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'dictr': dictr, 'pk': pk, 'patient': patient})
-			
+		else:
+			request.session['form_error'] = formset.total_error_count()
 
 	else:
 		print("estoy en el get")			
 		formset = mchatFormSet(initial=[{'question': l.question,'question_id': l.question_id} for l in item])
-		#print(formset)
 	return render(request,'testM/mchatStart.html', {'formset': formset, 'patient': patient})
 
 
@@ -447,7 +448,7 @@ def followup_mchat(request, pk):
 		for obj in serializers.deserialize("json", data_des):
 			list_pk_followup.append(obj.object.pk)
 		followUpItem=FollowUpItem.objects.filter(pk__in=list_pk_followup)
-		formset = mchatFollowUpFormset(request.POST,initial=[{'question_group': l.question_group, 'question': l.question, 'extra_option': l.extra_option} for l in followUpItem])
+		formset = mchatFollowUpFormset(request.POST,initial=[{'question_group': l.question_group,'question_item':l.question_item, 'question': l.question, 'extra_option': l.extra_option} for l in followUpItem])
 		if formset.is_valid():
 			for f in formset:
 				print("valido")
@@ -524,7 +525,7 @@ def followup_mchat(request, pk):
 		for o in objects:
 			request.session['question_id'] = o.question_id
 
-		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group, 'question': l.question, 'extra_option': l.extra_option} for l in page_query])
+		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group,'question_item':l.question_item, 'question': l.question, 'extra_option': l.extra_option} for l in page_query])
 		data = serializers.serialize("json", page_query)
 		request.session['page_query'] = data
 
