@@ -1,29 +1,34 @@
 {% extends 'testM/base.html' %}
 		{% block content %}
-			{% for patient in patient_list %} 
-				  <div class="post">
-					<div class="date">
+		<div class="table-responsive">
+		 		<table class="table table-dark table-hover">
+				    <thead>
+				      <tr>
+				        <th>Nombre</th>
+				        <th>Apellidos</th>
+				        <th>Test</th>
+				        <th>Resultados</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+   
+  
+			{% for patient in patient_list %}
 
-							
-
-				    </div>
-				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn"><span class="fas fa-play">iniciar m-chat para {{ patient.name }}</a>
+				      <tr>
+				        	<td>{{ patient.name }}</td>
+				        	<td>{{ patient.subname }}</td>					
+				       		<td><a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">m-chat</a></td>
 
 				       		{% if patient.item_scoreRF|length > 0 %}
 
-				       		<a href="{% url 'mchats:patient_result' patient.pk %}" class="btn"><span class="fas fa-play">Ver resultados para {{ patient.name }}</a>
+				       		<td><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
 				       		{% endif %}
-
-
-    			</div>
+				       </tr> 			
 			{% endfor %}
-					
-
-			
-
-			<a href="{% url 'mchats:patient_create' %}" class="btn"><span class="fas fa-play">Añadir Paciente</a>
-
-			
-
-
+			</tbody> 
+			</table>
+		</div>
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Paciente</a>
+				
 		{% endblock %}

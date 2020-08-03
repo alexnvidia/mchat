@@ -5,35 +5,39 @@
 
  <main role="main">
   <div class="container">
-    <div class="row mt-3 mb-5">
-      <div class="col-md-9 mx-auto">
+    <div class="">
+      <div class="">
         <div>          
-          resultados mchat
+          
+          <span class="badge badge-primary" style="font-size:30px">resultados mchat</span><br>
 
-
+          <ul class="list-group list-group-flush">
           {% for m in mchat_item %}
               
-              {% if m.option == True %}
-                <p>{{ m.question }} - Usted respondió: Si </p>
+              {% if m.option == True %}                
+                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px;">{{ m.question }} - Usted respondió: Si </span></li><br>
               {% else %}
-              <p> {{ m.question }} - Usted respondió: No </p>
-
+              <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ m.question }} - Usted respondió: No </span></li><br>
               {% endif %}
 
           {% endfor %}
+          </ul>
 
-          resultados mchat-rf
+          
+          <span class="badge badge-primary" style="font-size:30px">resultados mchat-rf</span><br>
 
+          <ul class="list-group list-group-flush">
           {% for f in followUpItem %}
               
               {% if f.option == True %}
-                <p>{{ f.question }} - Usted respondió: Si </p>
+                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: Si </span></li><br>
               {% else %}
-              <p> {{ f.question }} - Usted respondió: No </p>
+              <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: No </span></li><br>
 
               {% endif %}
 
           {% endfor %}
+          </ul>
         </div>
       </div>
     </div>

@@ -5,10 +5,9 @@
 {% block content %}
 
  {%  if request.user == patient.supervisor %} 
-    <p> in progress follow up </p>
 
     {% for object in objects %}
-      <p>{{ object.question }}</p>
+      <span class="badge badge-info" style="font-size:24px">Item {{ object.question_id }}: {{ object.question }}</span>
     {% endfor %}
 
     <form method="POST" class="form-group">{% csrf_token %}
@@ -28,7 +27,8 @@
 	        {{ form.option.errors }}
 	        </div>
 	    {% else %}
-	    	<p>{{ form.question_item.value }}</p><br>
+	    	
+	    	<span class="badge badge-secondary" style="font-size:14px">{{ form.question_item.value }}</span><br>
 	    	{{ form.question.value }}
 	        {{ form.option }}      
 	        {{ form.option.errors }}
