@@ -404,6 +404,8 @@ def mchat_start (request, pk):
 			return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'dictr': dictr, 'pk': pk, 'patient': patient})
 		else:
 			request.session['form_error'] = formset.total_error_count()
+			print("no es valido pinto esto")
+			print(request.session['form_error'])
 
 	else:
 		print("estoy en el get")			
