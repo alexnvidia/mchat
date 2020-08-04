@@ -384,8 +384,10 @@ def mchat_start (request, pk):
 
 	mchatFormSet = formset_factory(mchatTest ,extra=0)
 	if request.method == "POST":
+		print("entro en post")
 		formset = mchatFormSet(request.POST,initial=[{'question': l.question,'question_id': l.question_id} for l in item])#debo pasar initial para que se sigan mostrando los datos en el caso de que no sea valido
-		if formset.is_valid():							
+		if formset.is_valid():
+			print("valido")							
 			for f in formset:
 				option=f.cleaned_data['option']
 				lista_score=option_to_score_list(option,lista_score)
