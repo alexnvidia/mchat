@@ -406,6 +406,7 @@ def mchat_start (request, pk):
 			request.session['form_error'] = formset.total_error_count()
 			print("no es valido pinto esto")
 			print(request.session['form_error'])
+			print(formset.errors)
 
 	else:
 		print("estoy en el get")			
