@@ -1,0 +1,22 @@
+{% extends 'testM/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <main role="main">
+ <div class="jumbotron jumbotron-fluid"> 
+    <div class="container">
+      
+            <form action="" method="post">{% csrf_token %}
+            <div class="text-center">
+              <h1>¿Estas seguro que quieres eliminar a "{{ object }}"?</h1>
+              <input type="submit" class="btn btn-primary btn-lg" value="Confirmar">
+            </div>
+          </form>
+          
+    </div>
+ </div>
+  
+</main>
+{% endblock %}

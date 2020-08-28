@@ -15,6 +15,11 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.core import serializers
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.template import RequestContext
+from weasyprint import HTML
 
 # Pdb Import
 # Create your views here.
@@ -106,6 +111,29 @@ class MchatUpdate(UpdateView):
     def get_success_url(self):
         return reverse_lazy('mchats:update', args=[self.object.id])
 
+@method_decorator(staff_member_required, name='dispatch')
+class PatientUpdate(UpdateView):
+	model = Patient
+	form_class = PatientForm
+	template_name_suffix = '_update_form'
+
+	def get_form_kwargs(self):
+		kwargs = super(PatientUpdate, self).get_form_kwargs()
+		kwargs.update({'username': self.request.user})
+		return kwargs
+
+
+	def get_success_url(self):
+		return reverse_lazy('mchats:patients')
+
+@method_decorator(staff_member_required, name='dispatch')
+class PatientDelete(DeleteView):
+	model = Patient
+	success_url = reverse_lazy('mchats:patients')
+
+
+
+
 def MchatScore(question_id,option):
 		puntuacion = 0
 		if(question_id == 2 or question_id == 5 or question_id == 12 ):
@@ -187,20 +215,24 @@ def objetc_to_list(listaFollowUp):
 def IfMchatFollowUp(puntuacion_mchat):
 	resultDict = {
 	  "message": "none",
-	  "result": False
+	  "result": False,
+	  "finish": False
 	  
 	}
 	if (puntuacion_mchat >= 0 and puntuacion_mchat <=2):
 		resultDict["result"] = False
 		resultDict["message"] = messageFinalScoreNoFollow
+		resultDict["finish"] = True
 		return resultDict
 	elif (puntuacion_mchat >= 3 and puntuacion_mchat <=7):
 		resultDict["result"] = True
 		resultDict["message"] = messageFinalScoreFollow
+		resultDict["finish"] = False
 		return resultDict
 	elif (puntuacion_mchat >= 8 and puntuacion_mchat <=20):
 		resultDict["result"] = False
 		resultDict["message"] = messageFinalScoreNoFollowRisk
+		resultDict["finish"] = True
 		return resultDict
 	return resultDict 
 
@@ -335,22 +367,24 @@ def set_option_to_rf(queryset,item_scoreRF):
 	j = 0
 	lista_rf_def = []
 	lista_option = []
-	for q in queryset:
-		if (item_scoreRF[i] == '1'):
-			lista_rf_def.append(q.pk)
-			lista_option.append(True)
-			i+=1
-		elif (item_scoreRF[i] == '0'):
-			lista_rf_def.append(q.pk)
-			lista_option.append(False)
-			i+=1
-		else:
-			i+=1
-	queryset = queryset.filter(pk__in=lista_rf_def)
 
-	for q in queryset:		
-		q.option = lista_option[j]
-		j+=1
+	if(len(item_scoreRF) > 0):
+		for q in queryset:
+			if (item_scoreRF[i] == '1'):
+				lista_rf_def.append(q.pk)
+				lista_option.append(True)
+				i+=1
+			elif (item_scoreRF[i] == '0'):
+				lista_rf_def.append(q.pk)
+				lista_option.append(False)
+				i+=1
+			else:
+				i+=1
+		queryset = queryset.filter(pk__in=lista_rf_def)
+
+		for q in queryset:		
+			q.option = lista_option[j]
+			j+=1
 
 	return queryset
 
@@ -366,6 +400,23 @@ def set_option_to_item(mchat_item,item_score):
 			m.option = False
 			i+=1
 	return mchat_item
+
+def count_positive_mchat():
+	dict_n = {
+	  "n_patient_p": 0,
+	  "n_patient_pc": 0,
+	  "n_mchat_done": 0
+	  
+	}
+	n_patients_positive = Patient.objects.filter(positive=True).count()
+	n_patients_positive_confirmed = Patient.objects.filter(positive_tr=True).count()
+	n_mchat_done = Patient.objects.filter(finish=True).count()
+
+	dict_n["n_patient_p"] = n_patients_positive
+	dict_n["n_patient_pc"] = n_patients_positive_confirmed
+	dict_n["n_mchat_done"] = n_mchat_done
+	return dict_n
+
 
 	
 
@@ -395,11 +446,10 @@ def mchat_start (request, pk):
 				total_score+=MchatScore(question_id,option)				
 				if(MchatScore(question_id,option) == 1):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
-					
-			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp})
+			dictr = IfMchatFollowUp(total_score)					
+			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"]})
 			
-			#return render(request,'testM/resultados_mchat.html', {'formset': formset,'total_score': total_score})			
-			dictr = IfMchatFollowUp(total_score)
+			#return render(request,'testM/resultados_mchat.html', {'formset': formset,'total_score': total_score})
 			print(dictr["result"])
 			return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'dictr': dictr, 'pk': pk, 'patient': patient})
 		else:
@@ -497,7 +547,7 @@ def followup_mchat(request, pk):
 				audit_info = request.session['audit_info']
 				positive=FinalMchatRfScore(score_rf)
 				item_scoreRF = request.session['item_scoreRF']
-				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF})
+				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'finish': True})
 				return render(request,'testM/resultados_mchatRF.html',{'score_rf': score_rf, 'positive': positive, 'patient': patient,})
 			return redirect('mchats:mchats')
 		else:
@@ -536,6 +586,7 @@ def followup_mchat(request, pk):
 
 	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects,})
 
+@login_required
 def patient_result(request,pk):
 	patient = Patient.objects.get(pk=pk)
 	item_score = patient.item_score
@@ -559,7 +610,18 @@ def patient_result(request,pk):
 
 
 	if request.method == 'POST':
-		print("post")
+		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient},request=request)
+		html = HTML(string=html_string)
+		html.write_pdf(target='/tmp/mchat.pdf');
+
+		fs = FileSystemStorage('/tmp')
+		with fs.open('mchat.pdf') as pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			response['Content-Disposition'] = 'attachment; filename="mchat.pdf"'
+			return response
+		return response
+
+
 
 	else:
 		print("GET")
@@ -567,8 +629,15 @@ def patient_result(request,pk):
 			print(m.option)
 
 
-	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item})
+	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient})
 
+
+
+@login_required
+def graphics(request):
+	dict_n = count_positive_mchat()
+
+	return render(request, 'testM/graphic_mchat.html',{'dict_n': dict_n})
 
 
 

@@ -8,6 +8,7 @@
 				        <th>Apellidos</th>
 				        <th>Test</th>
 				        <th>Resultados</th>
+				        <th>Gestion</th>
 				      </tr>
 				    </thead>
 				    <tbody>
@@ -20,10 +21,14 @@
 				        	<td>{{ patient.subname }}</td>					
 				       		<td><a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">m-chat</a></td>
 
-				       		{% if patient.item_scoreRF|length > 0 %}
+				       		{% if patient.item_score|length > 0 %}
 
 				       		<td><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
+				       		{% else %}
+				       		<td> </td>
 				       		{% endif %}
+				       		<td><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></a>
+				       		<a href="{% url 'mchats:patient_delete' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-trash"></a></td>
 				       </tr> 			
 			{% endfor %}
 			</tbody> 

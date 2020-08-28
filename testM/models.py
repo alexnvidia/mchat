@@ -59,11 +59,13 @@ class Patient(models.Model):
 	birth_date = models.DateField(null=True,blank=True)	
 	supervisor = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 	mchat_score = models.IntegerField(default=0,)
-	positive = 	models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=None,blank=True)
-	item_score = models.CharField(max_length=21, default='00000000000000000000')
+	positive = 	models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=False,blank=True)
+	positive_tr = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=False,blank=True)
+	item_score = models.CharField(max_length=21, default='')
 	item_scoreRF = models.CharField(max_length=128, default='')
-	followup_list = models.CharField(max_length=20, default='00000000000000')
+	followup_list = models.CharField(max_length=50, default='')
 	audit_info = models.CharField(max_length=30, default='none')
+	finish = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=False,blank=True)
 
 
 

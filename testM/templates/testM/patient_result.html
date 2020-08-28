@@ -25,22 +25,79 @@
 
           
           <span class="badge badge-primary" style="font-size:30px">resultados mchat-rf</span><br>
+          {% if patient.mchat_score > 2 and patient.item_scoreRF|length > 0 %}
+            <ul class="list-group list-group-flush">
+            {% for f in followUpItem %}
+                
+                {% if f.option == True %}
+                  <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: Si </span></li><br>
+                {% else %}
+                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: No </span></li><br>
 
-          <ul class="list-group list-group-flush">
-          {% for f in followUpItem %}
-              
-              {% if f.option == True %}
-                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: Si </span></li><br>
-              {% else %}
-              <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: No </span></li><br>
+                {% endif %}
 
-              {% endif %}
-
-          {% endfor %}
-          </ul>
+            {% endfor %}
+            </ul>
+          {% elif patient.mchat_score > 2 and patient.item_scoreRF|length == 0 %}
+          <div class="alert alert-info">
+              <strong>Atención!</strong> No ha realiado aún la entrevista de seguimiento.
+            </div>
+          {% else %}
+            <div class="alert alert-info">
+              <strong>Atención!</strong> No fue necesario realizar entrevista de seguimiento.
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
+    <form method="POST" class="form-group">{% csrf_token %}
+      
+        <button type="submit" class="btn btn-primary">Descargar pdf</button>        
+    </form>
   </div>
+  <canvas id="myChart" style="max-width: 500px;"></canvas>
 </main>
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+$.noConflict();
+jQuery(document).ready(function(){
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: ["positive", "real_positive"],
+datasets: [{
+label: 'n of test with positive diagnostic',
+data: [12, 19],
+backgroundColor: [
+'rgba(255, 99, 132, 0.2)',
+'rgba(54, 162, 235, 0.2)'
+],
+borderColor: [
+'rgba(255,99,132,1)',
+'rgba(54, 162, 235, 1)',
+'rgba(255, 206, 86, 1)',
+'rgba(75, 192, 192, 1)',
+'rgba(153, 102, 255, 1)',
+'rgba(255, 159, 64, 1)'
+],
+borderWidth: 1
+}]
+},
+options: {
+scales: {
+yAxes: [{
+ticks: {
+beginAtZero: true
+}
+}]
+}
+}
+});
+});
+</script>
+
 {% endblock %}
