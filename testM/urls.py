@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import MchatListView, MchatUpdate, PatientCreate, HomePageView, PatientListView, PatientUpdate, PatientDelete
+from .views import MchatListView, MchatUpdate, PatientCreate, PatientListView, PatientUpdate, PatientDelete
 
 mchats_patterns = ([
 	

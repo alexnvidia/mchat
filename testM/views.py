@@ -50,17 +50,6 @@ AUDIT = "AUDIT"
 
 """ Constants """
 
-class HomePageView(TemplateView):
-
-    template_name = "home.html"
-
-    def get_context_data(self, **kwargs):
-    	supervisor_filter=User.objects.get(username=self.request.user)
-    	context = super(HomePageView, self).get_context_data(**kwargs)
-    	context['Mchat'] = Mchat.objects.all()[:1]
-    	context['Patient'] = Patient.objects.filter(supervisor=supervisor_filter)
-    	return context
-
 
 class MchatListView(ListView):
 
@@ -111,7 +100,7 @@ class MchatUpdate(UpdateView):
     def get_success_url(self):
         return reverse_lazy('mchats:update', args=[self.object.id])
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class PatientUpdate(UpdateView):
 	model = Patient
 	form_class = PatientForm
@@ -126,7 +115,7 @@ class PatientUpdate(UpdateView):
 	def get_success_url(self):
 		return reverse_lazy('mchats:patients')
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class PatientDelete(DeleteView):
 	model = Patient
 	success_url = reverse_lazy('mchats:patients')
