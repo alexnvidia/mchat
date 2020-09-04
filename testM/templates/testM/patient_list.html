@@ -19,7 +19,12 @@
 				      <tr>
 				        	<td>{{ patient.name }}</td>
 				        	<td>{{ patient.subname }}</td>					
-				       		<td><a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">m-chat</a></td>
+				       		<td>
+				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">m-chat</a>
+				       		{% if patient.mchat_score >= 3 %}
+				       		<a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">Seguimiento</a>
+				       		{% endif %}
+				       		</td>
 
 				       		{% if patient.item_score|length > 0 %}
 
