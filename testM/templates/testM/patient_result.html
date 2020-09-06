@@ -7,10 +7,21 @@
   <div class="container">
     <div class="">
       <div class="">
-        <div>          
-          
-          <span class="badge badge-primary" style="font-size:30px">resultados mchat</span><br>
+        <div>
+          <div class="alert alert-info">
+        <p style="font-size:30px"><strong> Nombre:</strong> {{ patient.name|title }} </p>
+        <p style="font-size:30px"><strong> Apellidos:</strong> {{ patient.subname|title }} </p>
+        <p style="font-size:30px;"><strong> Puntuación M-CHAT-R:</strong> {{ patient.mchat_score }}</p>
+        <p style="font-size:30px"><strong> Puntuación M-CHAT-R/F:</strong> {{ patient.mchatrf_score }} </p>
+        <p style="font-size:30px"><strong> Nivel de audición:</strong> {{ audit_message }} </p>
+        {% if patient.positive %}
+        <p style="font-size:30px"><strong> Positivo:</strong> Si </p>
+        {% else %}
+        <p style="font-size:30px"><strong> Positivo:</strong> No </p>
+        {% endif %}
+          </div>
 
+          <span class="badge badge-primary" style="font-size:36px">Cuestiones m-chat-r</span><br>
           <ul class="list-group list-group-flush">
           {% for m in mchat_item %}
               
@@ -24,7 +35,7 @@
           </ul>
 
           
-          <span class="badge badge-primary" style="font-size:30px">resultados mchat-rf</span><br>
+          <span class="badge badge-primary" style="font-size:36px">Cuestiones m-chat-r/f</span><br>
           {% if patient.mchat_score > 2 and patient.item_scoreRF|length > 0 %}
             <ul class="list-group list-group-flush">
             {% for f in followUpItem %}
@@ -55,49 +66,5 @@
         <button type="submit" class="btn btn-primary">Descargar pdf</button>        
     </form>
   </div>
-  <canvas id="myChart" style="max-width: 500px;"></canvas>
 </main>
-{% endblock %}
-
-
-{% block javascript %}
-<script>
-$.noConflict();
-jQuery(document).ready(function(){
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-type: 'bar',
-data: {
-labels: ["positive", "real_positive"],
-datasets: [{
-label: 'n of test with positive diagnostic',
-data: [12, 19],
-backgroundColor: [
-'rgba(255, 99, 132, 0.2)',
-'rgba(54, 162, 235, 0.2)'
-],
-borderColor: [
-'rgba(255,99,132,1)',
-'rgba(54, 162, 235, 1)',
-'rgba(255, 206, 86, 1)',
-'rgba(75, 192, 192, 1)',
-'rgba(153, 102, 255, 1)',
-'rgba(255, 159, 64, 1)'
-],
-borderWidth: 1
-}]
-},
-options: {
-scales: {
-yAxes: [{
-ticks: {
-beginAtZero: true
-}
-}]
-}
-}
-});
-});
-</script>
-
 {% endblock %}

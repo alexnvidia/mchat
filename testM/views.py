@@ -406,6 +406,16 @@ def count_positive_mchat():
 	dict_n["n_mchat_done"] = n_mchat_done
 	return dict_n
 
+def audit_info_mapper(audit_int):
+	message=""
+	AUDIT_INFO = {
+    1: 'Audicion normal',
+    2: 'Audicion por debajo de lo normal',
+    3: 'Resultados no concluyentes'
+	}
+	message=AUDIT_INFO[audit_int]
+
+	return message
 
 	
 
@@ -536,7 +546,7 @@ def followup_mchat(request, pk):
 				audit_info = request.session['audit_info']
 				positive=FinalMchatRfScore(score_rf)
 				item_scoreRF = request.session['item_scoreRF']
-				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'finish': True})
+				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'mchatrf_score': score_rf,'finish': True})
 				return render(request,'testM/resultados_mchatRF.html',{'score_rf': score_rf, 'positive': positive, 'patient': patient,})
 			return redirect('mchats:mchats')
 		else:
@@ -582,6 +592,8 @@ def patient_result(request,pk):
 	item_scoreRF = patient.item_scoreRF
 	followup_array = patient.followup_list
 	mchat_item = Item.objects.all()
+	audit_info = int(patient.audit_info)
+	audit_message = ""
 	Item_list = []
 
 	#transformo el char followup_array a lista
@@ -592,6 +604,8 @@ def patient_result(request,pk):
 
 	#utilizo la lista de item para filtrar los objetos followup que corresponden
 	followUpItem = FollowUpItem.objects.filter(item__in=Item_list)
+	#Transformo el campo audit_info que corresponde con un tipo númerico a su correspondiente mensaje del nivel auditivo
+	audit_message=audit_info_mapper(audit_info)
 
 	followUpItem = set_option_to_rf(followUpItem,item_scoreRF)
 
@@ -599,7 +613,7 @@ def patient_result(request,pk):
 
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient},request=request)
+		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
 		html = HTML(string=html_string)
 		html.write_pdf(target='/tmp/mchat.pdf');
 
@@ -618,7 +632,7 @@ def patient_result(request,pk):
 			print(m.option)
 
 
-	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient})
+	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})
 
 
 

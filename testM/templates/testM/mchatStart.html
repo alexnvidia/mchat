@@ -64,7 +64,7 @@
     <img class="card-img-top" src="{% static 'testM/boy.png' %}" alt="Card image" style="width:100%">
     <div class="card-body">
       <h4 class="card-title">Paciente #{{ patient.pk }}</h4>
-      <p class="card-text"><strong>{{ patient.name }} {{ patient.subname }}</strong></p>      
+      <p class="card-text"><strong>{{ patient.name|title }} {{ patient.subname|title }}</strong></p>      
     </div>
   </div>
     

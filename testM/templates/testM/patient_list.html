@@ -1,5 +1,7 @@
 {% extends 'testM/base.html' %}
 		{% block content %}
+		{% load static %}
+		{% if patient_list %}
 		<div class="table-responsive">
 		 		<table class="table table-dark table-hover">
 				    <thead>
@@ -17,8 +19,8 @@
 			{% for patient in patient_list %}
 
 				      <tr>
-				        	<td>{{ patient.name }}</td>
-				        	<td>{{ patient.subname }}</td>					
+				        	<td>{{ patient.name|title }}</td>
+				        	<td>{{ patient.subname|title }}</td>					
 				       		<td>
 				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">m-chat</a>
 				       		{% if patient.mchat_score >= 3 %}
@@ -39,6 +41,16 @@
 			</tbody> 
 			</table>
 		</div>
+
+
 			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Paciente</a>
+			{% else %}
+			<div class="alert alert-info">
+			    <p style="font-size:36px;color:lightgreen;text-shadow:2px 2px 4px #000000;"><strong>!Atención!</strong> Usted no ha añadido ningún paciente actualmente.
+				</p>
+				<img class="card-img-top" src="{% static 'testM/no_patient.png' %}" alt="no patient" style="width:50%">
+			</div>
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Paciente</a>
+			{% endif %}
 				
 		{% endblock %}

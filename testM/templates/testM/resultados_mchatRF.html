@@ -2,22 +2,30 @@
 
 {% load crispy_forms_tags %}
 
-{% block content %}    
-    
+{% block content %}   
 
+<div class="container p-3 my-3 bg-dark text-white">
+<h1 class="display-4">Resultado Final M-CHAT-R/F </h1>
+<p style="font-size:18px">El resultado final de la entrevista de seguimiento es el siguiente:</p>
 	{% if positive %}
-
-		El resultado final de la entrevista de seguimiento es el siguiente :
-
 			
-				debe llevar a  {{ patient.name }} a un profesional			
-
-
+		<p style="font-size:18px"> Puntuación de la primera etapa: <strong>{{ patient.mchat_score }} </strong></p>
+		<p style="font-size:18px"> Puntuación de la etapa de seguimiento: <strong>{{ score_rf }} </strong></p>
+		<p style="font-size:18px"> {{ patient.name|title }} ha dado positivo el test M-chat-r/f</p>		
+		<p style="font-size:18px">debe llevar a  {{ patient.name|title }} a un profesional</p>		
+		<div class="alert alert-info">
+		    <p><strong> Medida necesaria:</strong> remita al niño/a para una evaluación diagnóstica y para
+		determinar necesidad de atención temprana</p>
+		</div>
+			  
 	{% else %}
-    	{{ patient.name }} no ha dado positivo en la entrevista de seguimiento.
-    	se recomienda encarecidamente que el niño sea remitido a intervención
-		temprana y para realizar pruebas de diagnóstico tan pronto como sea posible
+		<p style="font-size:18px"> Puntuación de la primera etapa: <strong>{{ patient.mchat_score }} </strong>	</p> </br>
+		<p> Puntuación de la etapa de seguimiento: <strong>{{ score_rf }} </strong></p></br>
+    	<p style="font-size:18px"><strong>{{ patient.name|title }}</strong> no ha dado positivo en la entrevista de seguimiento.
+    	se recomienda encarecidamente que el niño/a sea remitido a intervención
+		temprana y para realizar pruebas de diagnóstico tan pronto como sea posible</p>
 
     {% endif %}
+    </div>
  
 {% endblock %}
