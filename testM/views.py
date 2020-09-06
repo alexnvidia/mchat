@@ -413,7 +413,10 @@ def audit_info_mapper(audit_int):
     2: 'Audicion por debajo de lo normal',
     3: 'Resultados no concluyentes'
 	}
-	message=AUDIT_INFO[audit_int]
+	if audit_int == 'none':
+		message = "Ninguno"
+		return message
+	message=int(AUDIT_INFO[audit_int])
 
 	return message
 
@@ -592,7 +595,7 @@ def patient_result(request,pk):
 	item_scoreRF = patient.item_scoreRF
 	followup_array = patient.followup_list
 	mchat_item = Item.objects.all()
-	audit_info = int(patient.audit_info)
+	audit_info = patient.audit_info
 	audit_message = ""
 	Item_list = []
 
