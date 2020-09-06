@@ -26,11 +26,11 @@
     <body>
     <div class="jumbotron text-center bg-secondary text-white" style="margin-bottom:0">
         {%  if user.is_authenticated %}        
-        <p class="top-menu float-right display-4">Hello {{ user.username }} <small><a href="{% url 'logout' %}"><span id="s1" class="fas fa-power-off" style="font-size:48px;color:lightblue;text-shadow:2px 2px 4px #000000;"></span></a></small></p>
+        <p class="top-menu float-sm-right display-4">Hello {{ user.username }} <small><a href="{% url 'logout' %}"><span id="s1" class="fas fa-power-off" style="font-size:48px;color:lightblue;text-shadow:2px 2px 4px #000000;"></span></a></small></p>
         
         {% else %}
-            <a href="{% url 'login' %}" class="top-menu float-right display-4" style="font-size:48px;color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Iniciar Sesion"><span class="fas fa-lock"></span></a>
-            <a href="{% url 'signup' %}" class="top-menu float-right display-4" style="font-size:48px;color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Registrarme"><span class="fas fa-user"></span></a>
+            <a href="{% url 'login' %}" class="top-menu float-sm-right display-4" style="color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Iniciar Sesion"><span class="fas fa-lock"></span></a>
+            <a href="{% url 'signup' %}" class="top-menu float-sm-right display-4" style="color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Registrarme"><span class="fas fa-user"></span></a>
 
         {% endif %}
         <h2><span class="badge badge-primary">M-CHAT-R/F</span></h2>
