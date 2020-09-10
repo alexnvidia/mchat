@@ -413,10 +413,12 @@ def audit_info_mapper(audit_int):
     2: 'Audicion por debajo de lo normal',
     3: 'Resultados no concluyentes'
 	}
-	if audit_int == 'none':
+	if audit_int == 'none' or audit_int == '':
 		message = "Ninguno"
 		return message
-	message=int(AUDIT_INFO[audit_int])
+	else:
+		message=AUDIT_INFO[int(audit_int)]
+		return message
 
 	return message
 
