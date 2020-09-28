@@ -33,15 +33,28 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="{% url 'mchats:graphic_mchat' %}">Gráfico</a>
-            </li>            
+            </li>         
           </ul>
         </div>  
   </nav>
     <div class="jumbotron jumbotron-fluid text-center bg-secondary text-white" style="margin-bottom:0">
         <div class="container-fluid pt-4">
-        {%  if user.is_authenticated %}        
-        <p class="top-menu float-sm-left" style="font-size:48px;">Hello {{ user.username }} <small><a href="{% url 'logout' %}"><span id="s1" class="fas fa-power-off" style="font-size:36px;color:lightblue;text-shadow:2px 2px 4px #000000;"></span></a></small></p>
-        
+        {%  if user.is_authenticated %}
+        <p class="top-menu float-sm-left" style="font-size:48px;">Hola {{ user.first_name }} </p>     
+        <p class="top-menu float-sm-right" style="font-size:48px;"><small><a href="{% url 'logout' %}" data-toggle="tooltip" title="Cerrar sesión"><span id="s1" class="fas fa-power-off" style="font-size:36px;color:lightblue;text-shadow:2px 2px 4px #000000;"></span></a></small></p>        
+        {% block profile %}
+        <div class="dropdown top-menu float-sm-left">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+            <spam class='far fa-address-card' style='font-size:36px'></spam>
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'mchats:user_profile' profileUser.pk %}">Ver perfil</a>
+            <a href="{% url 'mchats:profile_update' profileUser.pk %}" class="dropdown-item" >Editar Perfil</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'mchats:ProfilePatients' %}">Listado de pacientes</a>
+          </div>
+        </div>
+        {% endblock %}
         {% else %}
            
             <a href="{% url 'login' %}" class="float-sm-right" style="font-size:48px;color:lightgreen;text-shadow:2px 2px 4px #000000;" data-toggle="tooltip" title="Iniciar Sesion"><span class="fas fa-lock"></span></a>

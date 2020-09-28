@@ -1,0 +1,41 @@
+{% extends 'testM/base.html' %}
+{% block profile %}
+{% endblock %}
+{% block content %}
+    <div class="container">
+       <h1> Perfil de {{ object.user }}</h1>
+       <div class="table-responsive">
+                <table class="table table-info table-hover">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Información</th>
+                      </tr>
+                    </thead>
+                    <tbody>           
+
+                        <tr>
+                            <td><strong>Nombre: </strong>{{ object.first_name }}</td>                            
+                        </tr>
+                        <tr>
+                            <td><strong>Apellidos: </strong>{{ object.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Biografía: </strong>{{ object.bio }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Correco electrónico: </strong>{{ object.email }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dirección: </strong>{{ object.location }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Centro profesional: </strong>{{ object.center }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fecha de nacimiento: </strong>{{ object.birth_date }}</td>
+                        </tr>         
+                    </tbody> 
+                </table>
+        </div>
+   </div>
+{% endblock %}

@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_text
 from django.contrib.auth import login, authenticate
-from .models import Mchat , Item, Patient, FollowUpItem
-from .forms import mchatForm,mchatTest,PatientForm,mchatFollowup
+from .models import Mchat , Item, Patient, FollowUpItem, Profile,Patient_historic
+from .forms import mchatForm,mchatTest,PatientForm,mchatFollowup,profileForm
 from .forms import SignUpForm
 from django.forms import formset_factory, modelformset_factory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -11,6 +13,7 @@ from django.contrib.auth.models import User
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.urls import reverse, reverse_lazy
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
@@ -19,7 +22,16 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.template import RequestContext
+from django.db import IntegrityError
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+from .tokens import account_activation_token
+from django.core.mail import send_mail
+from django.conf import settings
 from weasyprint import HTML
+
+
 
 # Pdb Import
 # Create your views here.
@@ -57,6 +69,9 @@ class MchatListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated == True:
+        	profile = Profile.objects.get(user__in = [self.request.user.pk])
+        	context['profileUser'] = profile
         context['now'] = timezone.now()
         return context
 
@@ -73,10 +88,25 @@ class PatientListView(ListView):
 		supervisor_filter=User.objects.get(username=self.request.user)
 		return Patient.objects.filter(supervisor=supervisor_filter)
 
+@method_decorator(login_required, name='dispatch')
+class PatientListUserProfileView(ListView):
 
-""" para que el PatientForm permita el request.user debo meter 
-	como argumentos permitidos el username que tiene ya el valor del
-	request.user"""
+	model = Patient
+	template_name_suffix = '_profile_user'
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		return context
+	def get_queryset(self):
+		supervisor_filter=User.objects.get(username=self.request.user)
+		return Patient.objects.filter(supervisor=supervisor_filter)
+
+
+""" para que el PatientForm sea válido debo asignar un valor a la
+clave foranea supervisor ya que esta no puede ser nula
+y se asume que el usuario logueado es el supervisor de ese 
+paciente"""
 @method_decorator(login_required, name='dispatch')
 class PatientCreate(CreateView):
 	model = Patient
@@ -84,10 +114,11 @@ class PatientCreate(CreateView):
 	template_name_suffix = '_create_form'
 	success_url = reverse_lazy('mchats:patients')
 
-	def get_form_kwargs(self):
-		kwargs = super(PatientCreate, self).get_form_kwargs()
-		kwargs.update({'username': self.request.user})
-		return kwargs
+	def form_valid(self, form):
+		user = User.objects.get(username=self.request.user)
+		form.instance.supervisor = user
+		return super(PatientCreate, self).form_valid(form)
+
 
 	
 
@@ -101,15 +132,26 @@ class MchatUpdate(UpdateView):
         return reverse_lazy('mchats:update', args=[self.object.id])
 
 @method_decorator(login_required, name='dispatch')
+class ProfileUpdate(UpdateView):
+	model = Profile
+	form_class = profileForm
+	template_name_suffix = '_update_form'	
+
+
+	def get_success_url(self):
+		return reverse_lazy('mchats:mchats')
+
+
+@method_decorator(login_required, name='dispatch')
 class PatientUpdate(UpdateView):
 	model = Patient
 	form_class = PatientForm
 	template_name_suffix = '_update_form'
 
-	def get_form_kwargs(self):
-		kwargs = super(PatientUpdate, self).get_form_kwargs()
-		kwargs.update({'username': self.request.user})
-		return kwargs
+	def form_valid(self, form):
+		user = User.objects.get(username=self.request.user)
+		form.instance.supervisor = user
+		return super(PatientUpdate, self).form_valid(form)
 
 
 	def get_success_url(self):
@@ -119,6 +161,17 @@ class PatientUpdate(UpdateView):
 class PatientDelete(DeleteView):
 	model = Patient
 	success_url = reverse_lazy('mchats:patients')
+
+
+@method_decorator(login_required, name='dispatch')
+class PatientDetailView(DetailView):
+	model = Profile
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		return context
+
 
 
 
@@ -413,8 +466,8 @@ def audit_info_mapper(audit_int):
     2: 'Audicion por debajo de lo normal',
     3: 'Resultados no concluyentes'
 	}
-	if audit_int == 'none' or audit_int == '':
-		message = "Ninguno"
+	if audit_int == 'No aplica' or audit_int == '':
+		message = "No realizado"
 		return message
 	else:
 		message=AUDIT_INFO[int(audit_int)]
@@ -452,7 +505,9 @@ def mchat_start (request, pk):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
 			dictr = IfMchatFollowUp(total_score)					
 			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"]})
-			
+			if(dictr["finish"] == True):
+				Patient_historic.objects.create(patient = patient, mchat_score = total_score, item_score = lista_score, followup_list = listaFollowUp )
+
 			#return render(request,'testM/resultados_mchat.html', {'formset': formset,'total_score': total_score})
 			print(dictr["result"])
 			return render(request,'testM/resultados_mchat.html',{'total_score': total_score, 'dictr': dictr, 'pk': pk, 'patient': patient})
@@ -472,6 +527,7 @@ def mchat_start (request, pk):
 def followup_mchat(request, pk):
 	patient=Patient.objects.get(pk=pk)
 	item_score=patient.item_score
+	total_score = patient.mchat_score
 	followup_array=patient.followup_list
 	followup_object=[]
 	objects = ""
@@ -552,6 +608,7 @@ def followup_mchat(request, pk):
 				positive=FinalMchatRfScore(score_rf)
 				item_scoreRF = request.session['item_scoreRF']
 				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'mchatrf_score': score_rf,'finish': True})
+				Patient_historic.objects.create(patient = patient, mchat_score = total_score, mchatrf_score = score_rf , item_score = item_score, item_scoreRF = item_scoreRF, followup_list = followup_array, positive = positive, audit_info = audit_info)
 				return render(request,'testM/resultados_mchatRF.html',{'score_rf': score_rf, 'positive': positive, 'patient': patient,})
 			return redirect('mchats:mchats')
 		else:
@@ -648,6 +705,28 @@ def graphics(request):
 	return render(request, 'testM/graphic_mchat.html',{'dict_n': dict_n})
 
 
+def activation_sent_view(request):
+	return render(request, 'activation_sent.html')
+
+
+def activate(request, uidb64, token):
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=uid)
+		profile = Profile.objects.get(user__in = [user.pk])
+	except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+
+	if user is not None and account_activation_token.check_token(user,token):
+
+		user.is_active = True
+
+		user.profile.signup_confirmation = True
+		user.save()
+		login(request, user)
+		return render(request,'testM/complete_profile.html',{'profile': profile})
+	else:
+		return render(request, 'activation_invalid.html')
 
 
 
@@ -657,13 +736,25 @@ def signup(request):
 		if form.is_valid():
 			user = form.save()
 			user.refresh_from_db()
+			user.profile.first_name = form.cleaned_data.get('first_name')
+			user.profile.last_name = form.cleaned_data.get('last_name')
+			user.profile.email = form.cleaned_data.get('email')
 			user.profile.birth_date = form.cleaned_data.get('birth_date')
+			#No podemos loguear al usuario hasta que confirme
+			user.is_active = False
 			user.save()
-			raw_pasword = form.cleaned_data.get('password1')
-			user = authenticate(username=user.username, password=raw_pasword)
-			login(request,user)
-			return redirect('mchats:mchats')
-
+			current_site = get_current_site(request)
+			subject  = 'Por favor es necesario activar tu cuenta'
+			email_from = settings.EMAIL_HOST_USER
+			recipient_list = [user.profile.email,]
+			message = render_to_string('activation_request.html', {
+				'user': user,
+				'domain': current_site.domain,
+				'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+				'token': account_activation_token.make_token(user),
+			})
+			send_mail(subject, message, email_from, recipient_list)
+			return redirect('mchats:activation_sent')
 	else:
 		form = SignUpForm()
 	return render(request, 'signup.html',{'form':form})

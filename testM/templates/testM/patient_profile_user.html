@@ -4,14 +4,15 @@
 		{% block content %}
 		{% load static %}
 		{% if patient_list %}
+		<h2> LISTADO DE NIÑOS/AS QUE REALIZARÁN LA PRUEBA DEL M-CHAT-R/F</h2><br>
 		<div class="table-responsive">
-		 		<table class="table table-dark table-hover">
-				    <thead>
+		 		<table class="table table-info table-hover">
+				    <thead class="thead-dark">
 				      <tr>
 				        <th>Nombre</th>
 				        <th>Apellidos</th>
-				        <th>Test</th>
-				        <th>Resultados</th>
+				        <th>M-CHAT-R primera etapa</th>
+				        <th>M-CHAT-R/F segunda etapa</th>
 				        <th>Gestion</th>
 				      </tr>
 				    </thead>
@@ -23,18 +24,14 @@
 				      <tr>
 				        	<td>{{ patient.name|title }}</td>
 				        	<td>{{ patient.subname|title }}</td>					
-				       		<td>
-				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">m-chat</a>
-				       		{% if patient.mchat_score >= 3 and patient.mchat_score <= 7 %}
-				       		<a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">Seguimiento</a>
-				       		{% endif %}
-				       		</td>
+				       		<td>{{ patient.mchat_score}}</td>
+				       		
+ 
+				       		{% if patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_score|length > 0 %}
 
-				       		{% if patient.item_score|length > 0 %}
-
-				       		<td><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
+				       		<td>{{ patient.mchatrf_score }}</td>
 				       		{% else %}
-				       		<td> </td>
+				       		<td>---</td>
 				       		{% endif %}
 				       		<td><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></a>
 				       		<a href="{% url 'mchats:patient_delete' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-trash"></a></td>
@@ -45,7 +42,7 @@
 		</div>
 
 
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Paciente</a>
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Niño/a</a>
 			{% else %}
 			<div class="alert alert-info">
 			    <p style="font-size:36px;color:lightgreen;text-shadow:2px 2px 4px #000000;"><strong>!Atención!</strong> Usted no ha añadido ningún paciente actualmente.

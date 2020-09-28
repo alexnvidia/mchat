@@ -1,5 +1,6 @@
 {% extends 'testM/base.html' %}
-
+{% block profile %}
+{% endblock %}
 
 {% block content %}
 
@@ -15,9 +16,9 @@
         <p style="font-size:30px"><strong> Puntuación M-CHAT-R/F:</strong> {{ patient.mchatrf_score }} </p>
         <p style="font-size:30px"><strong> Nivel de audición:</strong> {{ audit_message }} </p>
         {% if patient.positive %}
-        <p style="font-size:30px"><strong> Positivo:</strong> Si </p>
+        <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> Si </p>
         {% else %}
-        <p style="font-size:30px"><strong> Positivo:</strong> No </p>
+        <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> No </p>
         {% endif %}
           </div>
 
@@ -49,13 +50,13 @@
 
             {% endfor %}
             </ul>
-          {% elif patient.mchat_score > 2 and patient.item_scoreRF|length == 0 %}
+          {% elif patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_scoreRF|length == 0 %}
           <div class="alert alert-info">
-              <strong>Atención!</strong> No ha realiado aún la entrevista de seguimiento.
+              <strong>¡Atención!</strong> No ha realizado aún la entrevista de seguimiento.
             </div>
           {% else %}
             <div class="alert alert-info">
-              <strong>Atención!</strong> No fue necesario realizar entrevista de seguimiento.
+              <strong>No fue necesario realizar entrevista de seguimiento.</strong> 
             </div>
           {% endif %}
         </div>
@@ -63,7 +64,7 @@
     </div>
     <form method="POST" class="form-group">{% csrf_token %}
       
-        <button type="submit" class="btn btn-primary">Descargar pdf</button>        
+        <button type="submit" class="btn btn-primary">Descargar pdf de resultados del niño/a</button>        
     </form>
   </div>
 </main>

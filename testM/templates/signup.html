@@ -1,7 +1,9 @@
 {% extends "testM/base.html" %}
+{% block profile %}
+{% endblock %}
 
 {% block content %}
-  <h2>Sign up</h2>
+  <h2>Registro de usuario</h2>
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -12,10 +14,13 @@
           <small style="color: grey">{{ field.help_text }}</small>
         {% endif %}
         {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
+        <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>!Atención!</strong> {{ error }}.
+        </div>          
         {% endfor %}
       </p>
     {% endfor %}
-    <button type="submit">Sign up</button>
+    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
   </form>
 {% endblock %}

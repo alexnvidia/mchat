@@ -16,13 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import include,url
 from django.contrib.auth import views
+from django.urls import path
 from testM.urls import mchats_patterns
 
 from testM import views as core_views
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^accounts/login/$', views.LoginView.as_view(), name='login'),
-    url(r'^accounts/logout/$', views.LogoutView.as_view(next_page='/'), name='logout'),
-    url(r'^signup/$', core_views.signup, name='signup'),
-    url(r'', include(mchats_patterns)),
+    path('admin/', admin.site.urls),
+    path('accounts/logout/', views.LogoutView.as_view(next_page='/'), name='logout'), 
+    path('accounts/password_reset/', views.PasswordResetView.as_view(template_name='registration/password_reset_form_mine.html'), name='password_reset'),
+    path('accounts/password_reset/done/', views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done_mine.html'), name='password_reset_done'),
+    path('accounts/reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm_mine.html'), name='password_reset_confirm'),
+    path('accounts/reset/done/', views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete_mine.html'), name='password_reset_complete'),
+    path('signup/', core_views.signup, name='signup'),
+    path('', include(mchats_patterns)),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

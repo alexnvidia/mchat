@@ -1,5 +1,5 @@
 from django import forms
-from .models import Mchat,Item,Patient,FollowUpItem
+from .models import Mchat,Item,Patient,FollowUpItem, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -22,12 +22,33 @@ MONTHS = {
 
 class SignUpForm(UserCreationForm):
 	"""docstring for SignUpForm"""
-	birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+	birth_date = forms.DateField(help_text='Formato requerido: DD/MM/YYYY',label="Fecha de nacimiento",
+		widget=forms.DateInput(attrs={'class':'form-control mt2', 'placeholder': 'Fecha de nacimiento'}))
+	first_name = forms.CharField(max_length=128, label='Nombre',
+		widget=forms.TextInput(attrs={'class':'form-control mt2', 'placeholder': 'Nombre'}))
+	last_name = forms.CharField(max_length=256, label='Apellidos',
+		widget=forms.TextInput(attrs={'class':'form-control mt3', 'placeholder': 'Apellidos'}))
+	email = forms.EmailField(required=True,max_length=256, label='Dirección de correo electrónico',help_text="Requerido. 256 caracteres como maximo",
+		widget=forms.EmailInput(attrs={'class':'form-control mt2', 'placeholder': 'Correo electrónico'}))
+	password1 = forms.CharField(required=True,label="Contraseña",
+		widget=forms.PasswordInput(attrs={'class':'form-control mt3', 'placeholder': 'Contraseña'}))
+
+	password2 = forms.CharField(required=True,label="",
+		widget=forms.PasswordInput(attrs={'class':'form-control mt3', 'placeholder': 'Repita la contraseña'}))
 
 	class Meta:
 		"""docstring for Meta"""
 		model = User
-		fields = ('username','birth_date', 'password1','password2',)
+		fields = ('username','first_name','last_name','email','birth_date', 'password1','password2',)
+		widgets = {
+				'username' : forms.TextInput(attrs={'class':'form-control mt2', 'placeholder': 'Nombre de Usuario'}),
+		}
+
+	def clean_email(self):
+		email = self.cleaned_data.get("email")
+		if User.objects.filter(email=email).exists():
+			raise forms.ValidationError("El email ya está registrado por otro usuario, introduzca otro diferente")
+		return email
 
 
 
@@ -61,6 +82,21 @@ class mchatTest(forms.ModelForm):
 		model = Item
 		fields = ('question','option','question_id',)
 
+class profileForm(forms.ModelForm):
+
+	class Meta:
+		model = Profile
+		fields = ('first_name','last_name','email','bio','location','center','birth_date',)
+		widgets = {
+				'first_name' : forms.TextInput(attrs={'class':'form-control mt3', 'placeholder': 'Nombre'}),
+				'last_name' : forms.TextInput(attrs={'class':'form-control mt3', 'placeholder': 'Apellidos'}),
+				'email' : forms.EmailInput(attrs={'class':'form-control mt3', 'placeholder': 'Correo electrónico'}),
+				'bio': forms.Textarea(attrs={'class':'form-control mt-3', 'rows':3, 'placeholder':'Biografía'}),
+				'location': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Dirección'}),
+				'center' : forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Centro de trabajo'}),
+				'birth_date' : forms.DateInput(attrs={'class':'form-control mt2', 'placeholder': 'Fecha de nacimiento'}),			
+		}
+
 
 class mchatFollowup(forms.ModelForm):
 	
@@ -83,13 +119,8 @@ def date_today():
 
 class PatientForm(forms.ModelForm):
 	""" filtro el supervisor para que salga el que esta autenticado en ese momento ya que ese sera el 
-	supervisor"""
-	birth_date = forms.DateField(widget=forms.SelectDateWidget(years=range(1980, date_today())))
-	supervisor = forms.ModelChoiceField(queryset=None, empty_label="...")
+	supervisor"""	
 
-	def __init__(self,username, *args, **kwargs):								
-		super(PatientForm, self).__init__(*args, **kwargs)		
-		self.fields['supervisor'].queryset = User.objects.filter(username=username)
 	def clean(self):
 		cleaned_data = super(PatientForm, self).clean()
 
@@ -98,15 +129,19 @@ class PatientForm(forms.ModelForm):
 
 		if birth_date is not None:
 			if (date_now < birth_date):
-				self.add_error(None,ValidationError('La fecha de nacimiento no pude ser mayor que la actual'))
-
-
-
+				self.add_error(None,ValidationError('La fecha de nacimiento no puede ser mayor que la actual'))
 
 
 	class Meta:
 		model = Patient
-		fields = ('name','subname','birth_date','supervisor',)
+		fields = ('name','subname','sex','birth_date',)
+		exclude = ['supervisor']
+		widgets = {				
+				'birth_date': forms.SelectDateWidget(years=range(1980, date_today()),attrs={'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Fecha'}),
+				'name': forms.TextInput(attrs={'class':'form-control w-50 mt3', 'placeholder': 'Nombre'}),
+				'subname': forms.TextInput(attrs={'class':'form-control w-50 mt3', 'placeholder': 'Apellidos'}),
+				'sex': forms.Select(attrs={'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Sexo'})
+		}
 
 
 		

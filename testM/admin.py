@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import Profile, Mchat,Item,Patient,FollowUpItem
+from .models import Profile, Mchat,Item,Patient,FollowUpItem,Patient_historic
 # Register your models here.
 
 
@@ -10,12 +10,13 @@ admin.site.register(Mchat)
 admin.site.register(Item)
 admin.site.register(Patient)
 admin.site.register(FollowUpItem)
+admin.site.register(Patient_historic)
 
 
 class ProfileInLine(admin.StackedInline):
 	model = Profile
 	can_delete = False
-	verbose_name_plural = 'Profile'
+	verbose_name_plural = 'Perfiles'
 	fk_name = 'user'
 
 
