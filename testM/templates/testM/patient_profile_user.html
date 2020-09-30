@@ -4,7 +4,7 @@
 		{% block content %}
 		{% load static %}
 		{% if patient_list %}
-		<h2> LISTADO DE NIÑOS/AS QUE REALIZARÁN LA PRUEBA DEL M-CHAT-R/F</h2><br>
+		<h3> LISTADO DE NIÑOS/AS QUE HAN REALIZADO O REALIZARÁN LA PRUEBA DEL M-CHAT-R/F</h3><br>
 		<div class="table-responsive">
 		 		<table class="table table-info table-hover">
 				    <thead class="thead-dark">
@@ -14,6 +14,7 @@
 				        <th>M-CHAT-R primera etapa</th>
 				        <th>M-CHAT-R/F segunda etapa</th>
 				        <th>Gestion</th>
+				        <th>Histórico</th>
 				      </tr>
 				    </thead>
 				    <tbody>
@@ -35,6 +36,9 @@
 				       		{% endif %}
 				       		<td><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-pencil-alt"></a>
 				       		<a href="{% url 'mchats:patient_delete' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-trash"></a></td>
+				       		<td>
+				       			<a href="{% url 'mchats:patient_historic' patient.pk %}" class="btn btn-outline-primary">Ver histórico</a>
+				       		</td>
 				       </tr> 			
 			{% endfor %}
 			</tbody> 

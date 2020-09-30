@@ -1,0 +1,71 @@
+{% extends 'testM/base.html' %}
+{% block profile %}
+{% endblock %}
+
+{% block content %}
+
+ <main role="main">
+  <div class="container">
+    <div class="">
+      <div class="">
+        <div>
+          <div class="alert alert-info">
+        <p style="font-size:30px"><strong> Nombre Completo:</strong> {{ patient.patient|title }} </p>        
+        <p style="font-size:30px;"><strong> Puntuación M-CHAT-R:</strong> {{ patient.mchat_score }}</p>
+        <p style="font-size:30px"><strong> Puntuación M-CHAT-R/F:</strong> {{ patient.mchatrf_score }} </p>
+        <p style="font-size:30px"><strong> Nivel de audición:</strong> {{ audit_message }} </p>
+        {% if patient.positive %}
+        <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> Si </p>
+        {% else %}
+        <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> No </p>
+        {% endif %}
+        <p style="font-size:30px"><strong> Fecha de realización</strong> {{ patient.date_test }} </p>
+          </div>
+
+          <span class="badge badge-primary" style="font-size:36px">Cuestiones m-chat-r</span><br>
+          <ul class="list-group list-group-flush">
+          {% for m in mchat_item %}
+              
+              {% if m.option == True %}                
+                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px;">{{ m.question }} - Usted respondió: Si </span></li><br>
+              {% else %}
+              <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ m.question }} - Usted respondió: No </span></li><br>
+              {% endif %}
+
+          {% endfor %}
+          </ul>
+
+          
+          <span class="badge badge-primary" style="font-size:36px">Cuestiones m-chat-r/f</span><br>
+          {% if patient.mchat_score > 2 and patient.item_scoreRF|length > 0 %}
+            <ul class="list-group list-group-flush">
+            {% for f in followUpItem %}
+                
+                {% if f.option == True %}
+                  <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: Si </span></li><br>
+                {% else %}
+                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: No </span></li><br>
+
+                {% endif %}
+
+            {% endfor %}
+            </ul>
+          {% elif patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_scoreRF|length == 0 %}
+          <div class="alert alert-info">
+              <strong>¡Atención!</strong> No ha realizado aún la entrevista de seguimiento.
+            </div>
+          {% else %}
+            <div class="alert alert-info">
+              <strong>No fue necesario realizar entrevista de seguimiento.</strong> 
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <form method="POST" class="form-group">{% csrf_token %}
+      
+        <button type="submit" class="btn btn-primary">Descargar pdf de resultados del niño/a</button>        
+    </form>
+  </div>
+</main>
+{% endblock %}

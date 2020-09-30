@@ -102,6 +102,18 @@ class PatientListUserProfileView(ListView):
 		supervisor_filter=User.objects.get(username=self.request.user)
 		return Patient.objects.filter(supervisor=supervisor_filter)
 
+class PatientHistoricView(ListView):
+
+	model = Patient_historic
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['now'] = timezone.now()
+		return context
+	def get_queryset(self):
+		return Patient_historic.objects.filter(patient = self.kwargs['pk'])
+
+
 
 """ para que el PatientForm sea válido debo asignar un valor a la
 clave foranea supervisor ya que esta no puede ser nula
@@ -697,12 +709,58 @@ def patient_result(request,pk):
 	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})
 
 
+@login_required
+def patient_historic_result(request,pk):
+	patient = Patient_historic.objects.get(pk=pk)
+	item_score = patient.item_score
+	item_scoreRF = patient.item_scoreRF
+	followup_array = patient.followup_list
+	mchat_item = Item.objects.all()
+	audit_info = patient.audit_info
+	audit_message = ""
+	Item_list = []
 
+	#transformo el char followup_array a lista
+	followup_list = char_to_list(followup_array)
+	
+	#recorro la lista anterior y genero la lista de item que tienen seguimiento
+	Item_list = objetc_to_list(followup_list)
+
+	#utilizo la lista de item para filtrar los objetos followup que corresponden
+	followUpItem = FollowUpItem.objects.filter(item__in=Item_list)
+	#Transformo el campo audit_info que corresponde con un tipo númerico a su correspondiente mensaje del nivel auditivo
+	audit_message=audit_info_mapper(audit_info)
+
+	followUpItem = set_option_to_rf(followUpItem,item_scoreRF)
+
+	mchat_item = set_option_to_item(mchat_item,item_score)
+
+
+	if request.method == 'POST':
+		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
+		html = HTML(string=html_string)
+		html.write_pdf(target='/tmp/mchat.pdf');
+
+		fs = FileSystemStorage('/tmp')
+		with fs.open('mchat.pdf') as pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			response['Content-Disposition'] = 'attachment; filename="mchat.pdf"'
+			return response
+		return response
+
+
+
+	else:
+		print("GET")
+
+
+	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})
 @login_required
 def graphics(request):
 	dict_n = count_positive_mchat()
 
 	return render(request, 'testM/graphic_mchat.html',{'dict_n': dict_n})
+
 
 
 def activation_sent_view(request):

@@ -77,7 +77,7 @@ class Patient(models.Model):
 
 
 	def __str__(self):
-		return (self.name + self.subname)
+		return (self.name + " " + self.subname)
 
 
 class Patient_historic(models.Model):
