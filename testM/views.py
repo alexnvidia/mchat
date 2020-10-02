@@ -669,6 +669,8 @@ def patient_result(request,pk):
 	audit_info = patient.audit_info
 	audit_message = ""
 	Item_list = []
+	target=""
+	namepdf=""
 
 	#transformo el char followup_array a lista
 	followup_list = char_to_list(followup_array)
@@ -689,22 +691,16 @@ def patient_result(request,pk):
 	if request.method == 'POST':
 		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
 		html = HTML(string=html_string)
-		html.write_pdf(target='/tmp/mchat.pdf');
+		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
+		target = "/tmp/" + namepdf
+		html.write_pdf(target=target);
 
 		fs = FileSystemStorage('/tmp')
-		with fs.open('mchat.pdf') as pdf:
+		with fs.open(namepdf) as pdf:
 			response = HttpResponse(pdf, content_type='application/pdf')
-			response['Content-Disposition'] = 'attachment; filename="mchat.pdf"'
+			response['Content-Disposition'] = 'attachment; filename=' + namepdf
 			return response
 		return response
-
-
-
-	else:
-		print("GET")
-		for m in mchat_item:
-			print(m.option)
-
 
 	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})
 
@@ -719,6 +715,8 @@ def patient_historic_result(request,pk):
 	audit_info = patient.audit_info
 	audit_message = ""
 	Item_list = []
+	target = ""
+	namepdf = ""
 
 	#transformo el char followup_array a lista
 	followup_list = char_to_list(followup_array)
@@ -739,19 +737,16 @@ def patient_historic_result(request,pk):
 	if request.method == 'POST':
 		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
 		html = HTML(string=html_string)
-		html.write_pdf(target='/tmp/mchat.pdf');
+		namepdf = "mchat_" + str(patient.patient).replace(" ","_") + str(patient.date_test) + ".pdf"
+		target = "/tmp/" + namepdf
+		html.write_pdf(target=target);
 
 		fs = FileSystemStorage('/tmp')
-		with fs.open('mchat.pdf') as pdf:
+		with fs.open(namepdf) as pdf:
 			response = HttpResponse(pdf, content_type='application/pdf')
-			response['Content-Disposition'] = 'attachment; filename="mchat.pdf"'
+			response['Content-Disposition'] = 'attachment; filename=' + namepdf
 			return response
 		return response
-
-
-
-	else:
-		print("GET")
 
 
 	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})

@@ -1,9 +1,15 @@
 {% extends 'testM/base.html' %}
 {% block profile %}
 {% endblock %}
+			
 		{% block content %}
 		{% load static %}
-		<h3> Histórico del niño/a que ha realizado el test M-CHAT-R/F</h3><br>
+		<script>
+			var dataArray = [];
+			var dataArray2 = [];
+			var labelsArray = [];
+			</script>
+		<h3> Tabla de histórico del niño/a que ha realizado el test M-CHAT-R/F</h3><br>
 		{% if patient_historic_list %}
 		<div class="table-responsive">
 		 		<table class="table table-info table-hover">
@@ -45,12 +51,32 @@
 				       		<td> </td>
 				       		{% endif %}
 
-				       </tr> 
-				      			
+				       </tr>
+				       <script>
+				       	dataArray.push({{ historic.mchat_score }});
+				       	dataArray2.push({{ historic.mchatrf_score }});
+				       	labelsArray.push(String("{{ historic.date_test }}"));
+				       </script>				      			
 			{% endfor %}
 				</tbody> 
 			</table>
 		</div>
+
+		<main role="main">
+		  <div class="container my-sm-5">
+		    
+		          
+		          <span class="badge badge-primary" style="font-size:30px">Gráfica de progresión del paciente</span><br>
+		          
+		          <div class="col-md-9">
+		            <canvas id="lineChart"></canvas>
+		          </div>
+		         
+		       
+		    </div>
+		    
+		  </div>  
+		</main> 
 		
 
 			
@@ -64,3 +90,45 @@
 			{% endif %}
 				
 		{% endblock %}
+
+		{% block javascript %}
+<script>
+$.noConflict();
+jQuery(document).ready(function(){
+var ctxL = document.getElementById("lineChart").getContext('2d');
+var myLineChart = new Chart(ctxL, {
+type: 'line',
+data: {
+labels: labelsArray,
+datasets: [{
+label: "M-CHAT primera etapa",
+data: dataArray,
+backgroundColor: [
+'rgba(105, 0, 132, .2)',
+],
+borderColor: [
+'rgba(200, 99, 132, .7)',
+],
+borderWidth: 2
+},
+{
+label: "M-CHAT segunda etapa",
+data: dataArray2,
+backgroundColor: [
+'rgba(0, 137, 132, .2)',
+],
+borderColor: [
+'rgba(0, 10, 130, .7)',
+],
+borderWidth: 2
+}
+]
+},
+options: {
+responsive: true
+}
+});
+});
+</script>
+
+{% endblock %}
