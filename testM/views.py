@@ -243,6 +243,17 @@ def construct_followup_list(question_id,followup_list):
 		return followup_list
 	return followup_list
 
+
+def add_all_optionRF(total_page,request):
+	item_scoreRF = ""
+	for n in range(1,total_page+1):
+		item_scoreRF+=request.session[str(n)]
+		request.session[str(n)] =""
+	return item_scoreRF
+
+
+
+
 def char_to_list(followup_list):
 	listf=[]
 	charBak=""
@@ -442,6 +453,36 @@ def set_option_to_rf(queryset,item_scoreRF):
 
 	return queryset
 
+def set_option_to_rf_nf(queryset,item_scoreRF):
+	i = 0
+	j = 0
+	lista_option = []
+
+	if(len(item_scoreRF) > 0):
+		for q in queryset:
+			if (item_scoreRF[i] == '1'):
+				lista_option.append(True)
+				i+=1
+			elif (item_scoreRF[i] == '0'):
+				lista_option.append(False)
+				i+=1
+			elif (item_scoreRF[i] == '2' or item_scoreRF[i] == '3' or item_scoreRF[i] == '4'):
+				lista_option.append(item_scoreRF[i])
+				i+=1
+			else:
+				lista_option.append(None)
+				i+=1
+		for q in queryset:
+			if (lista_option[j] == True or lista_option[j] == False):		
+				q.option = lista_option[j]
+				j+=1
+			else:
+				q.extra_option = lista_option[j]
+				j+=1
+
+	return queryset
+
+
 
 def set_option_to_item(mchat_item,item_score):
 	i = 0
@@ -474,9 +515,9 @@ def count_positive_mchat():
 def audit_info_mapper(audit_int):
 	message=""
 	AUDIT_INFO = {
-    1: 'Audicion normal',
-    2: 'Audicion por debajo de lo normal',
-    3: 'Resultados no concluyentes'
+    2: 'Audicion normal',
+    3: 'Audicion por debajo de lo normal',
+    4: 'Resultados no concluyentes'
 	}
 	if audit_int == 'No aplica' or audit_int == '':
 		message = "No realizado"
@@ -578,10 +619,8 @@ def followup_mchat(request, pk):
 		formset = mchatFollowUpFormset(request.POST,initial=[{'question_group': l.question_group,'question_item':l.question_item, 'question': l.question, 'extra_option': l.extra_option} for l in followUpItem])
 		if formset.is_valid():
 			for f in formset:
-				print("valido")
 				option=f.cleaned_data['option']
 				group=f.cleaned_data['question_group']
-				item_scoreRF = request.session['item_scoreRF']
 				item_scoreRF=option_to_score_list(option,item_scoreRF)
 				request.session['item_scoreRF'] = item_scoreRF
 				if (group == TRIGGER):
@@ -600,17 +639,21 @@ def followup_mchat(request, pk):
 					count_nopasa+=option_to_n(option)
 				elif (group == AUDIT):
 					extra_option = f.cleaned_data['extra_option']
-					print("esto es " + extra_option)
-			question_id = request.session['question_id']
-			request.session['score_rf']+=MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single)
-			print("entro al contador " + str(MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single)))
-
+					top=len(request.session['item_scoreRF'])
+					request.session['item_scoreRF']= request.session['item_scoreRF'][(0):(top-1)]
+					if (extra_option != ''):
+						request.session['item_scoreRF']+= extra_option
+					else:
+						request.session['item_scoreRF']+= 'X'
+			question_id = request.session['question_id']			
+			request.session['score_rf']+= MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single)
+			request.session['string_score'] += str(MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,list_single))
 			if (question_id == 2):
-				request.session['audit_info'] = 0
 				request.session['audit_info'] = extra_option
 
 			n_pages=request.session['num_pages']
 			a_page=request.session['actual_page']
+			request.session[str(a_page)] = request.session['item_scoreRF']
 			request.session['post_send'] = a_page + 1
 			if(a_page + 1 <= n_pages):
 				return redirect('/mchat/followup/' + str(pk) + '?page=' + str(a_page+1))
@@ -618,7 +661,7 @@ def followup_mchat(request, pk):
 				score_rf = request.session['score_rf']
 				audit_info = request.session['audit_info']
 				positive=FinalMchatRfScore(score_rf)
-				item_scoreRF = request.session['item_scoreRF']
+				item_scoreRF = add_all_optionRF(n_pages,request)
 				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'mchatrf_score': score_rf,'finish': True})
 				Patient_historic.objects.create(patient = patient, mchat_score = total_score, mchatrf_score = score_rf , item_score = item_score, item_scoreRF = item_scoreRF, followup_list = followup_array, positive = positive, audit_info = audit_info)
 				return render(request,'testM/resultados_mchatRF.html',{'score_rf': score_rf, 'positive': positive, 'patient': patient,})
@@ -634,8 +677,10 @@ def followup_mchat(request, pk):
 			request.session['post_send'] = 1
 			request.session['actual_page']= 1
 			request.session['score_rf'] = 0
-			request.session['audit_info'] = "none"
+			request.session['string_score'] = ""
+			request.session['audit_info'] = "No aplica"
 			request.session['item_scoreRF'] = ""
+			request.session['num_elem_rf'] =""
 		else:
 			request.session['actual_page']= int(page)
 		request.session['num_pages']=paginator.num_pages		
@@ -650,10 +695,31 @@ def followup_mchat(request, pk):
 			objects = paginator.page(paginator.num_pages)
 		#creo otro filtro para los item de siguimiento y asi en cada pagina solo salen los del item correspondiente
 		page_query = followUpItem.filter(item__pk__in=[object.pk for object in objects])
+		print(request.session['num_elem_rf'])
+		print("actual page:" + str(request.session['actual_page']))
+		print("siguiente:" + str(request.session['post_send']))
+		if request.session.get(str(page)) is not None:
+			print(request.session[str(page)])
+		else:
+			request.session[str(page)] = ""
+
+		
+		if (request.session['actual_page'] < request.session['post_send']):
+			print(request.session[str(page)])
+			if (request.session['string_score'][request.session['actual_page'] - 1] == '1'):
+				request.session['string_score']=request.session['string_score'][0:request.session['actual_page']-1]
+				request.session['score_rf']-=1
+				print("socre")
+		print(request.session['string_score'])
+		print(request.session['score_rf'])
+
 		for o in objects:
 			request.session['question_id'] = o.question_id
 
-		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group,'question_item':l.question_item, 'question': l.question, 'extra_option': l.extra_option} for l in page_query])
+		page_query=set_option_to_rf_nf(page_query,request.session[str(page)])
+
+
+		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group,'question_item':l.question_item, 'question': l.question,'option': l.option, 'extra_option': l.extra_option} for l in page_query])
 		data = serializers.serialize("json", page_query)
 		request.session['page_query'] = data
 

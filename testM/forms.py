@@ -9,9 +9,9 @@ from datetime import date
 #constantes
 SI_NO_CHOICES = ((True,'Si'),(False,'No'))
 AUDIT_INFO = [
-    (1, 'Audicion normal'),
-    (2, 'Audicion por debajo de lo normal'),
-    (3, 'Resultados no concluyentes'),
+    (2, 'Audicion normal'),
+    (3, 'Audicion por debajo de lo normal'),
+    (4, 'Resultados no concluyentes'),
 ]
 
 MONTHS = {

@@ -4,7 +4,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+<script>
+	$.noConflict();
+</script>
  {%  if request.user == patient.supervisor %} 
 
     {% for object in objects %}
@@ -37,30 +39,39 @@
 	    {% endif %} 
                        
         {% endfor %}
-
-        <div class="d-none">
-      
-        <p> debuggueando jquery </p>
-
-
-    </div>
-        <button type="submit" class="btn btn-primary">Obtener Resultado</button>        
+        
+       {% if objects.has_next %}
+       
+       	<button type="submit" class="btn btn-primary float-sm-right"><span class ="fas fa-arrow-alt-circle-right" style="font-size:18px">Siguiente</span></button>
+              
+        {% else %}    
+        <button type="submit" class="btn btn-primary">Obtener Resultado</button>
+        {% endif %}  
     </form>
-    {% if request.session.actual_page  != request.session.post_send %}
-    	<div class="container">		  
-		  <div class="alert alert-warning alert-dismissible" id="myAlert">
-		    <button type="button" class="close">&times;</button>
-		    <strong>Ojo!</strong> Se ha olvidado de responder a las preguntas de la pagina anterior.
-		  </div>
-		  <a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn"><span class="fas fa-play"> Reinicie 
-    		el seguimiento para {{ patient.name }} aquí</a>
-		</div>
-
+    
+    	{% if objects.has_previous %}
+    	<div class="clearfix">
+    	<a href="?page={{ objects.previous_page_number }}" class="btn btn-primary  float-sm-left"><span class="fas fa-arrow-alt-circle-left" style="font-size:18px">Atrás</span></a>
+    	</div>
+    	
     {% endif %}
+    
+    
+    
+    
+    
+    
+ {% else %}
 
-    {% block javascript %}
-		<script>
-		$.noConflict();
+ 	<p> No tiene permisos para realizar este test</p>
+
+ {% endif %}
+    	
+ 
+{% endblock %}
+
+{% block javascript %}
+		<script>		
 		jQuery(document).ready(function(){
 			var count = 0;
 			var element = jQuery("div");
@@ -158,13 +169,4 @@
 		  	
 		});
 		</script>
-{% endblock %}
-    
- {% else %}
-
- 	<p> No tiene permisos para realizar este test</p>
-
- {% endif %}
-    	
- 
 {% endblock %}
