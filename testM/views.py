@@ -433,7 +433,7 @@ def set_option_to_rf(queryset,item_scoreRF):
 	lista_rf_def = []
 	lista_option = []
 
-	if(len(item_scoreRF) > 0):
+	if(len(item_scoreRF) > 0 and len(item_scoreRF) == queryset.count()):
 		for q in queryset:
 			if (item_scoreRF[i] == '1'):
 				lista_rf_def.append(q.pk)
@@ -458,7 +458,7 @@ def set_option_to_rf_nf(queryset,item_scoreRF):
 	j = 0
 	lista_option = []
 
-	if(len(item_scoreRF) > 0):
+	if(len(item_scoreRF) > 0 and len(item_scoreRF) == queryset.count()):
 		for q in queryset:
 			if (item_scoreRF[i] == '1'):
 				lista_option.append(True)
@@ -756,10 +756,10 @@ def patient_result(request,pk):
 
 	if request.method == 'POST':
 		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
-		html = HTML(string=html_string)
+		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
-		html.write_pdf(target=target);
+		html.write_pdf(target=target,presentational_hints=True);
 
 		fs = FileSystemStorage('/tmp')
 		with fs.open(namepdf) as pdf:
@@ -821,6 +821,15 @@ def graphics(request):
 	dict_n = count_positive_mchat()
 
 	return render(request, 'testM/graphic_mchat.html',{'dict_n': dict_n})
+
+@login_required
+def confirm_positive(request,pk):	
+	Patient.objects.update_or_create(pk = pk, defaults={'positive_tr': True,})
+	return redirect('mchats:patients')
+
+
+def guide_mchat(request):
+	return render(request, 'testM/guide_mchat.html')
 
 
 

@@ -1,17 +1,73 @@
-{% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+      <title>M-CHAT-R/F test developing</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-{% block content %}
+        <style>
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
 
- <main role="main">
-  <div class="container">
-    <div class="">
-      <div class="">
-        <div>
-          <div class="alert alert-info">
-        <p style="font-size:30px"><strong> Nombre:</strong> {{ patient.name|title }} </p>
-        <p style="font-size:30px"><strong> Apellidos:</strong> {{ patient.subname|title }} </p>
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+   
+    </head>
+    <body>
+      {% block content %}
+
+
+  
+  <header class="w3-container w3-teal">
+  <h1>Página de resultados</h1>
+  </header>
+    
+        <div class="w3-container w3-padding-16">
+        <div class="w3-card-4 w3-dark-grey w3-center" style="width:50%">
+
+    <div class="w3-container w3-center ">
+      <h3>Resultados obtenidos</h3>
+      <img src="{% static 'testM/boy.png' %}" alt="Avatar" style="width:20%">
+      <h5 style="font-size:30px"><strong>{{ patient|title }} </strong> </h5>
+
+      <div class="w3-section">
         <p style="font-size:30px;"><strong> Puntuación M-CHAT-R:</strong> {{ patient.mchat_score }}</p>
         <p style="font-size:30px"><strong> Puntuación M-CHAT-R/F:</strong> {{ patient.mchatrf_score }} </p>
         <p style="font-size:30px"><strong> Nivel de audición:</strong> {{ audit_message }} </p>
@@ -20,52 +76,76 @@
         {% else %}
         <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> No </p>
         {% endif %}
-          </div>
+      </div>
+    </div>
 
-          <span class="badge badge-primary" style="font-size:36px">Cuestiones m-chat-r</span><br>
+  </div>
+          
+        
+          <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+          <span style="font-size:36px">Cuestiones m-chat-r</span><br>
           <ul class="list-group list-group-flush">
           {% for m in mchat_item %}
               
               {% if m.option == True %}                
-                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px;">{{ m.question }} - Usted respondió: Si </span></li><br>
+                <li style="word-break: break-all">{{ m.question }} - Usted respondió: Si </li><br>
               {% else %}
-              <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ m.question }} - Usted respondió: No </span></li><br>
+              <li style="word-break: break-all">{{ m.question }} - Usted respondió: No </li><br>
               {% endif %}
 
           {% endfor %}
           </ul>
+    
+          </div>
 
-          
-          <span class="badge badge-primary" style="font-size:36px">Cuestiones m-chat-r/f</span><br>
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+          <span style="font-size:36px">Cuestiones m-chat-r/f</span><br>
           {% if patient.mchat_score > 2 and patient.item_scoreRF|length > 0 %}
             <ul class="list-group list-group-flush">
             {% for f in followUpItem %}
                 
                 {% if f.option == True %}
-                  <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: Si </span></li><br>                
+                  <li  style="word-break: break-all">{{ f.question }} - Usted respondió: Si </li><br>                
                 {% else %}
-                <li class="list-group-item shadow-lg" style="width:1900px"><span class="badge badge-info" style="font-size:18px">{{ f.question }} - Usted respondió: No </span></li><br>
+                <li  style="word-break: break-all">{{ f.question }} - Usted respondió: No </li><br>
 
                 {% endif %}
 
             {% endfor %}
             </ul>
+        </div>
+
+          
+          
           {% elif patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_scoreRF|length == 0 %}
-          <div class="alert alert-info">
-              <strong>¡Atención!</strong> No ha realizado aún la entrevista de seguimiento.
+
+            <div class="w3-panel w3-blue w3-round w3-display-container" style="width: 20%;bottom: 8px">
+              <span onclick="this.parentElement.style.display='none'"
+              class="w3-button  w3-display-topright">&times;</span>              
+              <strong>No ha realizado aún la entrevista de seguimiento.</strong>
             </div>
           {% else %}
-            <div class="alert alert-info">
-              <strong>No fue necesario realizar entrevista de seguimiento.</strong> 
+
+             <div class="w3-panel w3-blue w3-round w3-display-container" style="width: 20%;bottom: 8px">
+              <span onclick="this.parentElement.style.display='none'"
+              class="w3-button  w3-display-topright">&times;</span>              
+              <strong>No fue necesario realizar entrevista de seguimiento.</strong>
             </div>
           {% endif %}
         </div>
-      </div>
-    </div>
+    
     <form method="POST" class="form-group">{% csrf_token %}
-      
-        <button type="submit" class="btn btn-primary">Descargar pdf de resultados del niño/a</button>        
+      <div style="bottom: 8px">        
+        <button type="submit" class="button" style="vertical-align:middle"><span>Descargar pdf de resultados del niño/a</span> </button>
+      </div>
+          
     </form>
-  </div>
-</main>
+  
+<footer class="w3-container w3-teal">
+  <h5>Footer</h5>
+  <p>© 2009 Diana Robins, Deborah Fein, & Marianne Barton. Traducción y adaptación en España: Grupo Estudio MCHAT España </p>
+</footer>
 {% endblock %}
+
+    </body>
+</html>

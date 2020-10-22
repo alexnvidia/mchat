@@ -9,6 +9,7 @@ mchats_patterns = ([
 	
 	path('', MchatListView.as_view(), name='mchats'),
 	path('mchat/listPatient', PatientListView.as_view(), name='patients'),
+	path('mchat/ConfirmPositive/<int:pk>', views.confirm_positive, name='confirm_positive'),
 	path('mchat/listPatientProfile', PatientListUserProfileView.as_view(), name='ProfilePatients'),	
 	path('update/<int:pk>', MchatUpdate.as_view(), name='update'),
 	path('mchat/start/<int:pk>', views.mchat_start, name='mchat_start'),
@@ -22,6 +23,7 @@ mchats_patterns = ([
 	path('mchat/patientDelete/<int:pk>', PatientDelete.as_view(), name='patient_delete'),
 	path('mchat/patientHistoric/<int:pk>', PatientHistoricView.as_view(), name='patient_historic'),
 	path('mchat/graphic', views.graphics, name='graphic_mchat'),
+	path('mchat/guide', views.guide_mchat, name='guide_mchat'),
 	path('sent/', activation_sent_view, name="activation_sent"),
 	path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate')
 

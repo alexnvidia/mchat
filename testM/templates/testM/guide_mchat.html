@@ -1,0 +1,199 @@
+{% extends 'testM/base.html' %}
+{% block profile %}
+{% endblock %}
+{% load static %}
+
+{% block content %}
+
+ <main role="main">
+ 	<div class="container-md  my-4">
+ 		
+ 		<span class="badge badge-primary" style="font-size:40px">Guía de realización M-CHAT-R/F(primera y segunda etapa)</span><br> 
+ 	</div>
+
+ 	<div  id="divAlert">     
+      <div class="alert alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>¡IMPORTANTE!</strong> Las conclusiones que se muestran en esta guía no son definitivas y por tanto los diagnósticos ofrecidos por el test no se deben tomar como una referencia única dado que existe un cierto porcentaje de falsos positivos, esto es, si el niño/a da positivo en alguna de las dos etapas del test no quiere decir que definitivamente haya riesgo de TEA, la última decisión o diagnóstico siempre tienen que ser tomadas por profesional sanitario.
+      </div>     
+      
+    </div>
+
+  <div class="container-md  my-3 border">
+  	<h1> Algoritmo de puntuación primera etapa</h1>                	  
+          <p> Para todos los items o preguntas, excepto el 2,5 y 12, responder "No" indica riesgo de TEA; para los items 2,5, y 12, responder "Sí" indica riesgo de TEA, a continuación se indican las siguientes propiedades psicométricas del M-CHAT-R:
+          </p>
+
+          		<div id="accordion">
+				    <div class="card">
+				      <div class="card-header">
+				        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+				          Nivel Bajo
+				        </a>
+				      </div>
+				      <div id="collapseOne" class="collapse show" data-parent="#accordion">
+				        <div class="card-body">
+				          Puntuación total entre 0-2. En el caso en el que el niño/a sea menor de 24 meses, repetir M-CHAT-R a los 24 meses. No es necesaria ninguna otra medida a menos que la vigilancia del desarrollo indique riesgo de TEA.
+				        </div>
+				      </div>
+				    </div>
+				    <div class="card">
+				      <div class="card-header">
+				        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+				        Nivel Medio
+				      </a>
+				      </div>
+				      <div id="collapseTwo" class="collapse" data-parent="#accordion">
+				        <div class="card-body">
+				          Puntuación total entre 3-7. Administrar la entrevista de seguimiento(segunda etapa) para obtener información adicional sobre las respuestas de riesgo. Si la puntuación de la segunda etapa se mantiene entre 2 puntos o más, el niño/a ha resultado positivo en el test M-CHAT-R/F lo que implica que es recomendable remitir al niño/a a una evaluación para determinar si tiene la necesidad de atención temprana. En el caso de que la puntuación esté entre 0-1 se considera que ha dado negativo y no es necesario realizar ninguna otra medida siempre y cuando su seguimiento indique que no hay ningún indicio de necesidad de atención temprana.
+				        </div>
+				      </div>
+				    </div>
+				    <div class="card">
+				      <div class="card-header">
+				        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+				          Nivel Alto
+				        </a>
+				      </div>
+				      <div id="collapseThree" class="collapse" data-parent="#accordion">
+				        <div class="card-body">
+				          Puntuación total entre 8-20. No es necesario realizar la entrevista de seguimiento y es recomendable acudir directamente a un profesional para que se haga una evaluación y determinar si es necesario una intervención temprana.
+				        </div>
+				      </div>
+				    </div>
+				</div>
+
+          
+         
+       
+    </div>
+
+
+    <div class="container-md  my-3 border">
+    	<h2> Pasos para la realización de la primera etapa(M-CHAT-R) </h2>
+    	
+    		<div id="demo2" class="carousel slide" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo2" data-slide-to="0" class="active" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="1" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="2" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="3" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="4" style='color:green'></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'testM/paso1.png' %}" alt="paso 1" width="1100" height="500">
+      <div class="carousel-caption">
+      	<h3> Primer paso</h3>
+        <p> Haz click en el botón ir al Test. </p>
+      </div>   
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'testM/paso2.png' %}" alt="paso 2" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+      </div>   
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'testM/paso3.png' %}" alt="paso 3" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+      </div>
+    </div>
+      <div class="carousel-item">
+      <img src="{% static 'testM/paso4.png' %}" alt="paso 4" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+      </div>
+     </div>
+      <div class="carousel-item">
+      <img src="{% static 'testM/paso5.png' %}" alt="paso 5" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+     </div>
+      </div>
+      
+  </div>
+  <a class="carousel-control-prev" href="#demo2" data-slide="prev">
+    <span class="fas fa-angle-left" style='font-size:48px;color:green'></span>
+  </a>
+  <a class="carousel-control-next" href="#demo2" data-slide="next">
+    <span class="fas fa-angle-right" style='font-size:48px;color:green'></span>
+  </a>
+</div>
+
+
+    </div>
+
+
+    <div class="container-md  my-3 border">
+    	<h2> Instrucciones de uso segunda etapa </h2>
+    	<p> Una vez realizado el test M-CHAT-R(primera etapa) y obtenida su puntuación, para la realización de la segunda etapa solo se tienen en cuenta aquellos items/preguntas cuyas respuestas implican riesgo de TEA.
+    	Cada página de la entrevista de seguimiento o segunda etapa corresponde con un item/pregunta de la primera etapa. Para conocer el algoritmo de puntuación es recomendable seguir un organigrama que se puede encontrar en el siguiente enlace oficial:</p>
+    	<a href="https://mchatscreen.com/wp-content/uploads/2015/05/M-CHAT-R_F_Spanish_Spain.pdf" target="_blank"> Enlace al organigrama de puntuación <i>(ver pag 7 del documento)</i></a>
+
+    	<p> Una vez puntuado el cuestionario, si la puntuación es de 2 o más puntos se considera que el niño/a ha dado positivo en la segunda etapa y en ese caso se recomienda que se haga un seguimiento con el profesional sanitario para poder realizar una intervención temprana y realizar las pruebas de diagnóstivo pertinentes. Cabe destacar que aunque la puntuación diga que el niño no ha dado positivo o que no hay riesgo de TEA, si los padres o los profesionales tienen alguna sospecha hay que acudir también a intervención temprana.</p>
+
+    </div>
+
+    <div class="container-md p3 my-3 border">
+    	<h2> Ejemplo de uso de la segunda etapa (M-CHAT-R/F)</h2>    	
+
+    	<div id="demo3" class="carousel slide" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo3" data-slide-to="0" class="active" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="1" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="2" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="3" style='color:green'></li>
+    <li data-target="#demo2" data-slide-to="4" style='color:green'></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'testM/paso1.png' %}" alt="paso 1" width="1100" height="500">
+      <div class="carousel-caption">
+      	<h3> Primer paso</h3>
+        <p> Haz click en el botón ir al Test. </p>
+      </div>   
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'testM/paso2.png' %}" alt="paso 2" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+      </div>   
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'testM/paso3.png' %}" alt="paso 3" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+      </div>
+    </div>
+      <div class="carousel-item">
+      <img src="{% static 'testM/paso4.png' %}" alt="paso 4" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+      </div>
+     </div>
+      <div class="carousel-item">
+      <img src="{% static 'testM/paso5.png' %}" alt="paso 5" width="1100" height="500">
+      <div class="carousel-caption">
+        <p> </p>
+     </div>
+      </div>
+      
+  </div>
+  <a class="carousel-control-prev" href="#demo2" data-slide="prev">
+    <span class="fas fa-angle-left" style='font-size:48px;color:green'></span>
+  </a>
+  <a class="carousel-control-next" href="#demo2" data-slide="next">
+    <span class="fas fa-angle-right" style='font-size:48px;color:green'></span>
+  </a>
+</div>
+
+
+    </div>
+    </div>
+     
+</main>
+{% endblock %}
+
+
