@@ -48,9 +48,9 @@ class StaffRequiredMixin(object):
 """
 """ Costants"""
 
-messageFinalScoreNoFollow = "No es necesario hacer seguimiento"
-messageFinalScoreFollow = "Es necesario hacer la entrevista de Seguimiento"
-messageFinalScoreNoFollowRisk = "No es necesario hacer seguimiento, por favor es necesario llevar a diagnóstico avanzado"
+messageFinalScoreNoFollow = "No es necesario hacer la entrevista de seguimiento o segunda etapa, los resultados no indican riesgo de TEA."
+messageFinalScoreFollow = "Es recomendable hacer la entrevista de Seguimiento o segunda etapa para poder tener un resultado completo."
+messageFinalScoreNoFollowRisk = "Puede prescindir de la entrevista de seguimiento o segunda etapa."
 TRIGGER = "TRIGGER"
 GROUP = "GROUP"
 SINGLE = "SINGLE"
@@ -202,6 +202,51 @@ def FinalMchatRfScore(puntuacion_mchat):
 	if(puntuacion_mchat >= 2):
 		return True
 	return False
+
+
+def transform_date_to_age(days):
+	age = ""
+	if (days > 365):
+		year = days//365
+		if(year > 1):
+			year_str = str(year) + " años"
+			age = year_str
+		else:
+			year_str = str(year) + " año"
+			age = year_str
+		rest = days%365
+		if (rest >= 30):
+			month = rest//30
+			if (month > 1):
+				month_str = " y " + str(month) + " meses"
+				age+=month_str
+			else:
+				month_str = " y " + str(month) + " mes"
+				age+=month_str
+		else:
+			days_rest = rest
+			if (days_rest) > 1:
+				age+= " y " + str(days_rest) + " días"
+
+		return age
+	else:
+		month = days//30
+		if (month > 1):
+			month_str =str(month) + " meses"
+			age = month_str
+		else:
+			month_str = str(month) + " mes"
+			age = month_str
+
+		days_rest = days%30
+		if (days_rest > 1):
+			age += " y " + str(days_rest) + " días"
+		else:
+			age += " y " + str(days_rest) + " día"
+		return age
+	return age
+
+
 
 
 
@@ -486,30 +531,41 @@ def set_option_to_rf_nf(queryset,item_scoreRF):
 
 def set_option_to_item(mchat_item,item_score):
 	i = 0
-
-	for m in mchat_item:
-		if (item_score[i] == '1'):
-			m.option = True
-			i+=1
-		else:
-			m.option = False
-			i+=1
+	if (len(item_score) and len(item_score) == mchat_item.count()):
+		for m in mchat_item:
+			if (item_score[i] == '1'):
+				m.option = True
+				i+=1
+			else:
+				m.option = False
+				i+=1
+		return mchat_item
+	else:
+		return mchat_item
 	return mchat_item
 
 def count_positive_mchat():
 	dict_n = {
 	  "n_patient_p": 0,
 	  "n_patient_pc": 0,
-	  "n_mchat_done": 0
+	  "n_mchat_done": 0,
+	  "ratio": 0
 	  
 	}
 	n_patients_positive = Patient.objects.filter(positive=True).count()
 	n_patients_positive_confirmed = Patient.objects.filter(positive_tr=True).count()
 	n_mchat_done = Patient.objects.filter(finish=True).count()
+	if n_patients_positive > 0:
+
+		ratio = n_patients_positive_confirmed / n_patients_positive
+	else:
+		ratio = 0
+	
 
 	dict_n["n_patient_p"] = n_patients_positive
 	dict_n["n_patient_pc"] = n_patients_positive_confirmed
 	dict_n["n_mchat_done"] = n_mchat_done
+	dict_n["ratio"] = ratio
 	return dict_n
 
 def audit_info_mapper(audit_int):
@@ -706,7 +762,7 @@ def followup_mchat(request, pk):
 		
 		if (request.session['actual_page'] < request.session['post_send']):
 			print(request.session[str(page)])
-			if (request.session['string_score'][request.session['actual_page'] - 1] == '1'):
+			if (len(request.session['string_score']) > 0  and request.session['string_score'][request.session['actual_page'] - 1] == '1'):
 				request.session['string_score']=request.session['string_score'][0:request.session['actual_page']-1]
 				request.session['score_rf']-=1
 				print("socre")
@@ -733,6 +789,8 @@ def patient_result(request,pk):
 	followup_array = patient.followup_list
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
+	last_test = Patient_historic.objects.filter(patient = pk).last()
+	last_test = last_test.date_test
 	audit_message = ""
 	Item_list = []
 	target=""
@@ -755,7 +813,7 @@ def patient_result(request,pk):
 
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
+		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test},request=request)
 		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
@@ -768,7 +826,7 @@ def patient_result(request,pk):
 			return response
 		return response
 
-	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})
+	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test})
 
 
 @login_required
@@ -777,12 +835,18 @@ def patient_historic_result(request,pk):
 	item_score = patient.item_score
 	item_scoreRF = patient.item_scoreRF
 	followup_array = patient.followup_list
+	birth_date = patient.patient.birth_date
+	date_test = patient.date_test
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
 	audit_message = ""
 	Item_list = []
 	target = ""
 	namepdf = ""
+	#Calculo la edad que tenia el dia de la realización del test
+	delta = date_test.date() - birth_date
+	delta = delta.days
+	age = transform_date_to_age(delta)
 
 	#transformo el char followup_array a lista
 	followup_list = char_to_list(followup_array)
@@ -801,7 +865,7 @@ def patient_historic_result(request,pk):
 
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message},request=request)
+		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age':age},request=request)
 		html = HTML(string=html_string)
 		namepdf = "mchat_" + str(patient.patient).replace(" ","_") + str(patient.date_test) + ".pdf"
 		target = "/tmp/" + namepdf
@@ -815,7 +879,7 @@ def patient_historic_result(request,pk):
 		return response
 
 
-	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message})
+	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age': age})
 @login_required
 def graphics(request):
 	dict_n = count_positive_mchat()

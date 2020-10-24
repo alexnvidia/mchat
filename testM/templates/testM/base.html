@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
     <head>
-    	<title>M-CHAT-R/F test developing</title>
+    	<title>M-CHAT-R/F</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -22,7 +22,32 @@
     width: 100%;
     height: 100%;
   }
+.button2 {
+  padding: 18px 300px;
+  width: 40%;
+  font-size: 50px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+  position: relative;
+  top: 50%;
+}
+
+.button2:hover {background-color: #3e8e41}
+
+.button2:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+
   </style>
+
+
     </head>
     <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -33,7 +58,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'mchats:graphic_mchat' %}">Gráfico</a>
+              <a class="nav-link" href="{% url 'mchats:graphic_mchat' %}">Gráfico estadístico sobre M-CHAT-R/F</a>
             </li>
             <li class="nav-item">
               <a id="guide" class="nav-link" href="{% url 'mchats:guide_mchat' %}">M-CHAT-R/F: Guía de uso</a>

@@ -5,18 +5,27 @@
 {% block content %}
 
  <main role="main">
-  <div class="container">
+  <div class="container my-3">
     
           
-          <span class="badge badge-primary" style="font-size:30px">Grafico de falsos positivos</span><br>
+          <h1 class="" style="font-size:30px;box-shadow: 2px 2px 4px lightGrey">Gráfico de diagnósticos positivos</h1><br>
           
           <div class="col-md-9">
             <canvas id="myChart"></canvas>
           </div>
-         <p> {{ dict_n.n_patient_p }}</p>
-       
+         
+       		<p style="font-size: 20px"> Ratio de acierto del test M-CHAT-R/F: <strong>{{ dict_n.ratio }}</strong></p>
     </div>
     
+  </div>
+
+  <div class="container my-3" style="box-shadow: 2px 2px 4px lightGrey">
+  		
+  		<div class="alert alert-info alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <p> Este gráfico estadístico pretende mostrar la efectividad del test M-CHAT-R/F en cuanto a los positivos diagnosticados que indican riesgo de TEA, para ello se compara el resultado del test con un resultado de diagnóstico realizado por un profesional. Los valores del ratio indican la efectividad de diagnóstico que tiene el test, valores menos a <strong>1</strong> indican que puede haber falsos positivos y por el contrario si son mayores que <strong>1</strong> hay falsos negativos. El valor de máxima efectividad sería <strong>1</strong>. Por último es conveniente saber que hasta que el profesional no evalue al niño/a y tenga un veredicto final, los valores de este gráfico no se deben tomar como 100% reales</p>
+      </div>    
+
   </div>  
 </main>
 {% endblock %}
@@ -30,9 +39,9 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
 type: 'bar',
 data: {
-labels: ["positive", "real_positive"],
+labels: ["Positivos en el test M-CHAT-R/F", "Positivos ConfirmadoS por un Profesional"],
 datasets: [{
-label: 'n of test with positive diagnostic',
+label: 'Número de test M-CHAT-R/F que son positivos',
 data: [{{ dict_n.n_patient_p }}, {{ dict_n.n_patient_pc }}],
 backgroundColor: [
 'rgba(255, 99, 132, 0.2)',

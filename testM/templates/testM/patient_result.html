@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
     <head>
-      <title>M-CHAT-R/F test developing</title>
+      <title>M-CHAT-R/F</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -52,7 +52,7 @@
     </head>
     <body>
       {% block content %}
-
+{% if patient.item_score|length > 0 %}
 
   
   <header class="w3-container w3-teal">
@@ -76,6 +76,7 @@
         {% else %}
         <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> No </p>
         {% endif %}
+        <p style="font-size:30px"><strong> Fecha de realización del ultimo test:</strong> {{ last_test }} </p>
       </div>
     </div>
 
@@ -88,9 +89,9 @@
           {% for m in mchat_item %}
               
               {% if m.option == True %}                
-                <li style="word-break: break-all">{{ m.question }} - Usted respondió: Si </li><br>
+                <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: Si </li><br>
               {% else %}
-              <li style="word-break: break-all">{{ m.question }} - Usted respondió: No </li><br>
+              <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: No </li><br>
               {% endif %}
 
           {% endfor %}
@@ -105,9 +106,9 @@
             {% for f in followUpItem %}
                 
                 {% if f.option == True %}
-                  <li  style="word-break: break-all">{{ f.question }} - Usted respondió: Si </li><br>                
+                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si </li><br>                
                 {% else %}
-                <li  style="word-break: break-all">{{ f.question }} - Usted respondió: No </li><br>
+                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No </li><br>
 
                 {% endif %}
 
@@ -140,6 +141,11 @@
       </div>
           
     </form>
+{% else %}
+
+  <h1> Aún no hay resultados disponibles</h1>
+
+{% endif %}
   
 <footer class="w3-container w3-teal">
   <h5>Footer</h5>

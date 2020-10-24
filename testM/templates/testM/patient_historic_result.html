@@ -76,7 +76,9 @@
         {% else %}
         <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> No </p>
         {% endif %}
-        <p style="font-size:30px"><strong> Fecha de realización</strong> {{ patient.date_test }} </p>
+        <p style="font-size:30px"><strong> Fecha de realización:</strong> {{ patient.date_test }} </p>
+
+        <p style="font-size:30px"><strong> Edad el día de la realización: </strong> {{ age }} </p>
       </div>
     </div>
 
@@ -89,9 +91,9 @@
           {% for m in mchat_item %}
               
               {% if m.option == True %}                
-                <li style="word-break: break-all">{{ m.question }} - Usted respondió: Si </li><br>
+                <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: Si </li><br>
               {% else %}
-              <li style="word-break: break-all">{{ m.question }} - Usted respondió: No </li><br>
+              <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: No </li><br>
               {% endif %}
 
           {% endfor %}
@@ -106,9 +108,9 @@
             {% for f in followUpItem %}
                 
                 {% if f.option == True %}
-                  <li  style="word-break: break-all">{{ f.question }} - Usted respondió: Si </li><br>                
+                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si </li><br>                
                 {% else %}
-                <li  style="word-break: break-all">{{ f.question }} - Usted respondió: No </li><br>
+                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No </li><br>
 
                 {% endif %}
 

@@ -8,9 +8,17 @@
 	$.noConflict();
 </script>
  {%  if request.user == patient.supervisor %} 
+<div class="container-fluid my-3">
+    <h2 style=" color:#16a3b0;text-shadow: 2px 2px 4px #2b8869; font-size:40px"> M-CHAT-R/F Segunda etapa</h2>
 
+  </div>
     {% for object in objects %}
-      <span class="badge badge-info" style="font-size:24px">Item {{ object.question_id }}: {{ object.question }}</span>
+    <div class="my-3" style="background-color: lightblue; box-shadow: 2px 2px 4px #3691b0;padding: 25px;">
+    	
+    <p class="my-3" style="word-break: break-all;font-size:30px">Item {{ object.question_id }}: {{ object.question }}</p>
+
+    </div>
+      
     {% endfor %}
 
     <form method="POST" class="form-group">{% csrf_token %}
@@ -18,23 +26,42 @@
     	{% for form in formset %}
     	{% if form.question_group.value == "TRIGGER" %}
     		<div class="d-none" id="{{ form.question.id_for_label }}" >
-    		{{ form.question.value }}    		
-	        {{ form.option }}        
+    		<h1 style="border-top: 5px solid lightblue; box-shadow: 2px 2px 4px #3691b0"></h1>
+    		<p style="word-break: break-all;font-size:20px"> {{ form.question.value }}</p>    		
+	        <p style="word-break: break-all;font-size:20px"> {{ form.option }}  </p>       
 	        {{ form.option.errors }}
+	        <div class="alert alert-info alert-dismissible">
+		      <button type="button" class="close" data-dismiss="alert">&times;</button>
+		      <strong>Se ha añadido una cuestión realacionada con la última pregunta que has respondido y debe responderla para obtener un resultado correcto</strong> 
+		      </div>
     		</div>
-
+    		    
+		           
+      
+    		
     	{% elif form.question_group.value == "AUDIT" %}
     		<div class="d-none" id="{{ form.question_group.value }}">
-    		{{ form.question.value }}
-	        {{ form.extra_option }}       
+    		<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
+	        <p style="word-break: break-all;font-size:20px">{{ form.extra_option }}</p>       
 	        {{ form.option.errors }}
 	        </div>
 	    {% else %}
-	    	
-	    	<span class="badge badge-secondary" style="font-size:14px">{{ form.question_item.value }}</span><br>
-	    	{{ form.question.value }}
-	        {{ form.option }}      
+	    
+	    	{% if form.question_item.value|cut:" "|length > 0 %}
+	    	<h1 style="border-top: 5px solid lightblue; box-shadow: 2px 2px 4px #3691b0"></h1>
+	    	<span class="badge badge-secondary" style="font-size:20px">{{ form.question_item.value }}</span><br>
+	    	<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
+	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p>
 	        {{ form.option.errors }}
+	        
+	    	{% else %}
+	    	<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
+	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p>      
+	        {{ form.option.errors }}
+	        {% endif %}
+
+	    
+	    	
 
 	    {% endif %} 
                        
@@ -83,40 +110,47 @@
 		  	case 2:
 		  	jQuery("#id_form-2-option_0").click(function(){
         		jQuery("#AUDIT").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});  			
 		  	break;
 
 		  	case 5:
 		  	jQuery("input[value='True']").parent("label[for!=id_form-0-option_0][for!=id_form-1-option_0]").click(function(){
         		jQuery("#id_form-7-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});		  	
 		  	break;
 
 		  	case 6:
 		  	jQuery("input[value='True']").click(function(){
         		jQuery("#id_form-4-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 		  	break;
 
 		  	case 7:
 		  	jQuery("input[value='True']").click(function(){
         		jQuery("#id_form-4-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 
   			jQuery("#id_form-4-option_0").click(function(){
         		jQuery("#id_form-5-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 		  	break;
 
 		  	case 8:
 		  	jQuery("input[value='True']").parent("label[for!=id_form-0-option_0]").click(function(){
         		jQuery("#id_form-8-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 		  	break;
 
 		  	case 9:
 		  	jQuery("input[value='True']").click(function(){
         		jQuery("#id_form-6-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 		  	break;
 
@@ -128,6 +162,7 @@
 		  		}
 		  		if(count == 1){
         		jQuery("#id_form-6-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
         		count++;
         		}
         		else if (count >= 2 && element != jQuery(this).attr("for")){
@@ -142,6 +177,7 @@
 
   			jQuery("#id_form-6-option_0").click(function(){
         		jQuery("#id_form-7-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 
 
@@ -151,16 +187,19 @@
 
 		  	jQuery("#id_form-0-option_1").click(function(){
         		jQuery("#id_form-1-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 		  	break;
 
 		  	case 19:
 		  	jQuery("#id_form-0-option_1").click(function(){
         		jQuery("#id_form-1-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 
   			jQuery("#id_form-1-option_1").click(function(){
         		jQuery("#id_form-2-question").removeClass('d-none');
+        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 		  	break;
 

@@ -27,6 +27,7 @@
             element += jQuery(this).attr("name");
             if(cont == 100){
                 jQuery("#divAlert").removeClass("d-none");
+                jQuery(document).scrollTop(jQuery(document).height());
 
             }
 
@@ -57,41 +58,41 @@
  
 
  <div class="progress fixed-bottom">
-    <div id="animated" class="progress-bar progress-bar-striped progress-bar-animated " style="width:0%"></div>
+    <div id="animated" class="progress-bar progress-bar-striped progress-bar-animated " style="width:0%"> PROGRESO DE LA PRIMERA ETAPA</div>
   </div>
 
   
   <div class="card bg-info text-white float-right" style="width:200px">
     <img class="card-img-top" src="{% static 'testM/boy.png' %}" alt="Card image" style="width:100%">
     <div class="card-body">
-      <h4 class="card-title">Paciente #{{ patient.pk }}</h4>
+      <h4 class="card-title">Paciente ID:#{{ patient.pk }}</h4>
       <p class="card-text"><strong>{{ patient.name|title }} {{ patient.subname|title }}</strong></p>      
     </div>
+  </div>
+
+  <div class="container-fluid my-3">
+    <h2 style=" color:#16a3b0;text-shadow: 2px 2px 4px #2b8869; font-size:40px"> M-CHAT-R Primera etapa</h2>
+
   </div>
     
     
     <form method="POST" class="form-group">{% csrf_token %}
     	{{ formset.management_form }}
     	{% for form in formset %}        
-        {{ form.question.value }}
-        {{ form.option }}
+        <p style="word-break: break-all;font-size:20px"> {{ form.question.value }} </p>
+        <p style="word-break: break-all;font-size:20px"> {{ form.option }} </p>
         {{ form.id }}        
         {{ form.option.errors }}               
         {% endfor %}
 
-        <div class="d-none">
-      
-        <p> debuggueando jquery </p>
-
-
-    </div>
+        
         <button type="submit" class="btn btn-primary">Obtener Resultado</button>        
     </form>
 
     <div class="d-none" id="divAlert">     
       <div class="alert alert-info alert-dismissible">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>Atencion!</strong> Ya ha respondido todas las preguntas, revise o haga click en obtener resultado.
+      <strong>Ya ha respondido todas las preguntas, revise o haga click en obtener resultado.</strong> 
       </div>     
       
     </div>
@@ -99,7 +100,7 @@
 
 {% else %}
 
-  <p> No tiene permisos para realizar este test</p>	   
+  <p style="word-break: break-all;font-size:20px"> No tiene permisos para realizar este test</p>	   
 
 {% endif %} 
 

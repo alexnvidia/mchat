@@ -10,16 +10,25 @@
 	<h2>Información sobre la primera etapa del cuestionario</h2>
 	{% if dictr.result %}		  		  
 		  <div class="alert alert-info">
-		    <strong>Atención!</strong> La puntuación final ha sido de <strong>{{ total_score }}</strong></br>
-		    {{ dictr.message }}</br><a href="{% url 'mchats:followup_mchat' pk %}" class="btn btn-outline-primary alert-link"><span class="fas fa-play">Continue el 
-    	seguimiento para: {{ patient.name|title }} aquí</a>.
+		    <strong>M-CHAT-R(Primera etapa) se ha completado correctamente,</strong> La puntuación final ha sido de <strong>{{ total_score }}.</strong></br>
+		    <p>{{ dictr.message }}</p></br>		   
+		    <a href="{% url 'mchats:followup_mchat' pk %}" class="btn btn-outline-primary alert-link"><span class="fas fa-play">Continue el 
+    	seguimiento para: {{ patient.name|title }} aquí</a>
 		  </div>
 		
 
     {% else %}
     	<div class="alert alert-success">
-		    <strong>M-CHAT-R Completado!</strong> La puntuación final ha sido de <strong>{{ total_score }}</strong></br>
-		    {{ dictr.message }} .
+		    <strong>M-CHAT-R(Primera etapa) se ha completado correctamente,</strong> La puntuación final ha sido de <strong>{{ total_score }}</strong></br>
+		    <p>{{ dictr.message }} </p>
+		     {% if total_score >= 8 %}
+		    	<p>Este resultado indica que es necesario realizar un diagnóstico avanzado de niño/a.
+				Diríjase a su médico de atención primaria para que pueda realizar las acciones adecuadas y
+				orientarle adecuadamente.
+				</p>
+			{% else %}
+			<p>Si el niño/a es menor de 24 meses, repetir M-CHAT-R a los 24 meses</p>
+		    {% endif %}
 		    <p> Puede volver al Inicio haciendo click en home</p>
 		</div>
     {% endif %}
