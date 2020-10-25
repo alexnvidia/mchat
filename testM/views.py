@@ -30,6 +30,7 @@ from .tokens import account_activation_token
 from django.core.mail import send_mail
 from django.conf import settings
 from weasyprint import HTML, CSS
+from datetime import date
 
 
 
@@ -790,6 +791,9 @@ def patient_result(request,pk):
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
 	last_test = Patient_historic.objects.filter(patient = pk).last()
+	delta = date.today() - patient.birth_date
+	delta = delta.days
+	age = transform_date_to_age(delta)
 	if last_test != None:
 
 		last_test = last_test.date_test
@@ -816,7 +820,7 @@ def patient_result(request,pk):
 
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test},request=request)
+		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age},request=request)
 		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
@@ -830,7 +834,7 @@ def patient_result(request,pk):
 			return response
 		return response
 
-	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test})
+	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age})
 
 
 @login_required
