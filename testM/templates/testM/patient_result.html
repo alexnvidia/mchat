@@ -76,7 +76,11 @@
         {% else %}
         <p style="font-size:30px"><strong> Positivo en el test M-CHAT-R/F:</strong> No </p>
         {% endif %}
+        {% if last_test %}
         <p style="font-size:30px"><strong> Fecha de realización del ultimo test:</strong> {{ last_test }} </p>
+        {% else %}
+        <p style="font-size:30px"><strong> Fecha de realización del ultimo test:</strong> Aún no se ha completado el test </p>
+        {% endif %}
       </div>
     </div>
 

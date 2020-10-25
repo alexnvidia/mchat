@@ -790,7 +790,10 @@ def patient_result(request,pk):
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
 	last_test = Patient_historic.objects.filter(patient = pk).last()
-	last_test = last_test.date_test
+	if last_test != None:
+
+		last_test = last_test.date_test
+	
 	audit_message = ""
 	Item_list = []
 	target=""
