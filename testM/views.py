@@ -821,7 +821,7 @@ def patient_result(request,pk):
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
 		css_file = '/testM/static/css/w3.css'
-		html.write_pdf(target=target,stylesheets=[CSS(settings.BASE_DIR +  css_file),"https://www.w3schools.com/w3css/4/w3.css"],presentational_hints=True)
+		html.write_pdf(target=target,stylesheets=[CSS(settings.BASE_DIR +  css_file)],presentational_hints=True)
 
 		fs = FileSystemStorage('/tmp')
 		with fs.open(namepdf) as pdf:
@@ -874,7 +874,7 @@ def patient_historic_result(request,pk):
 		namepdf = "mchat_" + str(patient.patient).replace(" ","_") + str(patient.date_test) + ".pdf"
 		target = "/tmp/" + namepdf
 		css_file = '/testM/static/css/w3.css'
-		html.write_pdf(target=target,stylesheets=[CSS(settings.BASE_DIR +  css_file),"https://www.w3schools.com/w3css/4/w3.css"],presentational_hints=True);
+		html.write_pdf(target=target,stylesheets=[CSS(settings.BASE_DIR +  css_file)],presentational_hints=True);
 
 		fs = FileSystemStorage('/tmp')
 		with fs.open(namepdf) as pdf:
