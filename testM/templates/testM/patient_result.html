@@ -124,16 +124,16 @@
           
           {% elif patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_scoreRF|length == 0 %}
 
-            <div class="w3-panel w3-blue w3-round w3-display-container" style="width: 20%;bottom: 8px">
+            <div class="w3-panel w3-blue w3-display-container" style="">
               <span onclick="this.parentElement.style.display='none'"
-              class="w3-button  w3-display-topright">&times;</span>              
+              class="w3-button w3-large w3-display-topright">&times;</span>              
               <strong>No ha realizado aún la entrevista de seguimiento.</strong>
             </div>
           {% else %}
 
-             <div class="w3-panel w3-blue w3-round w3-display-container" style="width: 20%;bottom: 8px">
+             <div class="w3-panel w3-blue w3-display-container" style="">
               <span onclick="this.parentElement.style.display='none'"
-              class="w3-button  w3-display-topright">&times;</span>              
+              class="w3-button w3-large w3-display-topright">&times;</span>              
               <strong>No fue necesario realizar entrevista de seguimiento.</strong>
             </div>
           {% endif %}
