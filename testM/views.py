@@ -29,7 +29,7 @@ from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 from django.core.mail import send_mail
 from django.conf import settings
-from weasyprint import HTML
+from weasyprint import HTML, CSS
 
 
 
@@ -820,7 +820,8 @@ def patient_result(request,pk):
 		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
-		html.write_pdf(target=target,presentational_hints=True);
+		css_file = '/home/alex/mchat/testM/static/css/w3.css'
+		html.write_pdf(target=target,stylesheets=[CSS(css_file),"https://www.w3schools.com/w3css/4/w3.css"],presentational_hints=True)
 
 		fs = FileSystemStorage('/tmp')
 		with fs.open(namepdf) as pdf:
@@ -872,7 +873,8 @@ def patient_historic_result(request,pk):
 		html = HTML(string=html_string)
 		namepdf = "mchat_" + str(patient.patient).replace(" ","_") + str(patient.date_test) + ".pdf"
 		target = "/tmp/" + namepdf
-		html.write_pdf(target=target);
+		css_file = '/home/alex/mchat/testM/static/css/w3.css'
+		html.write_pdf(target=target,stylesheets=[CSS(css_file),"https://www.w3schools.com/w3css/4/w3.css"],presentational_hints=True);
 
 		fs = FileSystemStorage('/tmp')
 		with fs.open(namepdf) as pdf:
