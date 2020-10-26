@@ -60,6 +60,7 @@ class SignUpForm(UserCreationForm):
 		if birth_date is not None:
 			if (date_now < birth_date):
 				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+		return birth_date
 
 
 
@@ -123,6 +124,8 @@ class profileForm(forms.ModelForm):
 		if birth_date is not None:
 			if (date_now < birth_date):
 				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+		return birth_date
+
 
 
 
@@ -158,6 +161,7 @@ class PatientForm(forms.ModelForm):
 		if birth_date is not None:
 			if (date_now < birth_date):
 				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+		return birth_date
 
 
 
