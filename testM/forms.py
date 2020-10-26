@@ -51,6 +51,25 @@ class SignUpForm(UserCreationForm):
 		return email
 
 
+	def clean_birth_date(self):
+		cleaned_data = super(SignUpForm, self).clean()
+
+		birth_date = cleaned_data.get('birth_date')
+		date_now = date.today()
+
+		if birth_date is not None:
+			if (date_now < birth_date):
+				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+
+
+
+
+
+
+
+
+
+
 
 
 class mchatForm(forms.ModelForm):
@@ -86,16 +105,25 @@ class profileForm(forms.ModelForm):
 
 	class Meta:
 		model = Profile
-		fields = ('first_name','last_name','email','bio','location','center','birth_date',)
+		fields = ('first_name','last_name','bio','location','center','birth_date',)
 		widgets = {
 				'first_name' : forms.TextInput(attrs={'class':'form-control mt3', 'placeholder': 'Nombre'}),
 				'last_name' : forms.TextInput(attrs={'class':'form-control mt3', 'placeholder': 'Apellidos'}),
-				'email' : forms.EmailInput(attrs={'class':'form-control mt3', 'placeholder': 'Correo electrónico'}),
 				'bio': forms.Textarea(attrs={'class':'form-control mt-3', 'rows':3, 'placeholder':'Biografía'}),
 				'location': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Dirección'}),
 				'center' : forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Centro de trabajo'}),
 				'birth_date' : forms.DateInput(attrs={'class':'form-control mt2', 'placeholder': 'Fecha de nacimiento'}),			
 		}
+	def clean_birth_date(self):
+		cleaned_data = super(profileForm, self).clean()
+
+		birth_date = cleaned_data.get('birth_date')
+		date_now = date.today()
+
+		if birth_date is not None:
+			if (date_now < birth_date):
+				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+
 
 
 class mchatFollowup(forms.ModelForm):
@@ -121,7 +149,7 @@ class PatientForm(forms.ModelForm):
 	""" filtro el supervisor para que salga el que esta autenticado en ese momento ya que ese sera el 
 	supervisor"""	
 
-	def clean(self):
+	def clean_birth_date(self):
 		cleaned_data = super(PatientForm, self).clean()
 
 		birth_date = cleaned_data.get('birth_date')
@@ -129,7 +157,8 @@ class PatientForm(forms.ModelForm):
 
 		if birth_date is not None:
 			if (date_now < birth_date):
-				self.add_error(None,ValidationError('La fecha de nacimiento no puede ser mayor que la actual'))
+				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+
 
 
 	class Meta:
