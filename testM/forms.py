@@ -3,6 +3,7 @@ from .models import Mchat,Item,Patient,FollowUpItem, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator
 import datetime
 from datetime import date
 
@@ -20,10 +21,12 @@ MONTHS = {
     9:'sep', 10:'oct', 11:'nov', 12:'dec'
 }
 
+
 class SignUpForm(UserCreationForm):
 	"""docstring for SignUpForm"""
-	birth_date = forms.DateField(help_text='Formato requerido: DD/MM/YYYY',label="Fecha de nacimiento",
-		widget=forms.DateInput(attrs={'class':'form-control mt2', 'placeholder': 'Fecha de nacimiento'}))
+	birth_date = forms.DateField(help_text='Formato requerido: DD/MM/YYYY',label="Fecha de nacimiento",required=True)
+	username = forms.CharField(help_text='Requerido. 150 carácteres como máximo y mínimo 8 carácteres. Únicamente letras, dígitos y @/./+/-/_ ',label="Nombre de Usuario",validators=[MinLengthValidator(8,'Mínimo 8 caracteres')],
+		widget=forms.TextInput(attrs={'class':'form-control mt2', 'placeholder': 'Nombre de Usuario'}))
 	first_name = forms.CharField(max_length=128, label='Nombre',
 		widget=forms.TextInput(attrs={'class':'form-control mt2', 'placeholder': 'Nombre'}))
 	last_name = forms.CharField(max_length=256, label='Apellidos',
@@ -35,6 +38,8 @@ class SignUpForm(UserCreationForm):
 
 	password2 = forms.CharField(required=True,label="",
 		widget=forms.PasswordInput(attrs={'class':'form-control mt3', 'placeholder': 'Repita la contraseña'}))
+
+	birth_date.widget.attrs.update({'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Fecha'})
 
 	class Meta:
 		"""docstring for Meta"""
@@ -104,6 +109,9 @@ class mchatTest(forms.ModelForm):
 
 class profileForm(forms.ModelForm):
 
+	birth_date = forms.DateField(required=True)
+	birth_date.widget.attrs.update({'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Fecha'})
+
 	class Meta:
 		model = Profile
 		fields = ('first_name','last_name','bio','location','center','birth_date',)
@@ -113,7 +121,7 @@ class profileForm(forms.ModelForm):
 				'bio': forms.Textarea(attrs={'class':'form-control mt-3', 'rows':3, 'placeholder':'Biografía'}),
 				'location': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Dirección'}),
 				'center' : forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Centro de trabajo'}),
-				'birth_date' : forms.DateInput(attrs={'class':'form-control mt2', 'placeholder': 'Fecha de nacimiento'}),			
+							
 		}
 	def clean_birth_date(self):
 		cleaned_data = super(profileForm, self).clean()
@@ -151,6 +159,8 @@ def date_today():
 class PatientForm(forms.ModelForm):
 	""" filtro el supervisor para que salga el que esta autenticado en ese momento ya que ese sera el 
 	supervisor"""	
+	birth_date = forms.DateField(required=True,label="Fecha de nacimiento")
+	birth_date.widget.attrs.update({'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Fecha'})
 
 	def clean_birth_date(self):
 		cleaned_data = super(PatientForm, self).clean()
@@ -170,10 +180,10 @@ class PatientForm(forms.ModelForm):
 		fields = ('name','subname','sex','birth_date',)
 		exclude = ['supervisor']
 		widgets = {				
-				'birth_date': forms.SelectDateWidget(years=range(1980, date_today()),attrs={'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Fecha'}),
-				'name': forms.TextInput(attrs={'class':'form-control w-50 mt3', 'placeholder': 'Nombre'}),
-				'subname': forms.TextInput(attrs={'class':'form-control w-50 mt3', 'placeholder': 'Apellidos'}),
-				'sex': forms.Select(attrs={'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Sexo'})
+				
+				'name': forms.TextInput(attrs={'class':'form-control w-25 mb-2 mr-sm-2', 'placeholder': 'Nombre'}),
+				'subname': forms.TextInput(attrs={'class':'form-control mt3', 'placeholder': 'Apellidos'}),
+				'sex': forms.Select(attrs={'class':'form-control mt3', 'placeholder': 'Sexo'})
 		}
 
 

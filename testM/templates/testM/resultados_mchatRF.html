@@ -1,12 +1,16 @@
 {% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+
 {% load crispy_forms_tags %}
 
 {% block content %}   
+<div class="container my-5">
 
-<div class="container p-3 my-3 bg-dark text-white">
-<h1 class="display-4">Resultado Final M-CHAT-R/F </h1>
+<div class="mx-auto shadow p-4 mb-4  my-5" style="background: #FFEFBA;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+">
+<h1 class="display-4 my-5 text-center">Resultado Final M-CHAT-R/F </h1>
 <p style="font-size:18px">El resultado final de la entrevista de seguimiento es el siguiente:</p>
 	{% if positive %}
 			
@@ -17,13 +21,20 @@
 		    <p> Remita al niño/a para una evaluación diagnóstica y para
 			determinar necesidad de atención temprana. Tenga en cuenta que pese a que el test indica que puede haber riesgo de TEA no debe tomar estos valores como una referencia única y siempre debe consultar a un profesional para que determine o realize un diagnóstico más completo y preciso. </p>
 		</div>
+
+			<p> Puede volver a la siguiente página para ver los resultados y descargarlos</p>
+			<a href="{% url 'mchats:patients' %}" class="btn btn-primary btn-sm btn-block my-3" style="font-size: 18px;color: #fff;  background-color: #4CAF50;  border: none;  border-radius: 15px;  box-shadow: 0 9px #999;"> Volver</a>
 			  
 	{% else %}
 		<p style="font-size:18px"> Puntuación de la primera etapa: <strong>{{ patient.mchat_score }} </strong>	</p> </br>
 		<p> Puntuación de la etapa de seguimiento: <strong>{{ score_rf }} </strong></p></br>
     	<p style="font-size:18px"><strong>{{ patient.name|title }}</strong> no ha dado positivo en la entrevista de seguimiento o segunda etapa. Es recomendable llevar un seguimiento del niño/a y determinar si es necesario atención temprana.</p>
 
+    	<p> Para volver a ver los últimos resultados completos de {{ patient.name|title }} pulse en el botón de abajo</p>
+			<a href="{% url 'mchats:patients' %}" class="btn btn-primary btn-sm  my-3" style="font-size: 18px;color: #fff;  background-color: #4CAF50;  border: none;  border-radius: 15px;  box-shadow: 0 9px #999;"> Volver</a>
+
     {% endif %}
     </div>
+</div>
  
 {% endblock %}

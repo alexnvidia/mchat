@@ -1,6 +1,5 @@
 {% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -8,7 +7,7 @@
 	$.noConflict();
 </script>
  {%  if request.user == patient.supervisor %} 
-<div class="container-fluid my-3">
+<div class="container-fluid my-5 text-center">
     <h2 style=" color:#16a3b0;text-shadow: 2px 2px 4px #2b8869; font-size:40px"> M-CHAT-R/F Segunda etapa</h2>
 
   </div>
@@ -30,9 +29,9 @@
     		<p style="word-break: break-all;font-size:20px"> {{ form.question.value }}</p>    		
 	        <p style="word-break: break-all;font-size:20px"> {{ form.option }}  </p>       
 	        {{ form.option.errors }}
-	        <div class="alert alert-info alert-dismissible">
+	        <div class="alert alert-warning alert-dismissible">
 		      <button type="button" class="close" data-dismiss="alert">&times;</button>
-		      <strong>Se ha añadido una cuestión realacionada con la última pregunta que has respondido y debe responderla para obtener un resultado correcto</strong> 
+		      Se ha añadido una cuestión realacionada con la última pregunta que has respondido y debe responderla para obtener un resultado correcto. <strong>**Nota: se indica con una etiqueta en lá última pregunta respondida eĺ número de la pregunta con la cual está relacionada</strong> 
 		      </div>
     		</div>
     		    
@@ -72,7 +71,7 @@
        	<button type="submit" class="btn btn-primary float-sm-right"><span class ="fas fa-arrow-alt-circle-right" style="font-size:18px">Siguiente</span></button>
               
         {% else %}    
-        <button type="submit" class="btn btn-primary">Obtener Resultado</button>
+        <button type="submit" class="btn btn-success btn-block text-center">Obtener Resultado</button>
         {% endif %}  
     </form>
     
@@ -83,7 +82,7 @@
     	
     {% endif %}
     
-    
+    {{ request.session.question_id|json_script:"question_id" }}
     
     
     
@@ -98,114 +97,7 @@
 {% endblock %}
 
 {% block javascript %}
-		<script>		
-		jQuery(document).ready(function(){
-			var count = 0;
-			var element = jQuery("div");
-		  jQuery(".close").click(function(){
-		    jQuery("#myAlert").alert("close");
-		  });
-		  switch({{ request.session.question_id }}){
 
-		  	case 2:
-		  	jQuery("#id_form-2-option_0").click(function(){
-        		jQuery("#AUDIT").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});  			
-		  	break;
+	<script src="{% static 'js/followup_script.js' %}"></script>
 
-		  	case 5:
-		  	jQuery("input[value='True']").parent("label[for!=id_form-0-option_0][for!=id_form-1-option_0]").click(function(){
-        		jQuery("#id_form-7-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});		  	
-		  	break;
-
-		  	case 6:
-		  	jQuery("input[value='True']").click(function(){
-        		jQuery("#id_form-4-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-		  	break;
-
-		  	case 7:
-		  	jQuery("input[value='True']").click(function(){
-        		jQuery("#id_form-4-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-
-  			jQuery("#id_form-4-option_0").click(function(){
-        		jQuery("#id_form-5-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-		  	break;
-
-		  	case 8:
-		  	jQuery("input[value='True']").parent("label[for!=id_form-0-option_0]").click(function(){
-        		jQuery("#id_form-8-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-		  	break;
-
-		  	case 9:
-		  	jQuery("input[value='True']").click(function(){
-        		jQuery("#id_form-6-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-		  	break;
-
-		  	case 14:
-		  	jQuery("input[value='True']").parent("label[for!=id_form-6-option_0][for!=id_form-7-option_0]").click(function(){
-		  		if(count == 0 && element != jQuery(this).attr("for")){
-		  		count++;
-		  		element = jQuery(this).attr("for");
-		  		}
-		  		if(count == 1){
-        		jQuery("#id_form-6-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-        		count++;
-        		}
-        		else if (count >= 2 && element != jQuery(this).attr("for")){
-        		jQuery("#id_form-6-question").addClass('d-none');
-        		}
-
-        		else {
-
-
-        		}
-  			});
-
-  			jQuery("#id_form-6-option_0").click(function(){
-        		jQuery("#id_form-7-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-
-
-		  	break;
-
-		  	case 18:
-
-		  	jQuery("#id_form-0-option_1").click(function(){
-        		jQuery("#id_form-1-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-		  	break;
-
-		  	case 19:
-		  	jQuery("#id_form-0-option_1").click(function(){
-        		jQuery("#id_form-1-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-
-  			jQuery("#id_form-1-option_1").click(function(){
-        		jQuery("#id_form-2-question").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
-  			});
-		  	break;
-
-		  	default:
-		  }
-		  	
-		});
-		</script>
 {% endblock %}

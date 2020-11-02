@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import MinLengthValidator
 
 
 # Create your models here.
@@ -71,7 +72,7 @@ class Patient(models.Model):
 	item_scoreRF = models.CharField(max_length=128, default='',verbose_name = 'Lista de respuestas segunda etapa')
 	followup_list = models.CharField(max_length=50, default='',verbose_name = 'Lista de item necesarios a revisar')
 	audit_info = models.CharField(max_length=30, default='No aplica',verbose_name = 'Nivel de audición')
-	sex = models.CharField(max_length=1,choices=MALE_FEMALE,null=True,default="",blank=True,verbose_name="Sexo")
+	sex = models.CharField(max_length=1,choices=MALE_FEMALE,default="",verbose_name="Sexo")
 	finish = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=False,blank=True,verbose_name = 'Test Realizado')
 
 

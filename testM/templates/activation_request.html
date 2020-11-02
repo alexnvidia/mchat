@@ -1,10 +1,41 @@
-{% autoescape off %}
-Hi {{ user.username }}
 
 
-Please click the following link to confirm your registration:
+<!doctype html>
+<html>
+    <head>
+      <title>M-CHAT-R/F</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">  
+    </head>
+    <body>
+     
+
+  
+  <header>
+  <h1>M-CHAT HELP WEB APP</h1>
+  </header>
+    
+    {% autoescape off %}
+    <div>
+    	<p>Hola {{ user.username }}, este es un correo electrónico de confirmación para activar su cuenta</p> 
+
+
+		<p>Por favor haz click en el siguiente enlace para confirmar tu registro en M-CHAT HELP:</p>
 
 
 http://{{ domain }}{% url 'mchats:activate' uidb64=uid token=token %}
+
+    </div>
+
  
 {% endautoescape %}
+        
+  
+<footer>
+ 
+  <p>© 2009 Diana Robins, Deborah Fein, & Marianne Barton. Traducción y adaptación en España: Grupo Estudio MCHAT España </p>
+</footer>
+
+
+    </body>
+</html>

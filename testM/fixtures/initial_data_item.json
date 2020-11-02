@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "question_id": 1,
-      "question": "Si usted señala algo al otro lado de la habitación, ¿su hijo/a lo mira? (POR EJEMPLO, Si usted señala a un juguete, un peluche o un animal, ¿su hijo/a lo mira?)",
+      "question": "Si usted señala algo al otro lado de la habitación, ¿su hijo/a lo mira? (Por ejemplo, Si usted señala a un juguete, un peluche o un animal, ¿su hijo/a lo mira?)",
       "mchat" : 1
     }
   },
@@ -22,7 +22,7 @@
     "pk": 3,
     "fields": {
       "question_id": 3,
-      "question": "¿Su hijo/a juega juegos de fantasía o imaginación? (POR EJEMPLO, “hace como que” bebe de una taza vacía, habla por teléfono o da de comer a una muñeca o peluche,…)",
+      "question": "¿Su hijo/a juega juegos de fantasía o imaginación? (Por ejemplo, “hace como que” bebe de una taza vacía, habla por teléfono o da de comer a una muñeca o peluche,…)",
       "mchat" : 1
     }
   },
@@ -31,7 +31,7 @@
     "pk": 4,
     "fields": {
       "question_id": 4,
-      "question": "¿A su hijo le gusta subirse a cosas? (POR EJEMPLO, a una silla, escaleras, o tobogán,…)",
+      "question": "¿A su hijo le gusta subirse a cosas? (Por ejemplo, a una silla, escaleras, o tobogán,…)",
       "mchat" : 1
     }
   },
@@ -40,7 +40,7 @@
     "pk": 5,
     "fields": {
       "question_id": 5,
-      "question": "¿Hace su hijo/a movimientos inusuales con sus dedos cerca de sus ojos? (POR EJEMPLO, ¿mueve sus dedos cerca de sus ojos de manera inusual?)",
+      "question": "¿Hace su hijo/a movimientos inusuales con sus dedos cerca de sus ojos? (Por ejemplo, ¿mueve sus dedos cerca de sus ojos de manera inusual?)",
       "mchat" : 1
     }
   },
@@ -49,7 +49,7 @@
     "pk": 6,
     "fields": {
       "question_id": 6,
-      "question": "¿Su hijo/a señala con un dedo cuando quiere pedir algo o pedir ayuda? (POR EJEMPLO, ¿señala un juguete o algo de comer que está fuera de su alcance?)",
+      "question": "¿Su hijo/a señala con un dedo cuando quiere pedir algo o pedir ayuda? (Por ejemplo, ¿señala un juguete o algo de comer que está fuera de su alcance?)",
       "mchat" : 1
     }
   },
@@ -58,7 +58,7 @@
     "pk": 7,
     "fields": {
       "question_id": 7,
-      "question": "Su hijo/a señala con un dedo cuando quiere mostrarle algo que le llama la atención? (POR EJEMPLO, señala un avión en el cielo o un camión muy grande en la calle)",
+      "question": "Su hijo/a señala con un dedo cuando quiere mostrarle algo que le llama la atención? (Por ejemplo, señala un avión en el cielo o un camión muy grande en la calle)",
       "mchat" : 1
     }
   },
@@ -67,7 +67,7 @@
     "pk": 8,
     "fields": {
       "question_id": 8,
-      "question": "¿Su hijo/a se interesa en otros niños? (POR EJEMPLO, ¿mira con atención a otros niños, les sonríe o se les acerca?)",
+      "question": "¿Su hijo/a se interesa en otros niños? (Por ejemplo, ¿mira con atención a otros niños, les sonríe o se les acerca?)",
       "mchat" : 1
     }
   },
@@ -76,7 +76,7 @@
     "pk": 9,
     "fields": {
       "question_id": 9,
-      "question": "¿Su hijo/a le muestra cosas acercándolas o levantándolas para que usted las vea – no para pedir ayuda sino solamente para compartirlas con usted? (POR EJEMPLO, le muestra una flor o un peluche o un coche de juguete)",
+      "question": "¿Su hijo/a le muestra cosas acercándolas o levantándolas para que usted las vea – no para pedir ayuda sino solamente para compartirlas con usted? (Por ejemplo, le muestra una flor o un peluche o un coche de juguete)",
       "mchat" : 1
     }
   },
@@ -85,7 +85,7 @@
     "pk": 10,
     "fields": {
       "question_id": 10,
-      "question": "¿Su hijo/a responde cuando usted le llama por su nombre? (POR EJEMPLO, se vuelve, habla o balbucea, o deja de hacer lo que estaba haciendo para mirarle?)",
+      "question": "¿Su hijo/a responde cuando usted le llama por su nombre? (Por ejemplo, se vuelve, habla o balbucea, o deja de hacer lo que estaba haciendo para mirarle?)",
       "mchat" : 1
     }
   },
@@ -103,7 +103,7 @@
     "pk": 12,
     "fields": {
       "question_id": 12,
-      "question": "¿Le molestan a su hijo/a ruidos cotidianos? (POR EJEMPLO, la aspiradora o la música, incluso cuando está no está excesivamente alta?)",
+      "question": "¿Le molestan a su hijo/a ruidos cotidianos? (Por ejemplo, la aspiradora o la música, incluso cuando está no está excesivamente alta?)",
       "mchat" : 1
     }
   },
@@ -130,7 +130,7 @@
     "pk": 15,
     "fields": {
       "question_id": 15,
-      "question": "¿Su hijo/a imita sus movimientos? (POR EJEMPLO, decir adiós con la mano, aplaudir o algún ruido gracioso que usted haga?)",
+      "question": "¿Su hijo/a imita sus movimientos? (Por ejemplo, decir adiós con la mano, aplaudir o algún ruido gracioso que usted haga?)",
       "mchat" : 1
     }
   },
@@ -148,7 +148,7 @@
     "pk": 17,
     "fields": {
       "question_id": 17,
-      "question": "¿Su hijo/a intenta que usted le mire/preste atención? (POR EJEMPLO, busca que usted le haga un cumplido, o le dice \"mira\" ó \"mírame\" ",
+      "question": "¿Su hijo/a intenta que usted le mire/preste atención? (Por ejemplo, busca que usted le haga un cumplido, o le dice \"mira\" ó \"mírame\" ",
       "mchat" : 1
     }
   },
@@ -157,7 +157,7 @@
     "pk": 18,
     "fields": {
       "question_id": 18,
-      "question": "¿Su hijo/a le entiende cuando usted le dice que haga algo? (POR EJEMPLO, si usted no hace gestos, ¿su hijo/a entiende \"pon el libro encima de la silla\" o \"tráeme la manta\"?)",
+      "question": "¿Su hijo/a le entiende cuando usted le dice que haga algo? (Por ejemplo, si usted no hace gestos, ¿su hijo/a entiende \"pon el libro encima de la silla\" o \"tráeme la manta\"?)",
       "mchat" : 1
     }
   },
@@ -166,7 +166,7 @@
     "pk": 19,
     "fields": {
       "question_id": 19,
-      "question": "Si algo nuevo pasa, ¿su hijo/a le mira para ver como usted reacciona al respecto? (POR EJEMPLO, si oye un ruido extraño o ve un juguete nuevo, ¿se gira a ver su cara?)",
+      "question": "Si algo nuevo pasa, ¿su hijo/a le mira para ver como usted reacciona al respecto? (Por ejemplo, si oye un ruido extraño o ve un juguete nuevo, ¿se gira a ver su cara?)",
       "mchat" : 1
     }
   },
@@ -175,7 +175,7 @@
     "pk": 20,
     "fields": {
       "question_id": 20,
-      "question": "Le gustan a su hijo/a los juegos de movimiento? (POR EJEMPLO, le gusta que le balancee, o que le haga “el caballito” sentándole en sus rodillas)",
+      "question": "Le gustan a su hijo/a los juegos de movimiento? (Por ejemplo, le gusta que le balancee, o que le haga “el caballito” sentándole en sus rodillas)",
       "mchat" : 1
     }
   }

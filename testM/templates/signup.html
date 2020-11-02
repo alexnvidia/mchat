@@ -1,9 +1,15 @@
 {% extends "testM/base.html" %}
+{% load static %}
 {% block profile %}
 {% endblock %}
 
 {% block content %}
-  <h2>Registro de usuario</h2>
+
+<div class="container">
+  <div class="mx-auto shadow p-4 mb-4 bg-white my-5">
+    <h2 class="my-5 text-center">Registro de usuario</h2>
+  
+  
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -21,6 +27,10 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+    <button type="submit" class="btn btn-primary btn-block my-5">Registrarse</button>
   </form>
+  </div>
+</div>
+  
+  <script src="{% static 'js/signup_script.js' %}"></script>
 {% endblock %}

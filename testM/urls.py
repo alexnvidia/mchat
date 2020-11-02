@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import (MchatListView, MchatUpdate, PatientCreate, PatientListView, PatientUpdate, 
-PatientDelete, activation_sent_view, activate, ProfileUpdate, PatientDetailView, PatientListUserProfileView,
+PatientDelete, activation_sent_view, activate, ProfileUpdate, ProfileDetailView, PatientListUserProfileView,
 PatientHistoricView)
 
 mchats_patterns = ([
@@ -17,7 +17,7 @@ mchats_patterns = ([
 	path('mchat/patient', PatientCreate.as_view(), name='patient_create'),
 	path('mchat/patientEdit/<int:pk>', PatientUpdate.as_view(), name='patient_update'),
 	path('UserProfileEdit/<int:pk>', ProfileUpdate.as_view(), name='profile_update'),
-	path('UserProfile/<int:pk>', PatientDetailView.as_view(),name='user_profile'),
+	path('UserProfile/<int:pk>', ProfileDetailView.as_view(),name='user_profile'),
 	path('mchat/patient/result/<int:pk>', views.patient_result, name='patient_result'),
 	path('mchat/patientHistoric/result/<int:pk>', views.patient_historic_result, name='patient_historic_result'),
 	path('mchat/patientDelete/<int:pk>', PatientDelete.as_view(), name='patient_delete'),

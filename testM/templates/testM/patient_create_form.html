@@ -1,15 +1,15 @@
 {% extends 'testM/base.html' %}
-
+{% load static %}
 {% load crispy_forms_tags %}
-{% block profile %}
-{% endblock %}
+
 {% block content %}
 
  <main role="main">
   <div class="container">
-    <div class="row mt-3 mb-5">
+    <div class="mx-auto shadow p-4 mb-4 bg-white my-5">
       <div class="col-md-9 mx-auto">
-        <div>          
+        <div> 
+        <h1 class="my-5 text-center"> Añadir niño/a</h1>         
           <form action="" method="post">{% csrf_token %}
             {% for field in form %}
             <p>
@@ -35,4 +35,5 @@
     </div>
   </div>
 </main>
+<script src="{% static 'js/patient_update_script.js' %}"></script>
 {% endblock %}

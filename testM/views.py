@@ -28,6 +28,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
 from django.conf import settings
 from weasyprint import HTML, CSS
 from datetime import date
@@ -70,9 +72,6 @@ class MchatListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated == True:
-        	profile = Profile.objects.get(user__in = [self.request.user.pk])
-        	context['profileUser'] = profile
         context['now'] = timezone.now()
         return context
 
@@ -103,6 +102,7 @@ class PatientListUserProfileView(ListView):
 		supervisor_filter=User.objects.get(username=self.request.user)
 		return Patient.objects.filter(supervisor=supervisor_filter)
 
+@method_decorator(login_required, name='dispatch')
 class PatientHistoricView(ListView):
 
 	model = Patient_historic
@@ -154,6 +154,10 @@ class ProfileUpdate(UpdateView):
 	def get_success_url(self):
 		return reverse_lazy('mchats:mchats')
 
+	def get_object(self):
+		return Profile.objects.get(user=self.kwargs['pk'])
+
+
 
 @method_decorator(login_required, name='dispatch')
 class PatientUpdate(UpdateView):
@@ -177,13 +181,19 @@ class PatientDelete(DeleteView):
 
 
 @method_decorator(login_required, name='dispatch')
-class PatientDetailView(DetailView):
+class ProfileDetailView(DetailView):
 	model = Profile
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['now'] = timezone.now()
 		return context
+
+	def get_object(self):
+		return Profile.objects.get(user=self.kwargs['pk'])
+
+	def get_queryset(self):
+		return Profile.objects.filter(user=self.kwargs['pk'])
 
 
 
@@ -341,7 +351,7 @@ def IfMchatFollowUp(puntuacion_mchat):
 		resultDict["finish"] = False
 		return resultDict
 	elif (puntuacion_mchat >= 8 and puntuacion_mchat <=20):
-		resultDict["result"] = False
+		resultDict["result"] = True
 		resultDict["message"] = messageFinalScoreNoFollowRisk
 		resultDict["finish"] = True
 		return resultDict
@@ -614,9 +624,9 @@ def mchat_start (request, pk):
 				if(MchatScore(question_id,option) == 1):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
 			dictr = IfMchatFollowUp(total_score)					
-			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"]})
+			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"],'positive': dictr["result"]})
 			if(dictr["finish"] == True):
-				Patient_historic.objects.create(patient = patient, mchat_score = total_score, item_score = lista_score, followup_list = listaFollowUp )
+				Patient_historic.objects.create(patient = patient, mchat_score = total_score, item_score = lista_score, followup_list = listaFollowUp, positive = dictr["result"] )
 
 			#return render(request,'testM/resultados_mchat.html', {'formset': formset,'total_score': total_score})
 			print(dictr["result"])
@@ -763,7 +773,7 @@ def followup_mchat(request, pk):
 		
 		if (request.session['actual_page'] < request.session['post_send']):
 			print(request.session[str(page)])
-			if (len(request.session['string_score']) > 0  and request.session['string_score'][request.session['actual_page'] - 1] == '1'):
+			if ((len(request.session['string_score']) > 0) and (len(request.session['string_score'])) <= (request.session['actual_page']-1)  and request.session['string_score'][request.session['actual_page'] - 1] == '1'):
 				request.session['string_score']=request.session['string_score'][0:request.session['actual_page']-1]
 				request.session['score_rf']-=1
 				print("socre")
@@ -925,7 +935,8 @@ def activate(request, uidb64, token):
 		user.profile.signup_confirmation = True
 		user.save()
 		login(request, user)
-		return render(request,'testM/complete_profile.html',{'profile': profile})
+		url=reverse('mchats:profile_update',kwargs={'pk':user.pk})
+		return HttpResponseRedirect(url)
 	else:
 		return render(request, 'activation_invalid.html')
 
@@ -945,7 +956,7 @@ def signup(request):
 			user.is_active = False
 			user.save()
 			current_site = get_current_site(request)
-			subject  = 'Por favor es necesario activar tu cuenta'
+			subject  = 'M-CHAT HELP WEB APP: Por favor es necesario activar tu cuenta'
 			email_from = settings.EMAIL_HOST_USER
 			recipient_list = [user.profile.email,]
 			message = render_to_string('activation_request.html', {
@@ -954,7 +965,8 @@ def signup(request):
 				'uid': urlsafe_base64_encode(force_bytes(user.pk)),
 				'token': account_activation_token.make_token(user),
 			})
-			send_mail(subject, message, email_from, recipient_list)
+			
+			send_mail(subject, None, email_from, recipient_list,html_message=message)
 			return redirect('mchats:activation_sent')
 	else:
 		form = SignUpForm()

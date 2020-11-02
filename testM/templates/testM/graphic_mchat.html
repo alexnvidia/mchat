@@ -1,16 +1,15 @@
 {% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+{% load static %}
 
 {% block content %}
 
  <main role="main">
-  <div class="container my-3">
+  <div class="container my-5">
     
           
-          <h1 class="" style="font-size:30px;box-shadow: 2px 2px 4px lightGrey">Gráfico de diagnósticos positivos</h1><br>
+          <h1 class="my-5 text-center" style="font-size:30px;box-shadow: 2px 2px 4px lightGrey">Gráfico de diagnósticos positivos</h1><br>
           
-          <div class="col-md-9">
+          <div class="col-md-9 my-2">
             <canvas id="myChart"></canvas>
           </div>
          
@@ -27,44 +26,14 @@
       </div>    
 
   </div>  
+
+  {{ dict_n.n_patient_p|json_script:"positive" }}
+  {{ dict_n.n_patient_pc|json_script:"positiveConfirmed" }}
 </main>
 {% endblock %}
 
 
 {% block javascript %}
-<script>
-$.noConflict();
-jQuery(document).ready(function(){
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-type: 'bar',
-data: {
-labels: ["Positivos en el test M-CHAT-R/F", "Positivos ConfirmadoS por un Profesional"],
-datasets: [{
-label: 'Número de test M-CHAT-R/F que son positivos',
-data: [{{ dict_n.n_patient_p }}, {{ dict_n.n_patient_pc }}],
-backgroundColor: [
-'rgba(255, 99, 132, 0.2)',
-'rgba(54, 162, 235, 0.2)'
-],
-borderColor: [
-'rgba(255,99,132,1)',
-'rgba(54, 162, 235, 1)'
-],
-borderWidth: 1
-}]
-},
-options: {
-scales: {
-yAxes: [{
-ticks: {
-beginAtZero: true
-}
-}]
-}
-}
-});
-});
-</script>
+<script src="{% static 'js/graphic_mchat_script.js' %}"></script>
 
 {% endblock %}

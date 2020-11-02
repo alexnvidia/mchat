@@ -1,20 +1,28 @@
 {% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+
 		{% block content %}
 		{% load static %}
 		{% if patient_list %}
+		<div  id="divAlert2" class="my-5">     
+		      <div class="alert alert-primary alert-dismissible fade show my-3">
+		      <button type="button" class="close" data-dismiss="alert">&times;</button>
+		      <strong>¡IMPORTANTE!</strong> Si tiene dudas de como se realiza la primera etapa o segunda etapa del test 
+		      puede revisar la guía de uso situada en la cabecera de esta página.
+		      </div>       
+    		</div>
+
+    		<h2 class="my-5 text-center"> Lista de niños/as disponibles para realizar el test</h2>
 		<div class="table-responsive p3 my-3">
 		 		<table class="table table-info table-hover">
 				    <thead class="thead-dark">
 				      <tr>
-				        <th>Nombre</th>
-				        <th>Apellidos</th>
-				        <th>Test</th>
-				        <th>Resultados</th>
-				        <th>Gestión</th>
-				        <th>Positivo en el test M-CHAT-R/F</th>
-				        <th>Riesgo de TEA</th>
+				        <th class="text-center">Nombre</th>
+				        <th class="text-center">Apellidos</th>
+				        <th class="text-center">Test</th>
+				        <th class="text-center">Resultados</th>				        
+				        <th class="text-center">Positivo en el test M-CHAT-R/F</th>
+				        <th class="text-center">Riesgo de TEA</th>
+				        <th class="text-center">Gestión</th>
 				      </tr>
 				    </thead>
 				    <tbody>
@@ -23,10 +31,10 @@
 			{% for patient in patient_list %}
 
 				      <tr>
-				        	<td>{{ patient.name|title }}</td>
-				        	<td>{{ patient.subname|title }}</td>					
-				       		<td>
-				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">M-CHAT-R(Primera etapa)</a>
+				        	<td class="text-center">{{ patient.name|title }}</td>
+				        	<td class="text-center">{{ patient.subname|title }}</td>					
+				       		<td class="text-center">
+				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary my-2"><span class="fas fa-play">M-CHAT-R(Primera etapa)</a>
 				       		{% if patient.mchat_score >= 3 and patient.mchat_score <= 7 %}
 				       		<a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">M-CHAT-R/F(Etapa de seguimiento)</a>
 				       		{% endif %}
@@ -34,23 +42,24 @@
 
 				       		{% if patient.item_score|length > 0 %}
 
-				       		<td><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
+				       		<td class="text-center"><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
 				       		{% else %}
 				       		<td> </td>
 				       		{% endif %}
-				       		<td><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Editar niño/a"><span class="fas fa-pencil-alt"></a>
-				       		<a href="{% url 'mchats:patient_delete' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Eliminar niño/a"><span class="fas fa-trash"></a></td>
+				       		
 				       		{% if patient.positive %}
-				       			<td> Si </td>
+				       			<td class="text-center"> Si </td>
 				       		{% else %}
-				       			<td> No </td>
+				       			<td class="text-center"> No </td>
 				       		{% endif %}
 
 				       		{% if patient.positive_tr %}
-				       			<td> Si </td>
+				       			<td class="text-center"> Si </td>
 				       		{% else %}
-				       			<td> No <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional indica riesgo de TEA"><span class="fas fa-check"></a> </td>
+				       			<td class="text-center"> No <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional indica riesgo de TEA"><span class="fas fa-check"></a> </td>
 				       		{% endif %}
+				       		<td class="text-center"><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary my-2" data-toggle="tooltip" title="Editar niño/a"><span class="fas fa-pencil-alt"></a>
+				       		<a href="{% url 'mchats:patient_delete' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Eliminar niño/a"><span class="fas fa-trash"></a></td>
 				       </tr> 			
 			{% endfor %}
 			</tbody> 
@@ -58,38 +67,19 @@
 		</div>
 
 
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-info" style="font-size:36px"><span class="fas fa-plus">Añadir niño/a</a>
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-info text-center" style="font-size:24px"><span class="fas fa-plus">Añadir niño/a</a>
 			{% else %}
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary" style="font-size:36px"><span class="fas fa-plus">Añadir Paciente</a>
-			<div class="alert alert-info my-3" style=" box-shadow: 2px 2px 4px Black">
-			    <p style="font-size:36px;color:white;text-shadow:2px 2px 4px Black"> Usted no ha añadido ningún paciente actualmente, puede añadirlo haciendo click en el botón de arriba.
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary text-center" style="font-size:24px"><span class="fas fa-plus">Añadir Paciente</a>
+			<div class="alert alert-info my-3" style=" box-shadow: 2px 2px 4px Black;background-image: url({% static 'testM/no_patient.png' %}); opacity: 0.7;">
+			    <p style="font-size:36px;color:white;text-shadow:2px 2px 4px Black"> Usted no ha añadido ningún niño/a actualmente, puede añadirlo haciendo click en el botón de arriba.
 				</p>
-				<img class="card-img-top" src="{% static 'testM/no_patient.png' %}" alt="no patient" style="width:25%">
+				<img class="card-img-top" src="{% static 'testM/tenor.png' %}" alt="no patient" style="width:50%;opacity: 0.4;">
 			</div>
 			
 			{% endif %}
 
-			<div  id="divAlert2">     
-      <div class="alert alert-primary alert-dismissible fade show my-3">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong>¡IMPORTANTE!</strong> Si tiene dudas de como se realiza la primera etapa o segunda etapa del test 
-      puede revisar la guía de uso situada en la cabecera de esta página.
-      </div>     
-      
-    </div>
-			<script>
-			jQuery(document).ready(function animt(){
-			  jQuery("#divAlert2").hover(function(){
-			    
-			  },
-			  function animt(){
-			    jQuery("#guide").css({"font-size": "100%", "text-shadow": "1px 1px 2px DarkCian, 0 0 25px blue, 0 0 5px Orange", "box-shadow":"1px 1px 2px grey, 0 0 25px Green, 0 0 5px darkRed", "border-radius":"15px"});
-			    
-			      jQuery("#guide").fadeOut(700).fadeIn(700);
-			  });
-			 
-			});
-		</script>
+			
+			<script src="{% static 'js/patient_list_script.js' %}"></script>
 		{% endblock %}
 
 		

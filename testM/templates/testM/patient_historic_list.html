@@ -1,6 +1,5 @@
 {% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+
 			
 		{% block content %}
 		{% load static %}
@@ -9,7 +8,7 @@
 			var dataArray2 = [];
 			var labelsArray = [];
 			</script>
-		<h3> Tabla de histórico del niño/a que ha realizado el test M-CHAT-R/F</h3><br>
+		<h3 class="text-center my-5" style="font-size:38px;color:black;text-shadow:2px 2px 4px lightGrey"> Tabla de histórico del niño/a que ha realizado el test M-CHAT-R/F</h3><br>
 		{% if patient_historic_list %}
 		<div class="table-responsive">
 		 		<table class="table table-info table-hover">
@@ -63,10 +62,10 @@
 		</div>
 
 		<main role="main">
-		  <div class="container my-sm-5">
+		  <div class="container mx-auto shadow p-4 mb-4 bg-white my-5">
 		    
 		          
-		          <span class="badge badge-primary" style="font-size:30px">Gráfica de progresión del paciente</span><br>
+		          <p class="text-center my-3" style="font-size:36px;color:black;text-shadow:2px 2px 4px grey">Gráfica de progresión del paciente</p>
 		          
 		          <div class="col-md-9">
 		            <canvas id="lineChart"></canvas>
@@ -81,10 +80,10 @@
 
 			
 			{% else %}
-			<div class="alert alert-info">
-			    <p style="font-size:36px;color:lightgreen;text-shadow:2px 2px 4px #000000;"><strong>Aún no se ha realizado ningún test completo. Cuando realize un test y se de como finalizado aparecerá una entrada de histórico.</strong> 
+			<div class="alert alert-info" style=" box-shadow: 2px 2px 4px Black;background-image: url({% static 'testM/no_patient.png' %}); opacity: 0.7;">
+			    <p style="font-size:36px;color:white;text-shadow:2px 2px 4px Black"><strong>Aún no se ha realizado ningún test completo. Cuando realize un test y se de como finalizado aparecerá una entrada de histórico.</strong> 
 				</p>
-				<img class="card-img-top" src="{% static 'testM/no_patient.png' %}" alt="no patient" style="width:50%">
+				
 			</div>
 			
 			{% endif %}

@@ -1,54 +1,8 @@
 {% extends 'testM/base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block profile %}
-{% endblock %}
-{% block javascript %}
-  <script>
-    $.noConflict();
-    jQuery(document).ready(function(){
-      
-      var almc = 0;   
-      var cont = 0;
-      var element = "";
-      if({{ request.session.form_error }} > 0){
-          nowC = 20 - {{ request.session.form_error }};
-          cont = (20 - {{ request.session.form_error }})*5;
-          var width = (jQuery(window).width())/20;
-          almc = (nowC*width);
-          jQuery("#animated").width(almc);
-      }
-      jQuery("input[type='radio']").click(function(){
-        if(element.search(jQuery(this).attr("name")) == -1 ){
-            var width = (jQuery(window).width())/20;            
-            cont+=5;
-            almc+=width
-            jQuery("#animated").width(almc);
-            element += jQuery(this).attr("name");
-            if(cont == 100){
-                jQuery("#divAlert").removeClass("d-none");
-                jQuery(document).scrollTop(jQuery(document).height());
 
-            }
-
-        }
-        
-
-        
-
-  });
-
-      jQuery( window ).resize(function() {
-        realsize = ((jQuery(window).width())*cont)/100
-        almc = realsize        
-        jQuery("#animated").width(almc);  
-            
-      });
-});
-  </script>
-
-
-{% endblock %}
+<script type="text/javascript"> $.noConflict();</script>
 
 {% block content %}
 
@@ -62,12 +16,16 @@
   </div>
 
   
-  <div class="card bg-info text-white float-right" style="width:200px">
+  
+
+   <div class="clearfix my-5">
+    <div class="card bg-info text-white float-left" style="width:200px;height: 320px">
     <img class="card-img-top" src="{% static 'testM/boy.png' %}" alt="Card image" style="width:100%">
     <div class="card-body">
       <h4 class="card-title">Paciente ID:#{{ patient.pk }}</h4>
       <p class="card-text"><strong>{{ patient.name|title }} {{ patient.subname|title }}</strong></p>      
     </div>
+  </div>
   </div>
 
   <div class="container-fluid my-3">
@@ -79,8 +37,8 @@
     <form method="POST" class="form-group">{% csrf_token %}
     	{{ formset.management_form }}
     	{% for form in formset %}        
-        <p style="word-break: break-all;font-size:20px"> {{ form.question.value }} </p>
-        <p style="word-break: break-all;font-size:20px"> {{ form.option }} </p>
+        <p style="font-size:20px"> {{ form.question.value }} </p>
+        <p style="font-size:20px"> {{ form.option }} </p>
         {{ form.id }}        
         {{ form.option.errors }}               
         {% endfor %}
@@ -96,7 +54,7 @@
       </div>     
       
     </div>
-
+{{ request.session.form_error|json_script:"form_error" }}
 
 {% else %}
 
@@ -106,7 +64,10 @@
 
 
 
+{% block javascript %}
+  <script src="{% static 'js/mchatStart_script.js' %}"></script>
 
+{% endblock %}
     
 
 {% endblock %}

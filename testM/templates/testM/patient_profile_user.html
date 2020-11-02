@@ -1,10 +1,11 @@
 {% extends 'testM/base.html' %}
-{% block profile %}
-{% endblock %}
+
 		{% block content %}
 		{% load static %}
+		
 		{% if patient_list %}
-		<h3> LISTADO DE NIÑOS/AS QUE HAN REALIZADO O REALIZARÁN LA PRUEBA DEL M-CHAT-R/F</h3><br>
+
+		<h3 class="my-3 py-5 tex-center" style="font-size:38px;color:black;text-shadow:2px 2px 4px lightGrey"> LISTADO DE NIÑOS/AS QUE HAN REALIZADO O REALIZARÁN LA PRUEBA DEL M-CHAT-R/F</h3><br>
 		<div class="table-responsive">
 		 		<table class="table table-info table-hover">
 				    <thead class="thead-dark">
@@ -24,9 +25,12 @@
 
 				      <tr>
 				        	<td>{{ patient.name|title }}</td>
-				        	<td>{{ patient.subname|title }}</td>					
+				        	<td>{{ patient.subname|title }}</td>
+				        	{% if patient.item_score|length > 0%}					
 				       		<td>{{ patient.mchat_score}}</td>
-				       		
+				       		{% else %}
+				       		<td>---</td>
+				       		{% endif %}
  
 				       		{% if patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_score|length > 0 %}
 
@@ -46,14 +50,16 @@
 		</div>
 
 
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Niño/a</a>
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary" style="font-size:24px"><span class="fas fa-plus">Añadir Niño/a</a>
 			{% else %}
-			<div class="alert alert-info">
-			    <p style="font-size:36px;color:lightgreen;text-shadow:2px 2px 4px #000000;"><strong>!Atención!</strong> Usted no ha añadido ningún paciente actualmente.
+			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary" style="font-size:24px"><span class="fas fa-plus">Añadir Niño/a</a>
+
+			<div class="alert alert-info my-2" style=" box-shadow: 2px 2px 4px Black; background-image: url({% static 'testM/no_patient.png' %}); opacity: 0.7;">
+			    <p style="font-size:36px;color:white;text-shadow:2px 2px 4px Black"><strong>Usted no ha añadido ningún niño/a actualmente, puede añadirlo haciendo click en el botón de arriba.</strong> 
 				</p>
-				<img class="card-img-top" src="{% static 'testM/no_patient.png' %}" alt="no patient" style="width:50%">
+				<img class="card-img-top tex-center" src="{% static 'testM/tenor.png' %}" alt="no patient" style="width:50%;opacity: 0.4;">
 			</div>
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary"><span class="fas fa-plus">Añadir Paciente</a>
+			
 			{% endif %}
 				
 		{% endblock %}
