@@ -52,7 +52,10 @@
 
 			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary" style="font-size:24px"><span class="fas fa-plus">Añadir Niño/a</a>
 			{% else %}
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary" style="font-size:24px"><span class="fas fa-plus">Añadir Niño/a</a>
+			<div class="text-center my-5">
+				<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary" style="font-size:24px"><span class="fas fa-plus">Añadir Niño/a</a>
+			</div>
+			
 
 			<div class="alert alert-info my-2" style=" box-shadow: 2px 2px 4px Black; background-image: url({% static 'testM/no_patient.png' %}); opacity: 0.7;">
 			    <p style="font-size:36px;color:white;text-shadow:2px 2px 4px Black"><strong>Usted no ha añadido ningún niño/a actualmente, puede añadirlo haciendo click en el botón de arriba.</strong> 
