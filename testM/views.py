@@ -624,7 +624,7 @@ def mchat_start (request, pk):
 				if(MchatScore(question_id,option) == 1):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
 			dictr = IfMchatFollowUp(total_score)					
-			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"],'positive': dictr["result"]})
+			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"],'positive': dictr["result"],'item_scoreRF' : '','mchatrf_score': 0})
 			if(dictr["finish"] == True):
 				Patient_historic.objects.create(patient = patient, mchat_score = total_score, item_score = lista_score, followup_list = listaFollowUp, positive = dictr["result"] )
 
