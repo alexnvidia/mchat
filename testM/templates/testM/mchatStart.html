@@ -19,11 +19,20 @@
   
 
    <div class="clearfix my-5">
-    <div class="card bg-info text-white float-left" style="width:200px;height: 320px">
-    <img class="card-img-top" src="{% static 'testM/boy.png' %}" alt="Card image" style="width:100%">
+    <div class="card bg-info text-white float-left" >
+    
     <div class="card-body">
-      <h4 class="card-title">Paciente ID:#{{ patient.pk }}</h4>
-      <p class="card-text"><strong>{{ patient.name|title }} {{ patient.subname|title }}</strong></p>      
+      <h4 class="card-title">Paciente ID: #{{ patient.pk }}</h4>
+      <p class="card-text"><strong>{{ patient.name|title }} {{ patient.subname|title }}</strong></p>
+      <p class="card-text"><strong>Fecha de nacimiento: {{ patient.birth_date }}</strong></p>
+      {% if patient.sex == 'U' %}
+      <p class="card-text"><strong>Sexo: Inteterminado</strong></p>
+      {% elif patient.sex == 'F' %}
+      <p class="card-text"><strong>Sexo: Femenino </strong></p>
+      {% else %}
+      <p class="card-text"><strong>Sexo: Masculino</strong></p> 
+      {% endif %}
+      <p class="card-text"><strong>Profesional supervisor: {{ patient.supervisor.first_name|title }} {{ patient.supervisor.last_name|title }}</strong></p>
     </div>
   </div>
   </div>

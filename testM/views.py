@@ -906,8 +906,12 @@ def graphics(request):
 	return render(request, 'testM/graphic_mchat.html',{'dict_n': dict_n})
 
 @login_required
-def confirm_positive(request,pk):	
-	Patient.objects.update_or_create(pk = pk, defaults={'positive_tr': True,})
+def confirm_positive(request,pk):
+	positive_tr = Patient.objects.get(pk=pk).positive_tr
+	if positive_tr == True:
+		Patient.objects.update_or_create(pk = pk, defaults={'positive_tr': False,})
+	else:
+		Patient.objects.update_or_create(pk = pk, defaults={'positive_tr': True,})
 	return redirect('mchats:patients')
 
 

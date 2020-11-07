@@ -31,7 +31,7 @@
 	        {{ form.option.errors }}
 	        <div class="alert alert-warning alert-dismissible">
 		      <button type="button" class="close" data-dismiss="alert">&times;</button>
-		      Se ha añadido una cuestión realacionada con la última pregunta que has respondido y debe responderla para obtener un resultado correcto. <strong>**Nota: se indica con una etiqueta en lá última pregunta respondida eĺ número de la pregunta con la cual está relacionada</strong> 
+		      Se ha añadido una cuestión realacionada con la última pregunta que has respondido y debe responderla para obtener un resultado correcto. <strong>**Nota: se indica con una etiqueta en la última pregunta respondida el número de la pregunta con la cual está relacionada</strong> 
 		      </div>
     		</div>
     		    
@@ -47,15 +47,19 @@
 	    {% else %}
 	    
 	    	{% if form.question_item.value|cut:" "|length > 0 %}
+            <div id="{{ form.question_group.value }}">
 	    	<h1 style="border-top: 5px solid lightblue; box-shadow: 2px 2px 4px #3691b0"></h1>
 	    	<span class="badge badge-secondary" style="font-size:20px">{{ form.question_item.value }}</span><br>
 	    	<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
 	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p>
+            </div>
 	        {{ form.option.errors }}
 	        
 	    	{% else %}
+            <div id="{{ form.question_group.value }}">
 	    	<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
-	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p>      
+	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p> 
+            </div>     
 	        {{ form.option.errors }}
 	        {% endif %}
 

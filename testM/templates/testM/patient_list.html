@@ -16,6 +16,7 @@
 		 		<table class="table table-info table-hover">
 				    <thead class="thead-dark">
 				      <tr>
+				      	<th class="text-center">Id del niño/a</th>
 				        <th class="text-center">Nombre</th>
 				        <th class="text-center">Apellidos</th>
 				        <th class="text-center">Test</th>
@@ -31,6 +32,7 @@
 			{% for patient in patient_list %}
 
 				      <tr>
+				      		<td class="text-center">{{ patient.pk }}</td>
 				        	<td class="text-center">{{ patient.name|title }}</td>
 				        	<td class="text-center">{{ patient.subname|title }}</td>					
 				       		<td class="text-center">
@@ -54,7 +56,7 @@
 				       		{% endif %}
 
 				       		{% if patient.positive_tr %}
-				       			<td class="text-center"> Si </td>
+				       			<td class="text-center"> Si <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional no indica riesgo de TEA"><span class="fas fa-check"></a></td>
 				       		{% else %}
 				       			<td class="text-center"> No <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional indica riesgo de TEA"><span class="fas fa-check"></a> </td>
 				       		{% endif %}

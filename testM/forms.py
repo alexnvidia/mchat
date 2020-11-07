@@ -21,6 +21,7 @@ MONTHS = {
     9:'sep', 10:'oct', 11:'nov', 12:'dec'
 }
 
+month_float = 30.417
 
 class SignUpForm(UserCreationForm):
 	"""docstring for SignUpForm"""
@@ -167,11 +168,24 @@ class PatientForm(forms.ModelForm):
 
 		birth_date = cleaned_data.get('birth_date')
 		date_now = date.today()
+		delta = date_now - birth_date
+		delta = delta.days
+		month = delta/month_float
 
 		if birth_date is not None:
 			if (date_now < birth_date):
 				raise forms.ValidationError("La fecha de nacimiento no puede ser mayor que la actual")
+			elif (month < 16 or month > 30):
+				raise forms.ValidationError("La edad recomendada está entre 16 y 30 meses")
 		return birth_date
+
+	def clean(self):
+		cleaned_data = super(PatientForm, self).clean()
+
+		name = cleaned_data.get('name').lower().capitalize()
+		subname = cleaned_data.get('subname').lower().capitalize()
+
+		return cleaned_data
 
 
 
@@ -187,7 +201,3 @@ class PatientForm(forms.ModelForm):
 		}
 
 
-		
-
-		
-		

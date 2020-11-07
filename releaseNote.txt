@@ -1,0 +1,11 @@
+Lista de cambios
+
+* Fix que indicaba que siguieras con el seguimiento cuando la puntuación era mayor que 7.
+* Fix para no permitir edades menores de 16 meses o mayores de 30 meses
+* Se ha añadido la columna id para poder identificar al usuario con mismo nombre
+* Se ha mejorado el proceso de seguimiento haciéndolo más intuitivo y se arreglado algunos comportamientos extraños
+* Se ha arreglado la apariencia de la página de resultados y se añadido botón de volver en esta página , en la de creación
+de paciente y en la de actualización.
+*IN PROGRESS Queda meter imágenes del flujo en cada hoja del seguimiento. 
+*IN PROGRESS Revisar página principal y de la guía.
+

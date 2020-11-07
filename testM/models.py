@@ -80,6 +80,13 @@ class Patient(models.Model):
 	def __str__(self):
 		return (self.name + " " + self.subname)
 
+	def clean(self):
+		self.name = self.name.lower().capitalize()
+		self.subname = self.subname.lower().capitalize()
+
+
+
+
 
 class Patient_historic(models.Model):
 	patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
