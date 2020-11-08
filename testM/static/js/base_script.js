@@ -6,7 +6,7 @@ jQuery(document).ready(function(){
       jQuery(this).css("color", "red");
     },  
     mouseleave: function(){
-      jQuery(this).css("color", "lightblue");
+      jQuery(this).css("color", "Black");
     } 
   });
 });

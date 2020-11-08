@@ -6,7 +6,7 @@
       "item": 1,
       "question_item": "¿Qué hace su hijo/a normalmente cuando usted señala a algo?",
       "question_group": "PASA",
-      "question": "Mira el objeto"
+      "question": "1. Mira el objeto"
     }
   },
   {
@@ -16,7 +16,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "PASA",
-      "question": "Señala el objeto"
+      "question": "2. Señala el objeto"
     }
   },
   {
@@ -26,7 +26,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "PASA",
-      "question": "Mira y dice algo sobre el objeto"
+      "question": "3. Mira y dice algo sobre el objeto"
     }
   },
   {
@@ -36,7 +36,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "PASA",
-      "question": "Mira si el padre señala y dice \"mira\"!"
+      "question": "4. Mira si el padre señala y dice \"mira\"!"
     }
   },
   {
@@ -46,7 +46,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "NOPASA",
-      "question": "Ignora al padre"
+      "question": "5. Ignora al padre"
     }
   },
   {
@@ -56,7 +56,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "NOPASA",
-      "question": "Mira alrededor de la habitacion"
+      "question": "6. Mira alrededor de la habitacion"
     }
   },
   {
@@ -66,7 +66,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "NOPASA",
-      "question": "Mira al dedo del padre"
+      "question": "7. Mira al dedo del padre"
     }
   },
   {
@@ -76,7 +76,7 @@
       "item": 2,
       "question_item": "Su hijo/a...",
       "question_group": "GROUP",
-      "question": "¿A menudo ignora los Sonidos?"
+      "question": "1. ¿A menudo ignora los Sonidos?"
     }
   },
   {
@@ -86,7 +86,7 @@
       "item": 2,
       "question_item": "",
       "question_group": "GROUP",
-      "question": "¿A menudo ignora a la gente?"
+      "question": "2. ¿A menudo ignora a la gente?"
     }
   },
   {
@@ -96,7 +96,7 @@
       "item": 2,
       "question_item": "",
       "question_group": "SINGLE",
-      "question": "¿Se ha evaluado la audición de su hijo/a?"
+      "question": "3. ¿Se ha evaluado la audición de su hijo/a?"
     }
   },
   {
@@ -106,7 +106,7 @@
       "item": 2,
       "question_item": "",
       "question_group": "AUDIT",
-      "question": "¿Cuáles fueron los resultados de la prueba de audición?(elija uno):"
+      "question": "4. ¿Cuáles fueron los resultados de la prueba de audición?(elija uno):"
     }
   },
   {
@@ -116,7 +116,7 @@
       "item": 3,
       "question_item": "Alguna vez...",
       "question_group": "PASA",
-      "question": "¿Finge beber de una taza de juguete?"
+      "question": "1. ¿Finge beber de una taza de juguete?"
     }
   },
   {
@@ -126,7 +126,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Finge comer con una cuchara o tenedor de juguete?"
+      "question": "2. ¿Finge comer con una cuchara o tenedor de juguete?"
     }
   },
   {
@@ -136,7 +136,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Finge hablar por teléfono?"
+      "question": "3. ¿Finge hablar por teléfono?"
     }
   },
   {
@@ -146,7 +146,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Finge dar de comer a un muñeco con comida de juguete o de verdad?"
+      "question": "4. ¿Finge dar de comer a un muñeco con comida de juguete o de verdad?"
     }
   },
   {
@@ -156,7 +156,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Empuja un coche haciendo como que va por una carretera imaginaria?"
+      "question": "5. ¿Empuja un coche haciendo como que va por una carretera imaginaria?"
     }
   },
   {
@@ -166,7 +166,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Finge ser un robot, un avión, una bailarina, o cualquier otro personaje favorito?"
+      "question": "6. ¿Finge ser un robot, un avión, una bailarina, o cualquier otro personaje favorito?"
     }
   },
   {
@@ -176,7 +176,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Pone una olla de juguete en una cocina de mentira?"
+      "question": "7. ¿Pone una olla de juguete en una cocina de mentira?"
     }
   },
   {
@@ -186,7 +186,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Revuelve comida imaginaria?"
+      "question": "8. ¿Revuelve comida imaginaria?"
     }
   },
   {
@@ -196,7 +196,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Pone una figura de acción o muñeca en un coche o camión de juguete como si fuese el conductor o el pasajero?"
+      "question": "9. ¿Pone una figura de acción o muñeca en un coche o camión de juguete como si fuese el conductor o el pasajero?"
     }
   },
   {
@@ -206,7 +206,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿Finge pasar la aspiradora a la alfombra, barrer, o cortar el césped?"
+      "question": "10. ¿Finge pasar la aspiradora a la alfombra, barrer, o cortar el césped?"
     }
   },
   {
@@ -216,7 +216,7 @@
       "item": 3,
       "question_item": "",
       "question_group": "PASA",
-      "question": "Otro(describa)"
+      "question": "11. Otro(describa)"
     }
   },
   {
@@ -226,7 +226,7 @@
       "item": 4,
       "question_item": "le gusta subirse a ...",
       "question_group": "PASA",
-      "question": "¿... escaleras?"
+      "question": "1. ¿... escaleras?"
     }
   },
   {
@@ -236,7 +236,7 @@
       "item": 4,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿... sillas?"
+      "question": "2. ¿... sillas?"
     }
   },
   {
@@ -246,7 +246,7 @@
       "item": 4,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "... muebles?"
+      "question": "3. ¿... muebles?"
     }
   },
   {
@@ -256,7 +256,7 @@
       "item": 4,
       "question_item": "",
       "question_group": "PASA",
-      "question": "¿... toboganes?"
+      "question": "4. ¿... toboganes?"
     }
   },
   {
@@ -266,7 +266,7 @@
       "item": 5,
       "question_item": "¿Alguna vez...",
       "question_group": "PASA",
-      "question": "¿Se mira las manos?"
+      "question": "1. ¿Se mira las manos?"
     }
   },
   {
@@ -276,7 +276,7 @@
       "item": 5,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Mueve sus dedos cuando juega al cucu?"
+      "question": "2. ¿Mueve sus dedos cuando juega al cucu?"
     }
   },
   {
@@ -286,7 +286,7 @@
       "item": 5,
       "question_item": "¿Alguna vez...",
       "question_group": "NOPASA",
-      "question": "¿Mueve sus dedos cerca de sus ojos"
+      "question": "3. ¿Mueve sus dedos cerca de sus ojos"
     }
   },
   {
@@ -296,7 +296,7 @@
       "item": 5,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Pone las manos arriba, cerca de sus ojos?"
+      "question": "4.¿Pone las manos arriba, cerca de sus ojos?"
     }
   },
   {
@@ -306,7 +306,7 @@
       "item": 5,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Pone las manos a los lados de su cabeza?"
+      "question": "5. ¿Pone las manos a los lados de su cabeza?"
     }
   },
   {
@@ -316,7 +316,7 @@
       "item": 5,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "Aletea sus manos cerca de su cara"
+      "question": "6. Aletea sus manos cerca de su cara"
     }
   },
   {
@@ -326,7 +326,7 @@
       "item": 5,
       "question_item": "  ",
       "question_group": "NOPASA",
-      "question": "Otro(describa)"
+      "question": "7. Otro(describa)"
     }
   },
   {
@@ -336,7 +336,7 @@
       "item": 5,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Esto pasa más de dos veces por semana?"
+      "question": "8. ¿Esto pasa más de dos veces por semana?"
     }
   },
   {
@@ -346,7 +346,7 @@
       "item": 6,
       "question_item": "¿Su hijo/a....?",
       "question_group": "GROUP",
-      "question": "Extiende la mano abierta hacia el objeto"
+      "question": "1. Extiende la mano abierta hacia el objeto"
     }
   },
   {
@@ -356,7 +356,7 @@
       "item": 6,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Lo guía a usted hacia el objeto"
+      "question": "2. Lo guía a usted hacia el objeto"
     }
   },
   {
@@ -366,7 +366,7 @@
       "item": 6,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Trata de alcanzar el objeto él/ella mismo"
+      "question": "3. Trata de alcanzar el objeto él/ella mismo"
     }
   },
   {
@@ -376,7 +376,7 @@
       "item": 6,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Pide el objeto con palabras o sonidos"
+      "question": "4. Pide el objeto con palabras o sonidos"
     }
   },
   {
@@ -386,7 +386,7 @@
       "item": 6,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Si usted pidiera que se lo muestre, su hijo/a señalaría al objeto?"
+      "question": "5. ¿Si usted pidiera que se lo muestre, su hijo/a señalaría al objeto?"
     }
   },
   {
@@ -396,7 +396,7 @@
       "item": 7,
       "question_item": "Alguna vez si hijo/a le quiere mostrar a usted algo interesante como por ejemplo... ",
       "question_group": "PASA",
-      "question": "¿... un avión en el cielo?"
+      "question": "1. ¿... un avión en el cielo?"
     }
   },
   {
@@ -406,7 +406,7 @@
       "item": 7,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿...un camion en la calle?"
+      "question": "2. ¿...un camion en la calle?"
     }
   },
   {
@@ -416,7 +416,7 @@
       "item": 7,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿...un insecto en el suelo?"
+      "question": "3. ¿...un insecto en el suelo?"
     }
   },
   {
@@ -426,7 +426,7 @@
       "item": 7,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿...un animal en el patio?"
+      "question": "4. ¿...un animal en el patio?"
     }
   },
   {
@@ -436,7 +436,7 @@
       "item": 7,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Cómo llama su hijo/a a su atención hacia eso que le interesa?¿Usa su dedo índice para señalar?"
+      "question": "5. ¿Cómo llama su hijo/a a su atención hacia eso que le interesa?¿Usa su dedo índice para señalar?"
     }
   },
   {
@@ -446,7 +446,7 @@
       "item": 7,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Señala con un dedo para mostrar su interés hacia algo, no para lograr ayuda?"
+      "question": "6. ¿Señala con un dedo para mostrar su interés hacia algo, no para lograr ayuda?"
     }
   },
   {
@@ -456,7 +456,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "SINGLE",
-      "question": "¿Cuando usted está en el parque infantil o en el supermercado, su hijo/a responde a otros niños si se le acercan?"
+      "question": "1. ¿Cuando usted está en el parque infantil o en el supermercado, su hijo/a responde a otros niños si se le acercan?"
     }
   },
   {
@@ -466,7 +466,7 @@
       "item": 8,
       "question_item": "¿Su hijo/a...",
       "question_group": "PASA",
-      "question": "¿Juega con el otro niño?"
+      "question": "2. ¿Juega con el otro niño?"
     }
   },
   {
@@ -476,7 +476,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Habla con el otron niño?"
+      "question": "3. ¿Habla con el otron niño?"
     }
   },
   {
@@ -486,7 +486,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Vocaliza/emite sonidos?"
+      "question": "4. ¿Vocaliza/emite sonidos?"
     }
   },
   {
@@ -496,7 +496,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Mira el otro niño?"
+      "question": "5. ¿Mira el otro niño?"
     }
   },
   {
@@ -506,7 +506,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Sonríe al otro niño?"
+      "question": "6. ¿Sonríe al otro niño?"
     }
   },
   {
@@ -516,7 +516,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Actúa tímidamente al principio y luego sonríe"
+      "question": "7. Actúa tímidamente al principio y luego sonríe"
     }
   },
   {
@@ -526,7 +526,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Se entusiasma con el otro niño"
+      "question": "8. Se entusiasma con el otro niño"
     }
   },
   {
@@ -536,7 +536,7 @@
       "item": 8,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Su hijo/a responde a otros niños más de la mitad de las ocasiones?"
+      "question": "9. ¿Su hijo/a responde a otros niños más de la mitad de las ocasiones?"
     }
   },
   {
@@ -546,7 +546,7 @@
       "item": 9,
       "question_item": "¿Su hijo/a le trae a usted a veces...",
       "question_group": "PASA",
-      "question": "¿Una foto o un juguete solo para mostrárselo?"
+      "question": "1. ¿Una foto o un juguete solo para mostrárselo?"
     }
   },
   {
@@ -556,7 +556,7 @@
       "item": 9,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Un dibujo que ha hecho?"
+      "question": "2. ¿Un dibujo que ha hecho?"
     }
   },
   {
@@ -566,7 +566,7 @@
       "item": 9,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Una flor que ha recogido?"
+      "question": "3. ¿Una flor que ha recogido?"
     }
   },
   {
@@ -576,7 +576,7 @@
       "item": 9,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Un insecto que ha encontrado entre la hierba?"
+      "question": "4. ¿Un insecto que ha encontrado entre la hierba?"
     }
   },
   {
@@ -586,7 +586,7 @@
       "item": 9,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Una torre de bloques que ha apilado?"
+      "question": "5. ¿Una torre de bloques que ha apilado?"
     }
   },
   {
@@ -596,7 +596,7 @@
       "item": 9,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Otro(describa):"
+      "question": "6. Otro(describa):"
     }
   },
   {
@@ -606,7 +606,7 @@
       "item": 9,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Le trae objetos solo para mostrárselos, no para pedir ayuda?"
+      "question": "7. ¿Le trae objetos solo para mostrárselos, no para pedir ayuda?"
     }
   },
   {
@@ -616,7 +616,7 @@
       "item": 10,
       "question_item": "¿Su hijo/a...",
       "question_group": "PASA",
-      "question": "¿Levanta la vista?"
+      "question": "1. ¿Levanta la vista?"
     }
   },
   {
@@ -626,7 +626,7 @@
       "item": 10,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Habla o balbucea?"
+      "question": "2. ¿Habla o balbucea?"
     }
   },
   {
@@ -636,7 +636,7 @@
       "item": 10,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Deja lo que estaba haciendo?"
+      "question": "3. ¿Deja lo que estaba haciendo?"
     }
   },
   {
@@ -646,7 +646,7 @@
       "item": 10,
       "question_item": "¿Su hijo/a...",
       "question_group": "NOPASA",
-      "question": "No responde"
+      "question": "4. No responde"
     }
   },
   {
@@ -656,7 +656,7 @@
       "item": 10,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "Parece oír pero ignora al adulto"
+      "question": "5. Parece oír pero ignora al adulto"
     }
   },
   {
@@ -666,7 +666,7 @@
       "item": 10,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Responde solo si el adulto está cara a cara con el/la niño/a ?"
+      "question": "6. ¿Responde solo si el adulto está cara a cara con el/la niño/a ?"
     }
   },
   {
@@ -676,7 +676,7 @@
       "item": 10,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Responde sólo si se le toca?"
+      "question": "7. ¿Responde sólo si se le toca?"
     }
   },
   {
@@ -686,7 +686,7 @@
       "item": 11,
       "question_item": "¿Su hijo/a...",
       "question_group": "PASA",
-      "question": "¿Sonríe cuando usted sonríe"
+      "question": "1. ¿Sonríe cuando usted sonríe"
     }
   },
   {
@@ -696,7 +696,7 @@
       "item": 11,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Sonríe cuando usted entra a la habitación"
+      "question": "2. Sonríe cuando usted entra a la habitación"
     }
   },
   {
@@ -706,7 +706,7 @@
       "item": 11,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Sonríe cuando usted regresa"
+      "question": "3. Sonríe cuando usted regresa"
     }
   },
   {
@@ -716,7 +716,7 @@
       "item": 11,
       "question_item": "¿Su hijo/a...",
       "question_group": "NOPASA",
-      "question": "¿Siempre está sonriendo?"
+      "question": "4. ¿Siempre está sonriendo?"
     }
   },
   {
@@ -726,7 +726,7 @@
       "item": 11,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Sonríe cuando juega con su juguete preferido?"
+      "question": "5. ¿Sonríe cuando juega con su juguete preferido?"
     }
   },
   {
@@ -736,7 +736,7 @@
       "item": 11,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Sonríe al azar o a nada en particular?"
+      "question": "6. ¿Sonríe al azar o a nada en particular?"
     }
   },
   {
@@ -746,7 +746,7 @@
       "item": 12,
       "question_item": "¿Su hijo reacciona de manera negativa al sonido de...:",
       "question_group": "GROUP",
-      "question": "¿La lavadora?"
+      "question": "1. ¿La lavadora?"
     }
   },
   {
@@ -756,7 +756,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Otros bebés llorando?"
+      "question": "2. ¿Otros bebés llorando?"
     }
   },
   {
@@ -766,7 +766,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿La aspiradora?"
+      "question": "3. ¿La aspiradora?"
     }
   },
   {
@@ -776,7 +776,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿El secador de pelo?"
+      "question": "4. ¿El secador de pelo?"
     }
   },
   {
@@ -786,7 +786,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Tráfico?"
+      "question": "5. ¿Tráfico?"
     }
   },
   {
@@ -796,7 +796,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Otros bebés chillando o gritando?"
+      "question": "6. ¿Otros bebés chillando o gritando?"
     }
   },
   {
@@ -806,7 +806,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Música muy alta?"
+      "question": "7. ¿Música muy alta?"
     }
   },
   {
@@ -816,7 +816,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿El teléfono/ el timbre de la puerta?"
+      "question": "8. ¿El teléfono/ el timbre de la puerta?"
     }
   },
   {
@@ -826,7 +826,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Lugares ruidosos como un supermercado o un restaurante?"
+      "question": "9. ¿Lugares ruidosos como un supermercado o un restaurante?"
     }
   },
   {
@@ -836,7 +836,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Otro(describa)"
+      "question": "10. Otro(describa)"
     }
   },
   {
@@ -846,7 +846,7 @@
       "item": 12,
       "question_item": "Su hijo/a...",
       "question_group": "PASA",
-      "question": "Se cubre los oídos con calma"
+      "question": "11. Se cubre los oídos con calma"
     }
   },
   {
@@ -856,7 +856,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Le dice a ustued que le molesta el ruido"
+      "question": "12. Le dice a usted que le molesta el ruido"
     }
   },
   {
@@ -866,7 +866,7 @@
       "item": 12,
       "question_item": "¿Si hijo/a...",
       "question_group": "NOPASA",
-      "question": "Grita"
+      "question": "13. Grita"
     }
   },
   {
@@ -876,7 +876,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "Llora"
+      "question": "14. Llora"
     }
   },
   {
@@ -886,7 +886,7 @@
       "item": 12,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "Se cubre los oídos y se altera"
+      "question": "15. Se cubre los oídos y se altera"
     }
   },
   {
@@ -896,7 +896,7 @@
       "item": 13,
       "question_item": " ",
       "question_group": "SINGLE",
-      "question": "¿Su hijo/a camina sin necesidad de agarrarse a algo?"
+      "question": "1. ¿Su hijo/a camina sin necesidad de agarrarse a algo?"
     }
   },
   {
@@ -906,7 +906,7 @@
       "item": 14,
       "question_item": "¿Su hijo/a le mira a los ojos cuando...",
       "question_group": "PASA",
-      "question": "¿Necesita algo?"
+      "question": "1. ¿Necesita algo?"
     }
   },
   {
@@ -916,7 +916,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Juega con usted?"
+      "question": "2. ¿Juega con usted?"
     }
   },
   {
@@ -926,7 +926,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Cuando come?"
+      "question": "3. Cuando come?"
     }
   },
   {
@@ -936,7 +936,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "Le cambia el pañal?"
+      "question": "4. Le cambia el pañal?"
     }
   },
   {
@@ -946,7 +946,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Usted le lee un cuento?"
+      "question": "5. ¿Usted le lee un cuento?"
     }
   },
   {
@@ -956,7 +956,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Cuando usted le habla?"
+      "question": "6. ¿Cuando usted le habla?"
     }
   },
   {
@@ -966,7 +966,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Le mira a los ojos todos los días?"
+      "question": "7. ¿Le mira a los ojos todos los días?"
     }
   },
   {
@@ -976,7 +976,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Cuando pasan juntos todo el día, su hijo/a le mira a los ojos por lo menos 5 veces?"
+      "question": "8. ¿Cuando pasan juntos todo el día, su hijo/a le mira a los ojos por lo menos 5 veces?"
     }
   },
   {
@@ -986,7 +986,7 @@
       "item": 15,
       "question_item": "¿Su hijo/a lo imita si usted:...",
       "question_group": "GROUP",
-      "question": "¿Saca la lengua?"
+      "question": "1. ¿Saca la lengua?"
     }
   },
   {
@@ -996,7 +996,7 @@
       "item": 15,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Hace un sonido gracioso?"
+      "question": "2. ¿Hace un sonido gracioso?"
     }
   },
   {
@@ -1006,7 +1006,7 @@
       "item": 15,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Hice adiòs con la mano?"
+      "question": "3. ¿Hice adiós con la mano?"
     }
   },
   {
@@ -1016,7 +1016,7 @@
       "item": 15,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Aplaude?"
+      "question": "4. ¿Aplaude?"
     }
   },
   {
@@ -1026,7 +1026,7 @@
       "item": 15,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Acerca su dedo a sus labios para indicar “shhh” (silencio)"
+      "question": "5. Acerca su dedo a sus labios para indicar “shhh” (silencio)"
     }
   },
   {
@@ -1036,7 +1036,7 @@
       "item": 15,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Tira un beso?"
+      "question": "6. ¿Tira un beso?"
     }
   },
   {
@@ -1046,7 +1046,7 @@
       "item": 15,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Otro(describa)"
+      "question": "7. Otro(describa)"
     }
   },
   {
@@ -1056,7 +1056,7 @@
       "item": 16,
       "question_item": "¿Su hijo/a...",
       "question_group": "PASA",
-      "question": "¿Mira al objeto que usted está mirando?"
+      "question": "1. ¿Mira al objeto que usted está mirando?"
     }
   },
   {
@@ -1066,7 +1066,7 @@
       "item": 16,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Señala al objeto?"
+      "question": "2. ¿Señala al objeto?"
     }
   },
   {
@@ -1076,7 +1076,7 @@
       "item": 16,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "¿Mira alrededor hasta ver lo que usted está mirando?"
+      "question": "3. ¿Mira alrededor hasta ver lo que usted está mirando?"
     }
   },
   {
@@ -1084,9 +1084,9 @@
     "pk": 110,
     "fields": {
       "item": 16,
-      "question_item": " ",
+      "question_item": "¿¿Su hijo/a...",
       "question_group": "NOPASA",
-      "question": "¿Lo ignora a usted?"
+      "question": "4. ¿Lo ignora a usted?"
     }
   },
   {
@@ -1096,7 +1096,7 @@
       "item": 16,
       "question_item": " ",
       "question_group": "NOPASA",
-      "question": "¿Mira su cara?"
+      "question": "5. ¿Mira su cara?"
     }
   },
   {
@@ -1106,7 +1106,7 @@
       "item": 17,
       "question_item": "¿Su hijo...",
       "question_group": "GROUP",
-      "question": "¿Dice \"mira\" o \"mírame\"?"
+      "question": "1. ¿Dice \"mira\" o \"mírame\"?"
     }
   },
   {
@@ -1116,7 +1116,7 @@
       "item": 17,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Balbucea o hace ruido para que usted mire a lo que él/ella está haciendo?"
+      "question": "2. ¿Balbucea o hace ruido para que usted mire a lo que él/ella está haciendo?"
     }
   },
   {
@@ -1126,7 +1126,7 @@
       "item": 17,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Lo mira esperando que usted lo felicite o comente?"
+      "question": "3. ¿Lo mira esperando que usted lo felicite o comente?"
     }
   },
   {
@@ -1136,7 +1136,7 @@
       "item": 17,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Le mira para ver si usted le está mirando?"
+      "question": "4. ¿Le mira para ver si usted le está mirando?"
     }
   },
   {
@@ -1146,7 +1146,7 @@
       "item": 17,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Otro(describa)"
+      "question": "5. Otro(describa)"
     }
   },
   {
@@ -1156,7 +1156,7 @@
       "item": 18,
       "question_item": " ",
       "question_group": "SINGLE",
-      "question": "¿Puede cumplir una orden cuando la situación le proporciona una pista? Por ejemplo, cuando usted está vestido/a para salir y le pide que se ponga los zapatos, ¿su hijo/a comprende?"
+      "question": "1. ¿Puede cumplir una orden cuando la situación le proporciona una pista? Por ejemplo, cuando usted está vestido/a para salir y le pide que se ponga los zapatos, ¿su hijo/a comprende?"
     }
   },
   {
@@ -1166,7 +1166,7 @@
       "item": 18,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "Si es hora de la cena y la comida está servida y usted le pide a su hijo/a que se siente ¿vendría a sentarse a la mesa?"
+      "question": "2. Si es hora de la cena y la comida está servida y usted le pide a su hijo/a que se siente ¿vendría a sentarse a la mesa?"
     }
   },
   {
@@ -1176,7 +1176,7 @@
       "item": 18,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Si usted dice: \"Muéstrame tu zapato\" sin señalar, hacer gestos o dar pistas (cuando no va a salir o a vestirle), ¿su hijo le muestra su zapato?"
+      "question": "3. Si usted dice: \"Muéstrame tu zapato\" sin señalar, hacer gestos o dar pistas (cuando no va a salir o a vestirle), ¿su hijo le muestra su zapato?"
     }
   },
   {
@@ -1186,7 +1186,7 @@
       "item": 18,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Si usted dice: \"Tráeme la manta\" o le pide otro objeto sin señalar, hacer gestos o dar pistas, ¿su hijo/a se lo trae?"
+      "question": "4. Si usted dice: \"Tráeme la manta\" o le pide otro objeto sin señalar, hacer gestos o dar pistas, ¿su hijo/a se lo trae?"
     }
   },
   {
@@ -1196,7 +1196,7 @@
       "item": 18,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Si usted dice: \"Pon el libro sobre la silla\" sin señalar, hacer gestos, o dar pistas, ¿su hijo/a pone el libro en la silla?"
+      "question": "5. Si usted dice: \"Pon el libro sobre la silla\" sin señalar, hacer gestos, o dar pistas, ¿su hijo/a pone el libro en la silla?"
     }
   },
   {
@@ -1206,7 +1206,7 @@
       "item": 19,
       "question_item": " ",
       "question_group": "SINGLE",
-      "question": "Si el niño oye un ruido extraño o que da miedo, ¿él / ella le miran antes de responder?"
+      "question": "1. Si el niño oye un ruido extraño o que da miedo, ¿él / ella le miran antes de responder?"
     }
   },
   {
@@ -1216,7 +1216,7 @@
       "item": 19,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Su hijo/a lo mira a usted cuando se acerca alguien a quien no conoce?"
+      "question": "2. ¿Su hijo/a lo mira a usted cuando se acerca alguien a quien no conoce?"
     }
   },
   {
@@ -1226,7 +1226,7 @@
       "item": 19,
       "question_item": " ",
       "question_group": "TRIGGER",
-      "question": "¿Se vuelve hacia usted para mirarle cuando se enfrenta a algo desconocido o un poco atemorizante?"
+      "question": "3. ¿Se vuelve hacia usted para mirarle cuando se enfrenta a algo desconocido o un poco atemorizante?"
     }
   },
   {
@@ -1236,7 +1236,7 @@
       "item": 20,
       "question_item": "Su hijo/a...",
       "question_group": "GROUP",
-      "question": "¿Se ríe o sonríe?"
+      "question": "1. ¿Se ríe o sonríe?"
     }
   },
   {
@@ -1246,7 +1246,7 @@
       "item": 20,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Habla o balbucea?"
+      "question": "2. ¿Habla o balbucea?"
     }
   },
   {
@@ -1256,7 +1256,7 @@
       "item": 20,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "¿Extiende sus brazos para pedir más?"
+      "question": "3. ¿Extiende sus brazos para pedir más?"
     }
   },
   {
@@ -1266,7 +1266,7 @@
       "item": 20,
       "question_item": " ",
       "question_group": "GROUP",
-      "question": "Otro(describa)"
+      "question": "4. Otro(describa)"
     }
   }
 

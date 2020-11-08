@@ -88,19 +88,6 @@ class PatientListView(ListView):
 		supervisor_filter=User.objects.get(username=self.request.user)
 		return Patient.objects.filter(supervisor=supervisor_filter)
 
-@method_decorator(login_required, name='dispatch')
-class PatientListUserProfileView(ListView):
-
-	model = Patient
-	template_name_suffix = '_profile_user'
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['now'] = timezone.now()
-		return context
-	def get_queryset(self):
-		supervisor_filter=User.objects.get(username=self.request.user)
-		return Patient.objects.filter(supervisor=supervisor_filter)
 
 @method_decorator(login_required, name='dispatch')
 class PatientHistoricView(ListView):

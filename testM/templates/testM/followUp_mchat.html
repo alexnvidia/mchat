@@ -72,10 +72,10 @@
         
        {% if objects.has_next %}
        
-       	<button type="submit" class="btn btn-primary float-sm-right"><span class ="fas fa-arrow-alt-circle-right" style="font-size:18px">Siguiente</span></button>
+       	<button id="buttonnext" type="submit" class="btn btn-primary float-sm-right" disabled="true"><span class ="fas fa-arrow-alt-circle-right" style="font-size:18px">Siguiente</span></button>
               
         {% else %}    
-        <button type="submit" class="btn btn-success btn-block text-center">Obtener Resultado</button>
+        <button id="buttonnext" type="submit" class="btn btn-success btn-block text-center" disabled="true">Obtener Resultado</button>
         {% endif %}  
     </form>
     
@@ -87,9 +87,122 @@
     {% endif %}
     
     {{ request.session.question_id|json_script:"question_id" }}
+
+    <div  id="divAlert" class="my-5 py-3">     
+              <div class="alert alert-primary alert-dismissible fade show my-3">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>¡IMPORTANTE!</strong> Algunas cuestiones indican "otro(Describa)"" esto 
+                quiere decir que si lo desea puede realizar una pregunta cuya respuesta 
+                tenga el mismo sentido que las anteriores, esto quiere decir que responder 'Si' o 'No' a la 
+                pregunta "otro" da el mismo resultado que las de su grupo. <strong>**Nota: Cada grupo
+                de preguntas va marcado por un recuadro gris , además puede mirar el flujo de abajo para más
+                información</strong>
+              </div>       
+            </div>
     
     
-    
+    <div id="item_1" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 1</h1>
+
+        <img src="{% static 'testM/item1.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_2" class="my-3 py-3 d-none"> 
+
+        <h1 class="text-center">Flujo del Item 2</h1>
+
+        <img src="{% static 'testM/item2.png' %}" class="rounded" alt="Flujo Item 2" >
+
+    </div>
+    <div id="item_3" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 3</h1>
+
+        <img src="{% static 'testM/item3.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_4" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 4</h1>
+
+        <img src="{% static 'testM/item4.png' %}" class="rounded" alt="Flujo Item 2" > 
+    </div>
+    <div id="item_5" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 5</h1>
+
+        <img src="{% static 'testM/item5.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_6" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 6</h1>
+
+        <img src="{% static 'testM/item6.png' %}" class="rounded" alt="Flujo Item 2" > 
+    </div>
+    <div id="item_7" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 7</h1>
+
+        <img src="{% static 'testM/item7.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_8" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 8</h1>
+
+        <img src="{% static 'testM/item8.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_9" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 9</h1>
+
+        <img src="{% static 'testM/item9.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_10" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 10</h1>
+
+        <img src="{% static 'testM/item10.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_11" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 11</h1>
+
+        <img src="{% static 'testM/item11.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_12" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 12</h1>
+
+        <img src="{% static 'testM/item12.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_13" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 13</h1>
+
+        <img src="{% static 'testM/item13.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_14" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 14</h1>
+
+        <img src="{% static 'testM/item14.png' %}" class="rounded" alt="Flujo Item 2" > 
+    </div>
+    <div id="item_15" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 15</h1>
+
+        <img src="{% static 'testM/item15.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_16" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 16</h1>
+
+        <img src="{% static 'testM/item16.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_17" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 17</h1>
+
+        <img src="{% static 'testM/item17.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_18" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 18</h1>
+
+        <img src="{% static 'testM/item18.png' %}" class="rounded" alt="Flujo Item 2" > 
+    </div>
+    <div id="item_19" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 19</h1>
+
+        <img src="{% static 'testM/item19.png' %}" class="rounded" alt="Flujo Item 2" >
+    </div>
+    <div id="item_20" class="my-3 d-none"> 
+    <h1 class="text-center">Flujo del Item 20</h1>
+
+        <img src="{% static 'testM/item20.png' %}" class="rounded" alt="Flujo Item 2" > 
+    </div>
     
  {% else %}
 

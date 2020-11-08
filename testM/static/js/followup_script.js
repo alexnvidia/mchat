@@ -5,16 +5,25 @@ jQuery(document).ready(function(){
 		  jQuery(".close").click(function(){
 		    jQuery("#myAlert").alert("close");
 		  });
+
+		  jQuery("input").click(function(){
+		    jQuery("#buttonnext").prop("disabled",false);
+		  });
 		  
 		  const question_id_js = JSON.parse(document.getElementById('question_id').textContent);
 
 		  switch(question_id_js){
 
+		  	case 1:
+		  	jQuery("#item_1").removeClass('d-none');
+
+		  	break;
+
 		  	case 2:
 		  	
+		  	jQuery("#item_2").removeClass('d-none');
 		  	jQuery("#id_form-2-option_0").click(function(){		  		
         		jQuery("#AUDIT").removeClass('d-none');
-        		jQuery(document).scrollTop(jQuery(document).height());
   			});
 
   			jQuery("#id_form-2-option_1").click(function(){		  		
@@ -25,7 +34,18 @@ jQuery(document).ready(function(){
 		  		
 		  	break;
 
+		  	case 3:
+		  	jQuery("#item_3").removeClass('d-none');
+
+		  	break;
+
+		  	case 4:
+		  	jQuery("#item_4").removeClass('d-none');
+
+		  	break;
+
 		  	case 5:
+		  	jQuery("#item_5").removeClass('d-none');
 		  	var lock = 0;
 		  	jQuery("input[value='True'][name!=form-0-option][name!=form-1-option]").click(function(){
 		  		this_element = jQuery(this);
@@ -34,7 +54,6 @@ jQuery(document).ready(function(){
 		  		}else{
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_5\">**</span>");
 		  			document.getElementById("span_5").innerHTML = "ver pregunta 8";
-		  			jQuery(document).scrollTop(jQuery(document).height());
 		  			jQuery("#id_form-7-question").removeClass('d-none');
         			jQuery("#id_form-7-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 8.</span>");
 		  		}
@@ -56,7 +75,10 @@ jQuery(document).ready(function(){
   			});		  	
 		  	break;
 
+
+
 		  	case 6:
+		  	jQuery("#item_6").removeClass('d-none');
 		  	jQuery("input[value='True']").click(function(){
 		  		this_element = jQuery(this);
 		  		if(document.getElementById("span_6")){
@@ -66,7 +88,6 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_6").innerHTML = "ver pregunta 5";
 		  			jQuery("#id_form-4-question").removeClass('d-none');
 		  			jQuery("#id_form-4-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 5.</span>");
-        			jQuery(document).scrollTop(jQuery(document).height());
 		  		}
         		
   			});
@@ -84,6 +105,7 @@ jQuery(document).ready(function(){
 		  	break;
 
 		  	case 7:
+		  	jQuery("#item_7").removeClass('d-none');
 		  	jQuery("input[value='True']").click(function(){
 		  		this_element = jQuery(this);
 		  		if(document.getElementById("span_7") || document.getElementById("span_72")){
@@ -93,7 +115,6 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_7").innerHTML = "ver pregunta 5";
 		  			jQuery("#id_form-4-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 5.</span>");
 		  			jQuery("#id_form-4-question").removeClass('d-none');
-        			jQuery(document).scrollTop(jQuery(document).height());
 		  		}
         		
   			});
@@ -119,7 +140,6 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_72").innerHTML = "ver pregunta 6";
 		  			jQuery("#id_form-5-question").removeClass('d-none');
 		  			jQuery("#span_done").remove();
-        			jQuery(document).scrollTop(jQuery(document).height());
 		  		}
         		
   			});
@@ -134,6 +154,7 @@ jQuery(document).ready(function(){
 		  	break;
 
 		  	case 8:
+		  	jQuery("#item_8").removeClass('d-none');
 		  	jQuery("input[value='True'][name!=form-0-option]").click(function(){
 		  		this_element = jQuery(this)
 		  		if(document.getElementById("span_8")){
@@ -143,7 +164,6 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_8").innerHTML = "ver pregunta 9";
 		  			jQuery("#id_form-8-question").removeClass('d-none');
 		  			jQuery("#id_form-8-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 9.</span>");
-        			jQuery(document).scrollTop(jQuery(document).height());
         			jQuery("#noneed").remove();
 		  		}
         		
@@ -174,6 +194,7 @@ jQuery(document).ready(function(){
 		  	break;
 
 		  	case 9:
+		  	jQuery("#item_9").removeClass('d-none');
 		  	jQuery("input[value='True'][name!=form-6-option]").click(function(){
 		  		this_element = jQuery(this)
 		  		if(document.getElementById("span_9")){
@@ -183,7 +204,6 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_9").innerHTML = "ver pregunta 7";
 		  			jQuery("#id_form-6-question").removeClass('d-none');
 		  			jQuery("#id_form-6-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 7.</span>");
-        			jQuery(document).scrollTop(jQuery(document).height());
 
 		  		}
         		
@@ -200,7 +220,29 @@ jQuery(document).ready(function(){
   			});
 		  	break;
 
+
+		  	case 10:
+		  	jQuery("#item_10").removeClass('d-none');
+
+		  	break;
+
+		  	case 11:
+		  	jQuery("#item_11").removeClass('d-none');
+
+		  	break;
+
+		  	case 12:
+		  	jQuery("#item_12").removeClass('d-none');
+
+		  	break;
+
+		  	case 13:
+		  	jQuery("#item_13").removeClass('d-none');
+
+		  	break;
+
 		  	case 14:
+		  	jQuery("#item_14").removeClass('d-none');
 		  	jQuery("input[value='True'][name!=form-6-option][name!=form-7-option]").click(function(){
 		  		this_element = jQuery(this)
 		  		
@@ -216,7 +258,7 @@ jQuery(document).ready(function(){
 			  			document.getElementById("span_14").innerHTML = "ver pregunta 7";
 			  			jQuery("#id_form-6-question").removeClass('d-none');
 			  			jQuery("#id_form-6-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 7.</span>");
-        				jQuery(document).scrollTop(jQuery(document).height());
+        				
 			  		}
         		
         		
@@ -274,7 +316,7 @@ jQuery(document).ready(function(){
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_142\">**</span>");
 		  			document.getElementById("span_142").innerHTML = "ver pregunta 8";
 		  			jQuery("#id_form-7-question").removeClass('d-none');
-        			jQuery(document).scrollTop(jQuery(document).height());
+        			
 		  		}
         		
   			});
@@ -289,7 +331,24 @@ jQuery(document).ready(function(){
 
 		  	break;
 
+		  	case 15:
+		  	jQuery("#item_15").removeClass('d-none');
+
+		  	break;
+
+		  	case 16:
+		  	jQuery("#item_16").removeClass('d-none');
+
+		  	break;
+
+		  	case 17:
+		  	jQuery("#item_17").removeClass('d-none');
+
+		  	break;
+
+
 		  	case 18:
+		  	jQuery("#item_18").removeClass('d-none');
 
 		  	jQuery("#id_form-0-option_1").click(function(){
 		  		this_element = jQuery(this)
@@ -319,7 +378,7 @@ jQuery(document).ready(function(){
 
 		  			}else{
 		  				jQuery(this).parent().after("<span class=\"badge badge-warning\" id=\"noneed\">*Ya puedes pasar a la siguiente página, esta respuesta es concluyente</span>");
-		  				jQuery(document).scrollTop(jQuery(document).height());
+		  				
 		  			}
 		  					  			
   						  					  		
@@ -339,6 +398,7 @@ jQuery(document).ready(function(){
 		  	break;
 
 		  	case 19:
+		  	jQuery("#item_19").removeClass('d-none');
 		  	jQuery("#id_form-0-option_1").click(function(){
 		  		this_element = jQuery(this)
 		  		if(document.getElementById("span_19")){
@@ -348,7 +408,7 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_19").innerHTML = "ver pregunta 2";
 		  			jQuery("#id_form-1-question").removeClass('d-none');
 		  			jQuery("#noneed").remove();
-        			jQuery(document).scrollTop(jQuery(document).height());
+        			
 		  		}
         		
   			});
@@ -377,7 +437,7 @@ jQuery(document).ready(function(){
 		  			document.getElementById("span_191").innerHTML = "ver pregunta 3";
 		  			jQuery("#id_form-2-question").removeClass('d-none');
 		  			jQuery("#noneed").remove();
-        			jQuery(document).scrollTop(jQuery(document).height());
+        			
 		  		}
         		
   			});
@@ -394,6 +454,12 @@ jQuery(document).ready(function(){
 		  		jQuery("#span_191").remove();
         		
   			});
+		  	break;
+
+
+		  	case 20:
+		  	jQuery("#item_20").removeClass('d-none');
+
 		  	break;
 
 		  	default:

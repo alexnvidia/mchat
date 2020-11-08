@@ -141,15 +141,15 @@
         </div>
     
     <form method="POST" class="form-group">{% csrf_token %}
-      <div style="bottom: 8px">        
+      <div class="text-center w3-padding-16 w3-margin-left" style="bottom: 8px">        
         <button type="submit" class="button" style="vertical-align:middle"><span>Descargar pdf de resultados del niño/a</span> </button>
       </div>
           
     </form>
 
-    <div class="text-center w3-padding-16">
+    <div class="text-center w3-padding-16 w3-margin-left">
            <a href="{% url 'mchats:patients' %}" class="w3-button w3-teal"> Volver</a>
-          </div>
+    </div>
 {% else %}
 
   <h1> Aún no hay resultados disponibles</h1>

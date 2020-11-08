@@ -20,9 +20,11 @@
 				        <th class="text-center">Nombre</th>
 				        <th class="text-center">Apellidos</th>
 				        <th class="text-center">Test</th>
-				        <th class="text-center">Resultados</th>				        
+				        <th class="text-center">Resultados(1ª y 2º etapa)</th>				        
 				        <th class="text-center">Positivo en el test M-CHAT-R/F</th>
 				        <th class="text-center">Riesgo de TEA</th>
+				        <th class="text-center">Histórico</th>
+				        <th class="text-center">Test Finalizado</th>
 				        <th class="text-center">Gestión</th>
 				      </tr>
 				    </thead>
@@ -32,10 +34,10 @@
 			{% for patient in patient_list %}
 
 				      <tr>
-				      		<td class="text-center">{{ patient.pk }}</td>
-				        	<td class="text-center">{{ patient.name|title }}</td>
-				        	<td class="text-center">{{ patient.subname|title }}</td>					
-				       		<td class="text-center">
+				      		<td class="text-center py-5">{{ patient.pk }}</td>
+				        	<td class="text-center py-5">{{ patient.name|title }}</td>
+				        	<td class="text-center py-5">{{ patient.subname|title }}</td>					
+				       		<td class="text-center py-5">
 				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary my-2"><span class="fas fa-play">M-CHAT-R(Primera etapa)</a>
 				       		{% if patient.mchat_score >= 3 and patient.mchat_score <= 7 %}
 				       		<a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">M-CHAT-R/F(Etapa de seguimiento)</a>
@@ -44,23 +46,35 @@
 
 				       		{% if patient.item_score|length > 0 %}
 
-				       		<td class="text-center"><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
+				       		<td class="text-center py-5"><a href="{% url 'mchats:patient_result' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-eye">Ver</a></td>
 				       		{% else %}
 				       		<td> </td>
 				       		{% endif %}
 				       		
 				       		{% if patient.positive %}
-				       			<td class="text-center"> Si </td>
+				       			<td class="text-center py-5"> Si </td>
 				       		{% else %}
-				       			<td class="text-center"> No </td>
+				       			<td class="text-center py-5"> No </td>
 				       		{% endif %}
 
 				       		{% if patient.positive_tr %}
-				       			<td class="text-center"> Si <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional no indica riesgo de TEA"><span class="fas fa-check"></a></td>
+				       			<td class="text-center py-5"> Si <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional no indica riesgo de TEA"><span class="fas fa-check"></a></td>
 				       		{% else %}
-				       			<td class="text-center"> No <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional indica riesgo de TEA"><span class="fas fa-check"></a> </td>
+				       			<td class="text-center py-5"> No <a href="{% url 'mchats:confirm_positive' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que el diagnóstico final revisado por un profesional indica riesgo de TEA"><span class="fas fa-check"></a> </td>
 				       		{% endif %}
-				       		<td class="text-center"><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary my-2" data-toggle="tooltip" title="Editar niño/a"><span class="fas fa-pencil-alt"></a>
+				       		<td class="text-center py-5"> 
+				       			<a href="{% url 'mchats:patient_historic' patient.pk %}" class="btn btn-outline-primary">Ver histórico</a>
+				       		</td>
+				       		{% if patient.finish %}
+				       		<td class="text-center py-5">
+				       			Si
+				       		</td>
+				       		{% else %}
+				       		<td class="text-center py-5">
+				       			No
+				       		</td>
+				       		{% endif %}
+				       		<td class="text-center py-5"><a href="{% url 'mchats:patient_update' patient.pk %}" class="btn btn-outline-primary my-2" data-toggle="tooltip" title="Editar niño/a"><span class="fas fa-pencil-alt"></a>
 				       		<a href="{% url 'mchats:patient_delete' patient.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Eliminar niño/a"><span class="fas fa-trash"></a></td>
 				       </tr> 			
 			{% endfor %}
