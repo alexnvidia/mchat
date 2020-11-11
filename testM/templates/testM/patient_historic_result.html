@@ -108,9 +108,9 @@
             {% for f in followUpItem %}
                 
                 {% if f.option == True %}
-                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si </li><br>                
+                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si / Item:{{ f.item }} </li><br>                
                 {% else %}
-                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No </li><br>
+                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No / Item:{{ f.item }} </li><br>
 
                 {% endif %}
 
