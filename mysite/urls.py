@@ -23,7 +23,7 @@ from testM import views as core_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/logout/', views.LogoutView.as_view(next_page='/'), name='logout'), 
-    path('accounts/password_reset/', views.PasswordResetView.as_view(template_name='registration/password_reset_form_mine.html'), name='password_reset'),
+    path('accounts/password_reset/', views.PasswordResetView.as_view(template_name='registration/password_reset_form_mine.html',email_template_name='registration/password_reset_email_mine.html'), name='password_reset'),
     path('accounts/password_reset/done/', views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done_mine.html'), name='password_reset_done'),
     path('accounts/reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm_mine.html'), name='password_reset_confirm'),
     path('accounts/reset/done/', views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete_mine.html'), name='password_reset_complete'),
