@@ -71,6 +71,9 @@ class Patient(models.Model):
 	item_score = models.CharField(max_length=21, default='',verbose_name = 'Lista de respuestas primera etapa')
 	item_scoreRF = models.CharField(max_length=128, default='',verbose_name = 'Lista de respuestas segunda etapa')
 	followup_list = models.CharField(max_length=50, default='',verbose_name = 'Lista de item necesarios a revisar')
+	followup_risk = models.CharField(max_length=50, default='',verbose_name = 'Lista de item que marcan riesgo en Seguimiento')
+	custom_quest = models.CharField(max_length=1024, default='',verbose_name= 'Pregunta personalizada')
+	adic_info = models.CharField(max_length=1200, default='',verbose_name='Informacion adicional')
 	audit_info = models.CharField(max_length=30, default='No aplica',verbose_name = 'Nivel de audición')
 	sex = models.CharField(max_length=1,choices=MALE_FEMALE,default="",verbose_name="Sexo")
 	finish = models.BooleanField(choices=SI_NO_CHOICES,max_length=3,null=True,default=False,blank=True,verbose_name = 'Test Realizado')
@@ -97,7 +100,10 @@ class Patient_historic(models.Model):
 	item_score = models.CharField(max_length=21, default='',verbose_name = 'Lista de respuestas primera etapa')
 	item_scoreRF = models.CharField(max_length=128, default='',verbose_name = 'Lista de respuestas segunda etapa')
 	followup_list = models.CharField(max_length=50, default='',verbose_name = 'Lista de item necesarios a revisar')
+	followup_risk = models.CharField(max_length=50, default='',verbose_name = 'Lista de item que marcan riesgo en Seguimiento')
+	custom_quest = models.CharField(max_length=1024, default='',verbose_name= 'Pregunta personalizada')
 	audit_info = models.CharField(max_length=30, default='No aplica',verbose_name = 'Nivel de audición')
+	adic_info = models.CharField(max_length=1200, default='',verbose_name='Informacion adicional')
 
 	class Meta:
 		ordering = ["date_test"]

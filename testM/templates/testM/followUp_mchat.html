@@ -14,7 +14,7 @@
     {% for object in objects %}
     <div class="my-3" style="background-color: lightblue; box-shadow: 2px 2px 4px #3691b0;padding: 25px;">
     	
-    <p class="my-3" style="word-break: break-all;font-size:30px">Item {{ object.question_id }}: {{ object.question }}</p>
+    <p class="my-3" style="word-break: break-all;font-size:30px">Item {{ object.question }}</p>
 
     </div>
       
@@ -72,10 +72,10 @@
         
        {% if objects.has_next %}
        
-       	<button id="buttonnext" type="submit" class="btn btn-primary float-sm-right" disabled="true"><span class ="fas fa-arrow-alt-circle-right" style="font-size:18px">Siguiente</span></button>
+       	<button id="buttonnext" type="submit" class="btn btn-primary float-sm-right" disabled="true" name="validate"><span class ="fas fa-arrow-alt-circle-right" style="font-size:18px">Siguiente</span></button>
               
         {% else %}    
-        <button id="buttonnext" type="submit" class="btn btn-success btn-block text-center" disabled="true">Obtener Resultado</button>
+        <button id="buttonnext" type="submit" class="btn btn-success btn-block text-center" disabled="true" name="validate">Obtener Resultado</button>
         {% endif %}  
     </form>
     
@@ -84,7 +84,31 @@
     	<a href="?page={{ objects.previous_page_number }}" class="btn btn-primary  float-sm-left"><span class="fas fa-arrow-alt-circle-left" style="font-size:18px">Atrás</span></a>
     	</div>
     	
-    {% endif %}
+        {% endif %}
+
+
+
+    <div class="container-sm py-4 d-none" id="divQuest" >
+    <div class="mx-auto shadow p-4 mb-4 bg-white my-5">
+      <div class="col-md-9 mx-auto">
+        <div>
+                   
+          <form method="POST" class="form-group" id="form_customq" action="{% url 'mchats:save_custom_quest' patient.pk request.session.question_id %}">{% csrf_token %}
+                {{ customform }}
+                <button id="buttonCustom" type="submit" class="btn btn-info form-control mt3 my-2" name="custom">Guardar Pregunta</button>
+
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div id="divUndoQuest" class="d-none">
+        <a id="undoClick" href="{% url 'mchats:undo_custom_quest' patient.pk request.session.question_id %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que quiere descartar la pregunta guardada"><span class="fas fa-check"> Descartar pregunta personalizada</a>
+        
+    </div>
+
+
     
     {{ request.session.question_id|json_script:"question_id" }}
 
@@ -93,7 +117,7 @@
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <strong>¡IMPORTANTE!</strong> Algunas cuestiones indican "otro(Describa)"" esto 
                 quiere decir que si lo desea puede realizar una pregunta cuya respuesta 
-                tenga el mismo sentido que las anteriores, esto quiere decir que responder 'Si' o 'No' a la 
+                tenga el mismo sentido que las anteriores, por lo que responder 'Si' o 'No' a la 
                 pregunta "otro" da el mismo resultado que las de su grupo. <strong>**Nota: Cada grupo
                 de preguntas va marcado por un recuadro gris , además puede mirar el flujo de abajo para más
                 información</strong>

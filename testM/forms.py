@@ -201,3 +201,43 @@ class PatientForm(forms.ModelForm):
 		}
 
 
+class custom_question(forms.ModelForm):
+
+	"""docstring for mchatForm"forms.ModelFormf __init__(self, arg):
+		super(mchatForm,forms.ModelForm.__init__()
+		self.arg = arg"""	
+
+	custom_quest =forms.CharField(label=False,widget=forms.TextInput(
+		attrs={'class':'form-control mt3 my-2', 'placeholder': 'Otro(Describa)'}))
+
+	class Meta:
+		model = Patient
+		fields = ('custom_quest',)
+		widgets = {				
+				
+				'custom_quest': forms.TextInput(attrs={'class':'form-control mt3 my-2', 'placeholder': 'Otro(Describa)'})
+		}
+
+
+class adicional_info(forms.ModelForm):
+
+	adic_info = forms.CharField(label=False, widget = forms.Textarea(
+		attrs={'class':'form-control mt-3', 'rows':6, 'placeholder':'Contenido adicional'}))
+
+	class Meta:
+		model = Patient
+		fields = ('adic_info',)
+
+	def clean_adic_info(self):
+		cleaned_data = super(adicional_info, self).clean()
+
+		adic_info = cleaned_data.get('adic_info')
+
+		if adic_info.find('|') != -1:
+			raise forms.ValidationError("No se permite el caracter '|' ")
+		return adic_info
+
+
+
+
+

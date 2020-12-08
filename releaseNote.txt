@@ -1,11 +1,23 @@
-Lista de cambios
+Lista de errores:
 
-* Fix que indicaba que siguieras con el seguimiento cuando la puntuación era mayor que 7.
-* Fix para no permitir edades menores de 16 meses o mayores de 30 meses
-* Se ha añadido la columna id para poder identificar al usuario con mismo nombre
-* Se ha mejorado el proceso de seguimiento haciéndolo más intuitivo y se arreglado algunos comportamientos extraños
-* Se ha arreglado la apariencia de la página de resultados y se añadido botón de volver en esta página , en la de creación
-de paciente y en la de actualización.
-*IN PROGRESS Queda meter imágenes del flujo en cada hoja del seguimiento. 
-*IN PROGRESS Revisar página principal y de la guía.
+	-DONE Fix en item 12 de seguimiento, Activar las de PASA y NOPASA cuando sean dos o mas.
+
+	-DONE Fix para reactivar boton de siguiente cuando vuelves atrás y ya respondiste a las preguntas.
+
+	-DONE (TODOS REVISADOS) Fix activar el botón de siguiente cuando ya no sea necesario responder más preguntas por ejemplo si aparece una pregunta TRIGGER ahí no debemos activarlo hasta que se responda.(
+		-Para el item 3,4 es necesario que solo se active cuando hay algún si o todos no)
+		-Para el item 5 se activa cuando es un si en PASA o un si en la pregunta trigger o cuando son todos no en el grupo NOPASA
+		-Para el item 6 se activa cuando es un si en trigger o todos no....etc.
+
+	-DONE En vista de resultados indicar la pregunta que corresponde además del número de los item de la primera etapa. Añadidos numeros de item en questiones de primera etapa. Añadido también cuestión relaccionada con el nivel auditivo.
+
+	-DONE Añadir la posibilidad de incluir la pregunta de otro(describa)
+
+	-DONE Añadir el diagrama de flujo también en página de resultados.
+
+	-DONE También añadir opción de descarga en RTF u otro formato editable.(Se exporta en formato docx, añadir tambien las imagenes del flujo conflictivo)
+
+	-TODO Dar opción de añadir contenido adicional al informe de resultados.
+
+
 

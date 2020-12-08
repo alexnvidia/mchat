@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
         <style>
 .button {
   display: inline-block;
@@ -59,7 +60,7 @@
   <h1>Página de resultados</h1>
   </header>
     
-        <div class="w3-container w3-padding-16">
+        
         <div class="w3-card-4 w3-dark-grey w3-center">
 
     <div class="w3-container w3-center ">
@@ -85,7 +86,7 @@
   </div>
           
         
-          <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+          <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue w3-padding-16 w3-margin-left">
           <span style="font-size:36px">Cuestiones m-chat-r</span><br>
           <ul class="list-group list-group-flush">
           {% for m in mchat_item %}
@@ -98,25 +99,61 @@
 
           {% endfor %}
           </ul>
+
+
     
           </div>
 
-          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+          <div class="w3-panel w3-pale-green w3-leftbar w3-border-green w3-padding-16 w3-margin-left">
           <span style="font-size:36px">Cuestiones m-chat-r/f</span><br>
           {% if patient.mchat_score > 2 and patient.item_scoreRF|length > 0 %}
             <ul class="list-group list-group-flush">
             {% for f in followUpItem %}
                 
                 {% if f.option == True %}
-                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si / Item:{{ f.item }} </li><br>                
+                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si / Item:{{ f.item }} </li>            
+                {% elif f.option == False %}
+                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No / Item:{{ f.item }} </li>
+
+                {% elif f.question_group == "AUDIT" %}
+                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: {{ audit_message }} / Item:{{ f.item }}</li>
+
                 {% else %}
-                <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No / Item:{{ f.item }} </li><br>
 
                 {% endif %}
 
             {% endfor %}
             </ul>
         </div>
+
+        <div class="w3-panel w3-pale-red w3-leftbar w3-border-red w3-padding-16 w3-margin-left">
+        <h1 class="text-center "> Flujos que indican riesgo de TEA</h2>
+        <ul class="list-group list-group-flush">
+        {% if List_risk|length > 0 %}
+        
+          {% for l in List_risk %}
+          
+            <li  style="word-break: break-all;font-size:20px">Item: {{ l.question_id }}</li>
+
+          
+          {% endfor %}
+        {% else %}
+
+          <li  style="word-break: break-all;font-size:20px">Ningún Item es conflictivo</li>
+        {% endif %}
+        </ul>
+        </div>
+
+        
+
+        <h1 class="text-center w3-padding-16 w3-margin-left"> Flujos Realizados</h2>
+        {% for i in Item_dict %}
+        <div id="item_{{ i.question_id }}" class="text-center w3-padding-16 w3-margin-left"> 
+          <h2 class="text-center">Flujo del Item {{ i.question_id }}</h1>
+
+          <img src="{% static i.static %}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
+        </div>
+        {% endfor %}
 
           
           
@@ -136,6 +173,33 @@
             </div>
           {% endif %}
         </div>
+
+        <div class="w3-panel w3-light-blue w3-leftbar w3-border-grey w3-padding-16 w3-margin-left">
+        <h1 class="text-center"> Contenido Adicional</h2>
+        <ul class="list-group list-group-flush">
+          {% if patient.adic_info %}
+          
+          
+            {% for l in adic_info_list %}
+            <li style="word-break: break-all;font-size:20px"> {{ l }}</li>
+            {% endfor %}
+          {% else %}
+            <li style="font-size:20px"> No se ha añadido contenido adicional </li>
+          {% endif %}
+          </ul>
+          </div>
+        
+
+         
+          <form method="POST" id="form_adicional" class="form-group w3-padding-16 w3-margin-left" action="{% url 'mchats:save_adicional_info' patient.pk %}">{% csrf_token %}
+            {{ form }}
+            <div class="text-center " style="bottom: 8px">     
+            <button type="submit" class="w3-button w3-circle w3-teal" style="vertical-align:middle;font-size:20px">+</button> 
+            </div>        
+          </form>
+        
+
+
     
     <form method="POST" class="form-group">{% csrf_token %}
       <div class="w3-padding-16 w3-margin-left" style="bottom: 8px">        
@@ -143,10 +207,20 @@
       </div>
           
     </form>
+   
+
+    <form method="POST" class="form-group" action="{% url 'mchats:result_docxH' patient.pk %}">{% csrf_token %}
+      <div class="text-center w3-padding-16 w3-margin-left" style="bottom: 8px">        
+        <button type="submit" class="button" style="vertical-align:middle"><span>Descargar odt de resultados del niño/a</span> </button>
+      </div>
+          
+    </form>
 
     <div class="text-center w3-padding-16 w3-margin-left">
            <a href="{% url 'mchats:patients' %}" class="w3-button w3-teal"> Volver</a>
     </div>
+
+    <script src="{% static 'js/result_script.js' %}"></script>
   
 <footer class="w3-container w3-teal">
   <h5>Footer</h5>

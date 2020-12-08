@@ -5,7 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text
 from django.contrib.auth import login, authenticate
 from .models import Mchat , Item, Patient, FollowUpItem, Profile,Patient_historic
-from .forms import mchatForm,mchatTest,PatientForm,mchatFollowup,profileForm
+from .forms import mchatForm,mchatTest,PatientForm,mchatFollowup,profileForm,custom_question,adicional_info
 from .forms import SignUpForm
 from django.forms import formset_factory, modelformset_factory
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -19,7 +19,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 from django.core import serializers
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.db import IntegrityError
@@ -33,6 +33,12 @@ from django.utils.html import strip_tags
 from django.conf import settings
 from weasyprint import HTML, CSS
 from datetime import date
+from zipfile import ZipFile
+from io import BytesIO, StringIO
+from docx import Document
+from docx.shared import Inches
+import io
+
 
 
 
@@ -254,6 +260,84 @@ def str_to_bool(string):
 	else:
 		return False
 
+
+def parse_custom_quest(question,final_quest,question_id):
+	final_str = ""
+	list_quest = question.split(', ')
+	list_aux = []
+
+	#de la lista extraigo los item de las cuestiones para luego ordenarlas
+	if question != '':
+		for l in list_quest:
+			if l[0:2].find('.') == -1:
+				list_aux.append(int(l[0:2]))
+			else:
+				list_aux.append(int(l[0:1]))
+		print(type(question_id))
+		list_aux.append(question_id)
+		list_aux.sort()
+		list_quest.insert(list_aux.index(question_id),str(question_id) + '.' + final_quest)
+		if len(list_quest) == 1:
+			for q in list_quest:
+				final_str = q
+			return final_str
+		elif len(list_quest) > 1:
+			for q in list_quest:
+				if list_quest.index(q) == len(list_quest) - 1:
+					final_str+= q
+				else:
+					final_str+= q + ', '
+			return final_str
+	else:
+		final_str = str(question_id) + '.' + final_quest
+		return final_str
+	return final_str
+
+def split_validate(question,final_quest,question_id):
+	list_quest = question.split(', ')
+	final_quest = str(question_id) + '.' +  final_quest
+	bool_message = True
+	for l in list_quest:
+		if(l[0:len(str(question_id))] == final_quest[0:len(str(question_id))]):
+			bool_message = False
+			return bool_message
+	return bool_message
+
+def split_validate_undo(question,question_id):
+	bool_message = False
+
+	if len(question) > 0:
+		for c in question:
+			if(c[0:len(str(question_id))] == str(question_id)):
+				bool_message = True
+	return bool_message
+
+
+def undo_custom(question,question_id):
+	final_str = ""
+	element = ""
+	for q in question:
+		if q[0:len(str(question_id))] == str(question_id):
+			element = q
+
+	if element in question:
+		question.pop(question.index(element))
+	else:
+		return final_str
+	if len(question) == 1:
+		for l in question:
+			final_str = l 
+	elif len(question) > 1:
+		for l in question:
+			if question.index(l) == len(question) - 1:
+				final_str+= l
+			else:
+				final_str+= l + ', '
+	return final_str
+
+
+
+
 def option_to_score_list(option,lista_score):
 	if (option == "True"):
 		lista_score+='1'
@@ -307,6 +391,31 @@ def char_to_list(followup_list):
 			listf.append(int(charBak))
 			charBak=""
 	return listf
+
+
+def item_risk2list(item_risk,Item_list):
+	listr = []
+	j = 0
+	if len(item_risk) == len(Item_list):
+		for i in Item_list:
+			if(item_risk[j] == '1'):
+				listr.append(i)
+				j+=1
+			else:
+				j+=1
+	return listr
+
+def select_c_quest(custom_quest, question_id):
+	element = "noresult"
+	for c in custom_quest:
+		if (len(c) > 0 and c[0] == str(question_id)):
+			element = c
+	return element
+
+
+
+
+
 
 def objetc_to_list(listaFollowUp):
 	followup_object=[]
@@ -470,11 +579,30 @@ def MchatScoreRf(question_id,count_pasa,list_trigger,count_nopasa,count_group,li
 			return score
 	return score
 
-def set_option_to_rf(queryset,item_scoreRF):
+def list_custom_n(list_question):
+	list_auxn = []
+	for l in list_question:
+			if l[0:2].find('.') == -1:
+				list_auxn.append(int(l[0:2]))
+			else:
+				list_auxn.append(int(l[0:1]))
+	return list_auxn
+
+
+
+
+def set_option_to_rf(queryset,question,item_scoreRF):
 	i = 0
 	j = 0
+	y = 0
+	z = 0
 	lista_rf_def = []
 	lista_option = []
+	lista_quest = question.split(', ')
+	list_aux = []
+	list_auxn = []
+	list_questn = []
+	list_position = []
 
 	if(len(item_scoreRF) > 0 and len(item_scoreRF) == queryset.count()):
 		for q in queryset:
@@ -486,13 +614,48 @@ def set_option_to_rf(queryset,item_scoreRF):
 				lista_rf_def.append(q.pk)
 				lista_option.append(False)
 				i+=1
+			elif (item_scoreRF[i] == '2' or item_scoreRF[i] == '3' or item_scoreRF[i] == '4'):
+				lista_rf_def.append(q.pk)
+				lista_option.append(item_scoreRF[i])
+				i+=1
 			else:
 				i+=1
 		queryset = queryset.filter(pk__in=lista_rf_def)
 
+		for c in queryset:
+			if c.question.find("Otro(describa)") != -1:
+				list_aux.append(str(c.item) + '. '+ "Otro(describa)")
+		if question != '':
+			list_auxn = list_custom_n(list_aux)
+			list_questn = list_custom_n(lista_quest)
+		print(list_auxn)
+		print(list_questn)
+		if len(list_auxn) != len(list_questn) and len(list_questn) <= len(list_auxn):
+			for r in list_questn:
+				if r in list_auxn:
+					list_position.append(list_auxn.index(r))
+			for c in lista_quest:
+				list_aux[list_position[z]] = c
+				z+=1
+			lista_quest = list_aux
+		else:
+			lista_quest = lista_quest
+
+
+
+
+
 		for q in queryset:		
 			q.option = lista_option[j]
 			j+=1
+			if question != '':
+				if q.question.find("Otro(describa)") != -1:
+					if lista_quest[y][0:2].find('.') == -1 and str(q.item) == lista_quest[y][0:2]:
+						q.question=q.question.replace(q.question[q.question.find('.')+2:len(q.question)],lista_quest[y][3:len(lista_quest[y])])
+					elif lista_quest[y][0:2].find('.') != -1 and str(q.item) == lista_quest[y][0:1]:
+						q.question=q.question.replace(q.question[q.question.find('.')+2:len(q.question)],lista_quest[y][2:len(lista_quest[y])])
+					y+=1
+
 
 	return queryset
 
@@ -582,6 +745,15 @@ def audit_info_mapper(audit_int):
 
 	return message
 
+
+def generate_list_dict(Item_list):
+	list_dict = []
+
+	for i in Item_list:
+		list_dict.append({"question_id":str(i.question_id),"static":"testM/item"+str(i.question_id)+".png"})
+	return list_dict
+
+
 	
 
 
@@ -611,7 +783,7 @@ def mchat_start (request, pk):
 				if(MchatScore(question_id,option) == 1):
 					listaFollowUp=(construct_followup_list(question_id,listaFollowUp))
 			dictr = IfMchatFollowUp(total_score)					
-			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"],'positive': dictr["result"],'item_scoreRF' : '','mchatrf_score': 0})
+			Patient.objects.update_or_create(pk = pk, defaults={'mchat_score': total_score,'item_score': lista_score,'followup_list': listaFollowUp,'finish': dictr["finish"],'positive': dictr["result"],'item_scoreRF' : '','mchatrf_score': 0,'custom_quest': '','adic_info': ''})
 			if(dictr["finish"] == True):
 				Patient_historic.objects.create(patient = patient, mchat_score = total_score, item_score = lista_score, followup_list = listaFollowUp, positive = dictr["result"] )
 
@@ -636,6 +808,7 @@ def followup_mchat(request, pk):
 	item_score=patient.item_score
 	total_score = patient.mchat_score
 	followup_array=patient.followup_list
+	c_quest = patient.custom_quest
 	followup_object=[]
 	objects = ""
 	list_pk_followup = []
@@ -650,7 +823,10 @@ def followup_mchat(request, pk):
 
 	#transformo el char followup_array a lista
 	followup_list=char_to_list(followup_array)
-	
+
+	#transformo la cuestiones personalizadas a lista
+	c_quest = c_quest.split(', ')
+
 	#recorro la lista anterior y genero la lista de item que tienen seguimiento
 	followup_object=objetc_to_list(followup_list)
 
@@ -661,11 +837,12 @@ def followup_mchat(request, pk):
 	item=Item.objects.order_by('pk').filter(question_id__in=followup_list)
 	
 	mchatFollowUpFormset = formset_factory(mchatFollowup ,extra=0)
+	customform = custom_question()
 	#print(request.session.items())
 	
 
 
-	if request.method == "POST":
+	if 'validate' in request.POST:
 		data_des = request.session['page_query']
 		for obj in serializers.deserialize("json", data_des):
 			list_pk_followup.append(obj.object.pk)
@@ -715,16 +892,22 @@ def followup_mchat(request, pk):
 				score_rf = request.session['score_rf']
 				audit_info = request.session['audit_info']
 				positive=FinalMchatRfScore(score_rf)
+				item_risk = request.session['string_score']
 				item_scoreRF = add_all_optionRF(n_pages,request)
-				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'mchatrf_score': score_rf,'finish': True})
-				Patient_historic.objects.create(patient = patient, mchat_score = total_score, mchatrf_score = score_rf , item_score = item_score, item_scoreRF = item_scoreRF, followup_list = followup_array, positive = positive, audit_info = audit_info)
+				custom_quest = patient.custom_quest
+				Patient.objects.update_or_create(pk = pk, defaults={'positive': positive,'audit_info': audit_info,'item_scoreRF': item_scoreRF,'mchatrf_score': score_rf,'followup_risk':item_risk,'finish': True,'adic_info' : ''})
+				Patient_historic.objects.create(patient = patient, mchat_score = total_score, 
+					mchatrf_score = score_rf , item_score = item_score, item_scoreRF = item_scoreRF, 
+					followup_list = followup_array, followup_risk = item_risk, positive = positive, 
+					audit_info = audit_info, custom_quest = custom_quest, adic_info = '')
 				return render(request,'testM/resultados_mchatRF.html',{'score_rf': score_rf, 'positive': positive, 'patient': patient,})
 			return redirect('mchats:mchats')
 		else:
 			print("Not Valid")
 			print(formset.errors)
+
 	else:
-		print("hola")
+		print("esto es get")
 		paginator = Paginator(item, 1)
 		page = request.GET.get('page')
 		if(page == None):
@@ -760,24 +943,75 @@ def followup_mchat(request, pk):
 		
 		if (request.session['actual_page'] < request.session['post_send']):
 			print(request.session[str(page)])
-			if ((len(request.session['string_score']) > 0) and (len(request.session['string_score'])) <= (request.session['actual_page']-1)  and request.session['string_score'][request.session['actual_page'] - 1] == '1'):
+			if ((len(request.session['string_score']) > 0) and (len(request.session['string_score'])) == (request.session['actual_page'])):
+				if(request.session['string_score'][request.session['actual_page'] - 1] == '1'):
+					request.session['score_rf']-=1
 				request.session['string_score']=request.session['string_score'][0:request.session['actual_page']-1]
-				request.session['score_rf']-=1
 				print("socre")
-		print(request.session['string_score'])
+		print("String Score: "+request.session['string_score'])
 		print(request.session['score_rf'])
 
 		for o in objects:
 			request.session['question_id'] = o.question_id
 
 		page_query=set_option_to_rf_nf(page_query,request.session[str(page)])
-
+		element=select_c_quest(c_quest,request.session['question_id'])
+		print(element)
 
 		formset = mchatFollowUpFormset(initial=[{'question_group': l.question_group,'question_item':l.question_item, 'question': l.question,'option': l.option, 'extra_option': l.extra_option} for l in page_query])
 		data = serializers.serialize("json", page_query)
 		request.session['page_query'] = data
 
-	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects,})
+	return render(request,'testM/followUp_mchat.html',{'patient': patient,'formset': formset,'objects': objects,'customform': customform,'element':element,})
+
+@login_required
+def save_custom_quest(request,pk,question_id):
+	patient = get_object_or_404(Patient,pk=pk)
+	question = patient.custom_quest
+	message = ''
+	customform = custom_question(request.POST)
+	if customform.is_valid():
+		question_form = customform.cleaned_data.get('custom_quest')
+		if(split_validate(question,question_form,question_id) == True):
+			question = parse_custom_quest(question,question_form,question_id)
+			Patient.objects.update_or_create(pk = pk, defaults={'custom_quest': question,})
+			message = "Se añadió: " + question[2:(len(question))] + " como pregunta personalizada"
+		else:
+			message = 'Ya introdujo esta pregunta anteriormente'
+	return JsonResponse(
+
+			{
+				'content' : {
+
+						'message' : message,
+				}
+			}
+		)
+
+@login_required
+def undo_custom_quest(request,pk,question_id):
+	patient = get_object_or_404(Patient,pk=pk)
+	question = patient.custom_quest
+	message = "No se envió ninguna pregunta personalizada"
+	if len(question) > 0:
+		question = question.split(', ')
+		if split_validate_undo(question,question_id) == True:
+			new_list = undo_custom(question,question_id)
+			Patient.objects.update_or_create(pk = pk, defaults={'custom_quest': new_list,})
+			message = 'Se ha descartado correctamente'
+		else:
+			message = 'Ninguna pregunta que descartar'
+	return JsonResponse(
+
+			{
+				'content' : {
+
+						'message' : message,
+				}
+			}
+		)
+
+
 
 @login_required
 def patient_result(request,pk):
@@ -785,6 +1019,9 @@ def patient_result(request,pk):
 	item_score = patient.item_score
 	item_scoreRF = patient.item_scoreRF
 	followup_array = patient.followup_list
+	question_c = patient.custom_quest
+	item_risk = patient.followup_risk
+	adic_info = patient.adic_info
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
 	last_test = Patient_historic.objects.filter(patient = pk).last()
@@ -811,13 +1048,21 @@ def patient_result(request,pk):
 	#Transformo el campo audit_info que corresponde con un tipo númerico a su correspondiente mensaje del nivel auditivo
 	audit_message=audit_info_mapper(audit_info)
 
-	followUpItem = set_option_to_rf(followUpItem,item_scoreRF)
+	followUpItem = set_option_to_rf(followUpItem,question_c,item_scoreRF)
 
 	mchat_item = set_option_to_item(mchat_item,item_score)
 
+	Item_dict = generate_list_dict(Item_list)
+
+	List_risk = item_risk2list(item_risk,Item_list)
+
+	form = adicional_info()
+
+	adic_info_list = adic_info.split("||")
+
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age},request=request)
+		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age,'Item_dict': Item_dict, 'List_risk' : List_risk, 'adic_info_list' : adic_info_list},request=request)
 		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
@@ -831,7 +1076,9 @@ def patient_result(request,pk):
 			return response
 		return response
 
-	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age})
+	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,
+		'patient': patient,'audit_message': audit_message,'last_test': last_test,
+		'age': age, 'Item_dict': Item_dict,'List_risk' : List_risk, 'form' : form, 'adic_info_list' : adic_info_list})
 
 
 @login_required
@@ -839,8 +1086,11 @@ def patient_historic_result(request,pk):
 	patient = Patient_historic.objects.get(pk=pk)
 	item_score = patient.item_score
 	item_scoreRF = patient.item_scoreRF
+	item_risk = patient.followup_risk
 	followup_array = patient.followup_list
+	question_c = patient.custom_quest
 	birth_date = patient.patient.birth_date
+	adic_info = patient.adic_info
 	date_test = patient.date_test
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
@@ -864,14 +1114,22 @@ def patient_historic_result(request,pk):
 	#Transformo el campo audit_info que corresponde con un tipo númerico a su correspondiente mensaje del nivel auditivo
 	audit_message=audit_info_mapper(audit_info)
 
-	followUpItem = set_option_to_rf(followUpItem,item_scoreRF)
+	followUpItem = set_option_to_rf(followUpItem,question_c,item_scoreRF)
 
 	mchat_item = set_option_to_item(mchat_item,item_score)
 
+	Item_dict = generate_list_dict(Item_list)
+
+	List_risk = item_risk2list(item_risk,Item_list)
+
+	form = adicional_info()
+
+	adic_info_list = adic_info.split("||")
+
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age':age},request=request)
-		html = HTML(string=html_string)
+		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age':age,'Item_dict':Item_dict, 'List_risk' : List_risk , 'adic_info_list':adic_info_list},request=request)
+		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient.patient).replace(" ","_") + str(patient.date_test) + ".pdf"
 		target = "/tmp/" + namepdf
 		css_file = '/testM/static/css/w3.css'
@@ -885,7 +1143,9 @@ def patient_historic_result(request,pk):
 		return response
 
 
-	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age': age})
+	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,
+		'patient': patient,'audit_message': audit_message,'age': age,
+		'Item_dict':Item_dict,'List_risk' : List_risk, 'form' : form, 'adic_info_list': adic_info_list})
 @login_required
 def graphics(request):
 	dict_n = count_positive_mchat()
@@ -904,6 +1164,331 @@ def confirm_positive(request,pk):
 
 def guide_mchat(request):
 	return render(request, 'testM/guide_mchat.html')
+
+
+def result_docx(request,pk):
+	patient = Patient.objects.get(pk=pk)
+	item_score = patient.item_score
+	item_scoreRF = patient.item_scoreRF
+	followup_array = patient.followup_list
+	question_c = patient.custom_quest
+	item_risk = patient.followup_risk
+	mchat_item = Item.objects.all()
+	audit_info = patient.audit_info
+	adic_info = patient.adic_info
+	last_test = Patient_historic.objects.filter(patient = pk).last()
+	delta = date.today() - patient.birth_date
+	delta = delta.days
+	age = transform_date_to_age(delta)
+	if last_test != None:
+		last_test = last_test.date_test
+	
+	audit_message = ""
+	Item_list = []
+	target=""
+	namepdf=""
+
+	#transformo el char followup_array a lista
+	followup_list = char_to_list(followup_array)
+	
+	#recorro la lista anterior y genero la lista de item que tienen seguimiento
+	Item_list = objetc_to_list(followup_list)
+
+	#utilizo la lista de item para filtrar los objetos followup que corresponden
+	followUpItem = FollowUpItem.objects.filter(item__in=Item_list)
+	#Transformo el campo audit_info que corresponde con un tipo númerico a su correspondiente mensaje del nivel auditivo
+	audit_message=audit_info_mapper(audit_info)
+
+	followUpItem = set_option_to_rf(followUpItem,question_c,item_scoreRF)
+
+	mchat_item = set_option_to_item(mchat_item,item_score)
+
+	Item_dict = generate_list_dict(Item_list)
+
+	List_risk = item_risk2list(item_risk,Item_list)
+
+	adic_info_list = adic_info.split("||")
+
+	document = Document()
+
+	namedocx = "mchat_" + str(patient).replace(" ","_") + ".docx"
+	docx_title = namedocx
+
+	document.add_heading("Resultados M-CHAT-R/F",0)
+
+	document.add_heading("Resultados Obtenidos",level=1)
+
+	document.add_paragraph()
+
+
+
+	a = document.add_paragraph()
+	b = document.add_paragraph()
+	c = document.add_paragraph()
+	d = document.add_paragraph()
+	e = document.add_paragraph()
+	f = document.add_paragraph()
+	g = document.add_paragraph()
+
+	a.add_run(str(patient)).bold = True
+	b.add_run('Puntuación M-CHAT-R: ').bold = True
+	b.add_run(str(patient.mchat_score))
+	c.add_run('Puntuación M-CHAT-R/F: ').bold = True
+	c.add_run(str(patient.mchatrf_score))
+	d.add_run('Nivel de audición: ').bold = True
+	d.add_run(audit_message)
+	e.add_run('Positivo en el test M-CHAT-R/F: ').bold = True
+	if (patient.positive):
+		e.add_run('Si')
+	else:
+		e.add_run('No')	
+	f.add_run('Fecha de realización del último test: ').bold = True
+	f.add_run(str(last_test))
+	g.add_run('Edad Actual: ').bold = True
+	g.add_run(age)
+
+
+	document.add_heading("Cuestiones M-CHAT-R",level=1)
+	document.add_heading()
+
+	for m in mchat_item:
+		if m.option == True:
+			document.add_paragraph(m.question + ' - Usted respondió: Si ',style='List Bullet')
+		else:
+			document.add_paragraph(m.question + ' - Usted respondió: No ',style='List Bullet')
+
+	document.add_heading("Cuestiones M-CHAT-R/F",level=1)
+	document.add_heading()
+
+	if patient.mchat_score > 2 and len(patient.item_scoreRF) > 0:
+		for f in followUpItem:			
+			if f.option == True and f.question_group != 'Audit':
+				document.add_paragraph(f.question + ' - Usted respondió: Si / Item: ' + str(f.item),style='List Bullet')			
+			elif f.option == False and f.question != 'Audit':
+				document.add_paragraph(f.question + ' - Usted respondió: No / Item: ' + str(f.item),style='List Bullet')
+			else:
+				document.add_paragraph(f.question + ' - Usted respondió:' + audit_message + '/ Item: ' + str(f.item),style='List Bullet')
+		document.add_heading("Flujos que implican riesgo de TEA",level=1)
+		document.add_paragraph()
+
+		if (len(List_risk) > 0):
+			for l in List_risk:
+				document.add_paragraph("Item: "+str(l.question_id),style='List Bullet')
+		else:
+			document.add_paragraph("Ningún item implica riesgo de TEA")
+
+		document.add_heading("Flujos realizados",level=1)
+		document.add_paragraph()
+		for t in Item_dict:
+			document.add_paragraph("Flujo del Item "+t["question_id"])
+			document.add_picture('testM/static/testM/item'+t["question_id"]+".png", width=Inches(4))	
+	elif( patient.mchat_score > 2 and patient.mchat_score < 8 and len(patient.item_scoreRF) == 0):
+		document.add_paragraph('No ha realizado aún la entrevista de seguimiento')
+	else:
+		document.add_paragraph()
+		document.add_paragraph('No fue necesario relizar la entrevista de seguimiento')
+	document.add_heading("Contenido Adicional", level=1)
+	if adic_info != '':
+		document.add_paragraph()
+		for l in adic_info_list:
+			document.add_paragraph(l, style='List Bullet')
+	else:
+		document.add_paragraph("No se ha añadido contenido adicional", style='List Bullet')
+
+
+
+	return generate_docx(docx_title,document)
+
+
+def result_docx_historic(request,pk):
+	patient = Patient_historic.objects.get(pk=pk)
+	item_score = patient.item_score
+	item_scoreRF = patient.item_scoreRF
+	item_risk = patient.followup_risk
+	followup_array = patient.followup_list
+	question_c = patient.custom_quest
+	birth_date = patient.patient.birth_date
+	date_test = patient.date_test
+	mchat_item = Item.objects.all()
+	audit_info = patient.audit_info
+	adic_info = patient.adic_info
+	audit_message = ""
+	Item_list = []
+	target = ""
+	namepdf = ""
+	#Calculo la edad que tenia el dia de la realización del test
+	delta = date_test.date() - birth_date
+	delta = delta.days
+	age = transform_date_to_age(delta)
+
+	#transformo el char followup_array a lista
+	followup_list = char_to_list(followup_array)
+	
+	#recorro la lista anterior y genero la lista de item que tienen seguimiento
+	Item_list = objetc_to_list(followup_list)
+
+	#utilizo la lista de item para filtrar los objetos followup que corresponden
+	followUpItem = FollowUpItem.objects.filter(item__in=Item_list)
+	#Transformo el campo audit_info que corresponde con un tipo númerico a su correspondiente mensaje del nivel auditivo
+	audit_message=audit_info_mapper(audit_info)
+
+	followUpItem = set_option_to_rf(followUpItem,question_c,item_scoreRF)
+
+	mchat_item = set_option_to_item(mchat_item,item_score)
+
+	Item_dict = generate_list_dict(Item_list)
+
+	List_risk = item_risk2list(item_risk,Item_list)
+
+	adic_info_list = adic_info.split("||")
+
+	document = Document()
+
+	namedocx = "mchat_" + str(patient).replace(" ","_") + ".docx"
+	docx_title = namedocx
+
+	document.add_heading("Resultados M-CHAT-R/F",0)
+
+	document.add_heading("Resultados Obtenidos",level=1)
+
+	document.add_paragraph()
+
+
+
+	a = document.add_paragraph()
+	b = document.add_paragraph()
+	c = document.add_paragraph()
+	d = document.add_paragraph()
+	e = document.add_paragraph()
+	f = document.add_paragraph()
+	g = document.add_paragraph()
+
+	a.add_run(str(patient.patient)).bold = True
+	b.add_run('Puntuación M-CHAT-R: ').bold = True
+	b.add_run(str(patient.mchat_score))
+	c.add_run('Puntuación M-CHAT-R/F: ').bold = True
+	c.add_run(str(patient.mchatrf_score))
+	d.add_run('Nivel de audición: ').bold = True
+	d.add_run(audit_message)
+	e.add_run('Positivo en el test M-CHAT-R/F: ').bold = True
+	if (patient.positive):
+		e.add_run('Si')
+	else:
+		e.add_run('No')	
+	f.add_run('Fecha de realización: ').bold = True
+	f.add_run(str(date_test))
+	g.add_run('Edad el día de la realización: ').bold = True
+	g.add_run(age)
+
+
+	document.add_heading("Cuestiones M-CHAT-R",level=1)
+	document.add_heading()
+
+	for m in mchat_item:
+		if m.option == True:
+			document.add_paragraph(m.question + ' - Usted respondió: Si ',style='List Bullet')
+		else:
+			document.add_paragraph(m.question + ' - Usted respondió: No ',style='List Bullet')
+
+	document.add_heading("Cuestiones M-CHAT-R/F",level=1)
+	document.add_heading()
+
+	if patient.mchat_score > 2 and len(patient.item_scoreRF) > 0:
+		for f in followUpItem:			
+			if f.option == True and f.question_group != 'Audit':
+				document.add_paragraph(f.question + ' - Usted respondió: Si / Item: ' + str(f.item),style='List Bullet')			
+			elif f.option == False and f.question != 'Audit':
+				document.add_paragraph(f.question + ' - Usted respondió: No / Item: ' + str(f.item),style='List Bullet')
+			else:
+				document.add_paragraph(f.question + ' - Usted respondió:' + audit_message + '/ Item: ' + str(f.item),style='List Bullet')
+
+		document.add_heading("Flujos que implican riesgo de TEA",level=1)
+		document.add_paragraph()
+
+		if (len(List_risk) > 0):
+			for l in List_risk:
+				document.add_paragraph("Item: "+str(l.question_id),style='List Bullet')
+		else:
+			document.add_paragraph("Ningún item implica riesgo de TEA")
+
+		document.add_heading("Flujos realizados",level=1)
+		document.add_paragraph()
+		for t in Item_dict:
+			document.add_paragraph("Flujo del Item "+t["question_id"])
+			document.add_picture('testM/static/testM/item'+t["question_id"]+".png", width=Inches(4))
+	elif( patient.mchat_score > 2 and patient.mchat_score < 8 and len(patient.item_scoreRF) == 0):
+		document.add_paragraph('No ha realizado aún la entrevista de seguimiento')
+	else:
+		document.add_paragraph()
+		document.add_paragraph('No fue necesario relizar la entrevista de seguimiento')
+	document.add_heading("Contenido Adicional", level=1)
+	if adic_info != '':
+		document.add_paragraph()
+		for l in adic_info_list:
+			document.add_paragraph(l, style='List Bullet')
+	else:
+		document.add_paragraph("No se ha añadido contenido adicional", style='List Bullet')
+
+
+	return generate_docx(docx_title,document)
+
+
+def generate_docx(docx,document):
+	f = BytesIO()
+	document.save(f)
+	length = f.tell()
+	f.seek(0)
+	response = HttpResponse(
+		f.getvalue(),
+		content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+	)
+	response['Content-Disposition'] = 'attachment; filename=' + docx
+	response['Content-Length'] = length
+	return response
+
+def save_adicional_info(request,pk):
+	if request.META["HTTP_REFERER"].find("patientHistoric") == -1:
+		patient = get_object_or_404(Patient,pk=pk)
+	else:
+		patient = get_object_or_404(Patient_historic, pk=pk)
+	adic_info = patient.adic_info
+	message = "Guardado correctamente"
+
+	form = adicional_info(request.POST)
+	if form.is_valid():
+		info = form.cleaned_data.get('adic_info')
+		if adic_info != '':
+			adic_info+= '||' + info
+		else:
+			adic_info = info + '. '
+		if request.META["HTTP_REFERER"].find("patientHistoric") == -1:
+			Patient.objects.update_or_create(pk = pk, defaults={'adic_info': adic_info,})
+		else:
+			Patient_historic.objects.update_or_create(pk = pk, defaults={'adic_info': adic_info,})		
+		return JsonResponse(
+
+			{
+				'content' : {
+
+						'message' : message + " Recargue la página para ver los cambios",
+				}
+			}
+		)
+	else:
+		print(form.errors.as_data()['adic_info'])
+		message = str(form.errors.as_data()['adic_info'][0])
+	return JsonResponse(
+
+			{
+				'content' : {
+
+						'message' : message,
+				}
+			}
+		)
+
+
 
 
 

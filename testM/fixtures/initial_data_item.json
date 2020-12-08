@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "question_id": 1,
-      "question": "Si usted señala algo al otro lado de la habitación, ¿su hijo/a lo mira? (Por ejemplo, Si usted señala a un juguete, un peluche o un animal, ¿su hijo/a lo mira?)",
+      "question": "1. Si usted señala algo al otro lado de la habitación, ¿su hijo/a lo mira? (Por ejemplo, Si usted señala a un juguete, un peluche o un animal, ¿su hijo/a lo mira?)",
       "mchat" : 1
     }
   },
@@ -13,7 +13,7 @@
     "pk": 2,
     "fields": {
       "question_id": 2,
-      "question": "¿Alguna vez se ha preguntado si su hijo/a es sordo/a?",
+      "question": "2. ¿Alguna vez se ha preguntado si su hijo/a es sordo/a?",
       "mchat" : 1
     }
   },
@@ -22,7 +22,7 @@
     "pk": 3,
     "fields": {
       "question_id": 3,
-      "question": "¿Su hijo/a juega juegos de fantasía o imaginación? (Por ejemplo, “hace como que” bebe de una taza vacía, habla por teléfono o da de comer a una muñeca o peluche,…)",
+      "question": "3. ¿Su hijo/a juega juegos de fantasía o imaginación? (Por ejemplo, “hace como que” bebe de una taza vacía, habla por teléfono o da de comer a una muñeca o peluche,…)",
       "mchat" : 1
     }
   },
@@ -31,7 +31,7 @@
     "pk": 4,
     "fields": {
       "question_id": 4,
-      "question": "¿A su hijo le gusta subirse a cosas? (Por ejemplo, a una silla, escaleras, o tobogán,…)",
+      "question": "4. ¿A su hijo le gusta subirse a cosas? (Por ejemplo, a una silla, escaleras, o tobogán,…)",
       "mchat" : 1
     }
   },
@@ -40,7 +40,7 @@
     "pk": 5,
     "fields": {
       "question_id": 5,
-      "question": "¿Hace su hijo/a movimientos inusuales con sus dedos cerca de sus ojos? (Por ejemplo, ¿mueve sus dedos cerca de sus ojos de manera inusual?)",
+      "question": "5. ¿Hace su hijo/a movimientos inusuales con sus dedos cerca de sus ojos? (Por ejemplo, ¿mueve sus dedos cerca de sus ojos de manera inusual?)",
       "mchat" : 1
     }
   },
@@ -49,7 +49,7 @@
     "pk": 6,
     "fields": {
       "question_id": 6,
-      "question": "¿Su hijo/a señala con un dedo cuando quiere pedir algo o pedir ayuda? (Por ejemplo, ¿señala un juguete o algo de comer que está fuera de su alcance?)",
+      "question": "6. ¿Su hijo/a señala con un dedo cuando quiere pedir algo o pedir ayuda? (Por ejemplo, ¿señala un juguete o algo de comer que está fuera de su alcance?)",
       "mchat" : 1
     }
   },
@@ -58,7 +58,7 @@
     "pk": 7,
     "fields": {
       "question_id": 7,
-      "question": "Su hijo/a señala con un dedo cuando quiere mostrarle algo que le llama la atención? (Por ejemplo, señala un avión en el cielo o un camión muy grande en la calle)",
+      "question": "7. Su hijo/a señala con un dedo cuando quiere mostrarle algo que le llama la atención? (Por ejemplo, señala un avión en el cielo o un camión muy grande en la calle)",
       "mchat" : 1
     }
   },
@@ -67,7 +67,7 @@
     "pk": 8,
     "fields": {
       "question_id": 8,
-      "question": "¿Su hijo/a se interesa en otros niños? (Por ejemplo, ¿mira con atención a otros niños, les sonríe o se les acerca?)",
+      "question": "8. ¿Su hijo/a se interesa en otros niños? (Por ejemplo, ¿mira con atención a otros niños, les sonríe o se les acerca?)",
       "mchat" : 1
     }
   },
@@ -76,7 +76,7 @@
     "pk": 9,
     "fields": {
       "question_id": 9,
-      "question": "¿Su hijo/a le muestra cosas acercándolas o levantándolas para que usted las vea – no para pedir ayuda sino solamente para compartirlas con usted? (Por ejemplo, le muestra una flor o un peluche o un coche de juguete)",
+      "question": "9. ¿Su hijo/a le muestra cosas acercándolas o levantándolas para que usted las vea – no para pedir ayuda sino solamente para compartirlas con usted? (Por ejemplo, le muestra una flor o un peluche o un coche de juguete)",
       "mchat" : 1
     }
   },
@@ -85,7 +85,7 @@
     "pk": 10,
     "fields": {
       "question_id": 10,
-      "question": "¿Su hijo/a responde cuando usted le llama por su nombre? (Por ejemplo, se vuelve, habla o balbucea, o deja de hacer lo que estaba haciendo para mirarle?)",
+      "question": "10. ¿Su hijo/a responde cuando usted le llama por su nombre? (Por ejemplo, se vuelve, habla o balbucea, o deja de hacer lo que estaba haciendo para mirarle?)",
       "mchat" : 1
     }
   },
@@ -94,7 +94,7 @@
     "pk": 11,
     "fields": {
       "question_id": 11,
-      "question": "¿Cuándo usted sonríe a su hijo/a, él o ella también le sonríe?",
+      "question": "11. ¿Cuándo usted sonríe a su hijo/a, él o ella también le sonríe?",
       "mchat" : 1
     }
   },
@@ -103,7 +103,7 @@
     "pk": 12,
     "fields": {
       "question_id": 12,
-      "question": "¿Le molestan a su hijo/a ruidos cotidianos? (Por ejemplo, la aspiradora o la música, incluso cuando está no está excesivamente alta?)",
+      "question": "12. ¿Le molestan a su hijo/a ruidos cotidianos? (Por ejemplo, la aspiradora o la música, incluso cuando está no está excesivamente alta?)",
       "mchat" : 1
     }
   },
@@ -112,7 +112,7 @@
     "pk": 13,
     "fields": {
       "question_id": 13,
-      "question": "¿Su hijo/a camina solo?",
+      "question": "13. ¿Su hijo/a camina solo?",
       "mchat" : 1
     }
   },
@@ -121,7 +121,7 @@
     "pk": 14,
     "fields": {
       "question_id": 14,
-      "question": "¿Su hijo/a le mira a los ojos cuando usted le habla, juega con él o ella, o lo viste?",
+      "question": "14. ¿Su hijo/a le mira a los ojos cuando usted le habla, juega con él o ella, o lo viste?",
       "mchat" : 1
     }
   },
@@ -130,7 +130,7 @@
     "pk": 15,
     "fields": {
       "question_id": 15,
-      "question": "¿Su hijo/a imita sus movimientos? (Por ejemplo, decir adiós con la mano, aplaudir o algún ruido gracioso que usted haga?)",
+      "question": "15. ¿Su hijo/a imita sus movimientos? (Por ejemplo, decir adiós con la mano, aplaudir o algún ruido gracioso que usted haga?)",
       "mchat" : 1
     }
   },
@@ -139,7 +139,7 @@
     "pk": 16,
     "fields": {
       "question_id": 16,
-      "question": "Si usted se gira a ver algo, ¿su hijo/a trata de mirar hacia lo que usted está mirando?",
+      "question": "16. Si usted se gira a ver algo, ¿su hijo/a trata de mirar hacia lo que usted está mirando?",
       "mchat" : 1
     }
   },
@@ -148,7 +148,7 @@
     "pk": 17,
     "fields": {
       "question_id": 17,
-      "question": "¿Su hijo/a intenta que usted le mire/preste atención? (Por ejemplo, busca que usted le haga un cumplido, o le dice \"mira\" ó \"mírame\" ",
+      "question": "17. ¿Su hijo/a intenta que usted le mire/preste atención? (Por ejemplo, busca que usted le haga un cumplido, o le dice \"mira\" ó \"mírame\" ",
       "mchat" : 1
     }
   },
@@ -157,7 +157,7 @@
     "pk": 18,
     "fields": {
       "question_id": 18,
-      "question": "¿Su hijo/a le entiende cuando usted le dice que haga algo? (Por ejemplo, si usted no hace gestos, ¿su hijo/a entiende \"pon el libro encima de la silla\" o \"tráeme la manta\"?)",
+      "question": "18. ¿Su hijo/a le entiende cuando usted le dice que haga algo? (Por ejemplo, si usted no hace gestos, ¿su hijo/a entiende \"pon el libro encima de la silla\" o \"tráeme la manta\"?)",
       "mchat" : 1
     }
   },
@@ -166,7 +166,7 @@
     "pk": 19,
     "fields": {
       "question_id": 19,
-      "question": "Si algo nuevo pasa, ¿su hijo/a le mira para ver como usted reacciona al respecto? (Por ejemplo, si oye un ruido extraño o ve un juguete nuevo, ¿se gira a ver su cara?)",
+      "question": "19. Si algo nuevo pasa, ¿su hijo/a le mira para ver como usted reacciona al respecto? (Por ejemplo, si oye un ruido extraño o ve un juguete nuevo, ¿se gira a ver su cara?)",
       "mchat" : 1
     }
   },
@@ -175,7 +175,7 @@
     "pk": 20,
     "fields": {
       "question_id": 20,
-      "question": "Le gustan a su hijo/a los juegos de movimiento? (Por ejemplo, le gusta que le balancee, o que le haga “el caballito” sentándole en sus rodillas)",
+      "question": "20. Le gustan a su hijo/a los juegos de movimiento? (Por ejemplo, le gusta que le balancee, o que le haga “el caballito” sentándole en sus rodillas)",
       "mchat" : 1
     }
   }
