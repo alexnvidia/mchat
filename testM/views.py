@@ -38,6 +38,7 @@ from io import BytesIO, StringIO
 from docx import Document
 from docx.shared import Inches
 import io
+import time
 
 
 
@@ -1073,6 +1074,7 @@ def patient_result(request,pk):
 		with fs.open(namepdf) as pdf:
 			response = HttpResponse(pdf, content_type='application/pdf')
 			response['Content-Disposition'] = 'attachment; filename=' + namepdf
+			time.sleep(1)
 			return response
 		return response
 

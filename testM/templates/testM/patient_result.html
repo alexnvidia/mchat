@@ -157,6 +157,8 @@
           <img src="{% static i.static %}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
         </div>
         {% endfor %}
+
+
           
           
           {% elif patient.mchat_score > 2 and patient.mchat_score < 8 and patient.item_scoreRF|length == 0 %}
@@ -216,6 +218,7 @@
       </div>
           
     </form>
+
 
     <div class="text-center w3-padding-16 w3-margin-left">
            <a href="{% url 'mchats:patients' %}" class="w3-button w3-teal"> Volver</a>
