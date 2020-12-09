@@ -1281,7 +1281,7 @@ def result_docx(request,pk):
 		document.add_paragraph()
 		for t in Item_dict:
 			document.add_paragraph("Flujo del Item "+t["question_id"])
-			document.add_picture('testM/static/testM/item'+t["question_id"]+".png", width=Inches(4))	
+			document.add_picture(settings.BASE_DIR+"/testM/static/testM/item"+t["question_id"]+".png", width=Inches(4))	
 	elif( patient.mchat_score > 2 and patient.mchat_score < 8 and len(patient.item_scoreRF) == 0):
 		document.add_paragraph('No ha realizado aún la entrevista de seguimiento')
 	else:
@@ -1415,7 +1415,7 @@ def result_docx_historic(request,pk):
 		document.add_paragraph()
 		for t in Item_dict:
 			document.add_paragraph("Flujo del Item "+t["question_id"])
-			document.add_picture('testM/static/testM/item'+t["question_id"]+".png", width=Inches(4))
+			document.add_picture(settings.BASE_DIR+"/testM/static/testM/item"+t["question_id"]+".png", width=Inches(4))
 	elif( patient.mchat_score > 2 and patient.mchat_score < 8 and len(patient.item_scoreRF) == 0):
 		document.add_paragraph('No ha realizado aún la entrevista de seguimiento')
 	else:
