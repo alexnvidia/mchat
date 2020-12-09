@@ -469,8 +469,7 @@ jQuery(document).ready(function(){
 		  		}else{
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_5\">**</span>");
 		  			document.getElementById("span_5").innerHTML = "ver pregunta 8";
-		  			jQuery("#id_form-7-question").removeClass('d-none');		  			
-        			jQuery("#id_form-7-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 8.</span>");
+		  			jQuery("#id_form-7-question").removeClass('d-none');
 		  		}
 		  		if(other_element == 'form-6-option'){
 		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
@@ -485,7 +484,6 @@ jQuery(document).ready(function(){
 		  			jQuery("#id_form-7-question").addClass('d-none');
 		  			jQuery("input[name=form-7-option]").prop("checked",false)
 		  			jQuery("#span_5").remove();
-		  			jQuery("#span_done").remove();
 
 		  		}
 		  		this_element = jQuery(this).attr("name");
@@ -535,8 +533,7 @@ jQuery(document).ready(function(){
 		  		jQuery("#buttonnext").prop("disabled",false);
 		  		jQuery("#id_form-7-question").addClass('d-none');
 		  		jQuery("div[id=NOPASA]").addClass('d-none');
-		  		jQuery("#span_5").remove();
-		  		jQuery("#span_done").remove();        		
+		  		jQuery("#span_5").remove();     		
   			});
 
   			jQuery("input[value='False'][name=form-0-option],input[value='False'][name=form-1-option]").click(function(){
@@ -594,7 +591,6 @@ jQuery(document).ready(function(){
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_6\">**</span>");
 		  			document.getElementById("span_6").innerHTML = "ver pregunta 5";
 		  			jQuery("#id_form-4-question").removeClass('d-none');
-		  			jQuery("#id_form-4-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 5.</span>");
 		  		}
 
 		  		
@@ -616,7 +612,6 @@ jQuery(document).ready(function(){
 		  			jQuery("input[name=form-4-option]").prop("checked", false);
 		  			jQuery("#id_form-4-question").addClass('d-none');
 		  			jQuery("#span_6").remove();
-		  			jQuery("#span_done").remove();
 		  			jQuery("#buttonnext").prop("disabled",true);		  			
 
 		  		}
@@ -695,7 +690,6 @@ jQuery(document).ready(function(){
 		  		}else{
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_7\">**</span>");
 		  			document.getElementById("span_7").innerHTML = "ver pregunta 5";
-		  			jQuery("#id_form-4-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 5.</span>");
 		  			jQuery("#id_form-4-question").removeClass('d-none');
 		  		}
         		
@@ -708,7 +702,6 @@ jQuery(document).ready(function(){
 		  			jQuery("#id_form-4-question").addClass('d-none');
 		  			jQuery("#id_form-5-question").addClass('d-none');
 		  			jQuery("#span_7").remove();
-		  			jQuery("#span_done").remove();
 
 		  		}
 
@@ -757,7 +750,6 @@ jQuery(document).ready(function(){
 		  			this_element.parent("").after("<span class=\"badge badge-warning\" id=\"span_72\">**</span>");
 		  			document.getElementById("span_72").innerHTML = "ver pregunta 6";
 		  			jQuery("#id_form-5-question").removeClass('d-none');
-		  			jQuery("#span_done").remove();
 		  			jQuery("#buttonnext").prop("disabled",true);
 		  		}
         		
@@ -827,7 +819,6 @@ jQuery(document).ready(function(){
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_8\">**</span>");
 		  			document.getElementById("span_8").innerHTML = "ver pregunta 9";
 		  			jQuery("#id_form-8-question").removeClass('d-none');
-		  			jQuery("#id_form-8-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 9.</span>");
         			jQuery("#noneed").remove();
 		  		}
         		
@@ -838,7 +829,6 @@ jQuery(document).ready(function(){
 		  			jQuery("input[name=form-8-option]").prop('checked', false);
 		  			jQuery("#id_form-8-question").addClass('d-none');
 		  			jQuery("#span_8").remove();
-		  			jQuery("#span_done").remove();		  			
 
 		  		}
 
@@ -885,7 +875,6 @@ jQuery(document).ready(function(){
 		  			jQuery("input[name!=form-0-option]").prop('checked', false);
 		  			jQuery("#PASA,#id_form-8-question").addClass('d-none');
 		  			jQuery("#span_8").remove();
-		  			jQuery("#span_done").remove();
 		  			jQuery("#buttonnext").prop("disabled",false);
 		  			listE = [];
 		  			jQuery(this).parent().after("<span class=\"badge badge-warning\" id=\"noneed\">*Ya puedes pasar a la siguiente página, esta respuesta es concluyente</span>");
@@ -948,7 +937,6 @@ jQuery(document).ready(function(){
 		  			this_element.parent().after("<span class=\"badge badge-warning\" id=\"span_9\">**</span>");
 		  			document.getElementById("span_9").innerHTML = "ver pregunta 7";
 		  			jQuery("#id_form-6-question").removeClass('d-none');
-		  			jQuery("#id_form-6-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 7.</span>");
 
 		  		}
 
@@ -963,7 +951,6 @@ jQuery(document).ready(function(){
 		  			jQuery("input[name=form-6-option]").prop('checked', false);
 		  			jQuery("#id_form-6-question").addClass('d-none');
 		  			jQuery("#span_9").remove();
-		  			jQuery("#span_done").remove();
 
 		  		}
 
@@ -1425,7 +1412,6 @@ jQuery(document).ready(function(){
 		  			other_element.parent().after("<span class=\"badge badge-warning\" id=\"span_14\">**</span>");
 				  	document.getElementById("span_14").innerHTML = "ver pregunta 7";
 				  	jQuery("#id_form-6-question").removeClass('d-none');
-				  	jQuery("#id_form-6-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 7.</span>");
 
 		  			if(listE.indexOf(this_element) == -1){
 		  			listE.push(this_element);
@@ -1448,7 +1434,6 @@ jQuery(document).ready(function(){
 		        		jQuery("input[name=form-6-option]").prop('checked', false);
 		        		jQuery("#span_14").remove();
 		        		jQuery("#span_142").remove();
-		        		jQuery("#span_done").remove();
 		  				jQuery("#buttonnext").prop("disabled",false);
 		  			}
 		  			else{
@@ -1482,7 +1467,6 @@ jQuery(document).ready(function(){
 		        				jQuery("input[name=form-6-option]").prop('checked', false);
 		        				jQuery("#span_14").remove();
 		        				jQuery("#span_142").remove();
-		        				jQuery("#span_done").remove();
 				  				jQuery("#buttonnext").prop("disabled",false);
 				  			}
 		  				}
@@ -1492,14 +1476,12 @@ jQuery(document).ready(function(){
 		        				jQuery("input[name=form-6-option]").prop('checked', false);
 		        				jQuery("#span_14").remove();
 		        				jQuery("#span_142").remove();
-		        				jQuery("#span_done").remove();
 			  					jQuery("#buttonnext").prop("disabled",true);
 
 			  					if(count == 1){
 			  						jQuery("input[value='True'][name="+listE[0]+"]").parent().after("<span class=\"badge badge-warning\" id=\"span_14\">**</span>");
 				  					document.getElementById("span_14").innerHTML = "ver pregunta 7";
 				  					jQuery("#id_form-6-question").removeClass('d-none');
-				  					jQuery("#id_form-6-question").before("<span class=\"badge badge-success\" id=\"span_done\">Ya no es necesario responder mas preguntas excepto la pregunta 7.</span>");
 			  					}
 
 			  					
