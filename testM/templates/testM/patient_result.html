@@ -148,15 +148,27 @@
 
 
 
-
+        
         <h1 class="text-center w3-padding-16 w3-margin-left"> Todos los flujos Realizados</h2>
-        {% for i in Item_dict %}
-        <div id="item_{{ i.question_id }}" class="text-center w3-padding-16 w3-margin-left"> 
-          <h2 class="text-center">Flujo del Item {{ i.question_id }}</h1>
+        {% if flag == 1 %}
+          {% for i in Item_dict %}
+          <div id="item_{{ i.question_id }}" class="text-center w3-padding-16 w3-margin-left"> 
+            <h2 class="text-center">Flujo del Item {{ i.question_id }}</h1>
 
-          <img src="{{ i.static }}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
-        </div>
-        {% endfor %}
+            <img src="file://{{ i.static }}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
+          </div>
+          {% endfor %}
+        {% else %}
+          {% for i in Item_dict %}
+          <div id="item_{{ i.question_id }}" class="text-center w3-padding-16 w3-margin-left"> 
+            <h2 class="text-center">Flujo del Item {{ i.question_id }}</h1>
+
+            <img src="{% static i.static %}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
+          </div>
+          {% endfor %}
+
+        {% endif %}
+
 
 
           

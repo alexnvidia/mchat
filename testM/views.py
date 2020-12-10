@@ -747,11 +747,14 @@ def audit_info_mapper(audit_int):
 	return message
 
 
-def generate_list_dict(Item_list):
+def generate_list_dict(Item_list,flag):
 	list_dict = []
 
 	for i in Item_list:
-		list_dict.append({"question_id":str(i.question_id),"static":"/static/testM/item"+str(i.question_id)+".png"})
+		if flag == 0:			
+			list_dict.append({"question_id":str(i.question_id),"static":"/testM/item"+str(i.question_id)+".png"})
+		else:
+			list_dict.append({"question_id":str(i.question_id),"static":settings.BASE_DIR+"/testM/static/testM/item"+str(i.question_id)+".png"})
 	return list_dict
 
 
@@ -1028,6 +1031,7 @@ def patient_result(request,pk):
 	last_test = Patient_historic.objects.filter(patient = pk).last()
 	delta = date.today() - patient.birth_date
 	delta = delta.days
+	flag = 0
 	age = transform_date_to_age(delta)
 	if last_test != None:
 
@@ -1053,7 +1057,7 @@ def patient_result(request,pk):
 
 	mchat_item = set_option_to_item(mchat_item,item_score)
 
-	Item_dict = generate_list_dict(Item_list)
+	Item_dict = generate_list_dict(Item_list,flag)
 
 	List_risk = item_risk2list(item_risk,Item_list)
 
@@ -1063,7 +1067,9 @@ def patient_result(request,pk):
 
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age,'Item_dict': Item_dict, 'List_risk' : List_risk, 'adic_info_list' : adic_info_list},request=request)
+		flag = 1
+		Item_dict = generate_list_dict(Item_list,flag)
+		html_string = render_to_string('testM/patient_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'last_test': last_test,'age': age,'Item_dict': Item_dict, 'List_risk' : List_risk, 'adic_info_list' : adic_info_list, 'flag': flag},request=request)
 		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient).replace(" ","_") + ".pdf"
 		target = "/tmp/" + namepdf
@@ -1080,7 +1086,7 @@ def patient_result(request,pk):
 
 	return render(request, 'testM/patient_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,
 		'patient': patient,'audit_message': audit_message,'last_test': last_test,
-		'age': age, 'Item_dict': Item_dict,'List_risk' : List_risk, 'form' : form, 'adic_info_list' : adic_info_list})
+		'age': age, 'Item_dict': Item_dict,'List_risk' : List_risk, 'form' : form, 'adic_info_list' : adic_info_list, 'flag' : flag})
 
 
 @login_required
@@ -1096,6 +1102,7 @@ def patient_historic_result(request,pk):
 	date_test = patient.date_test
 	mchat_item = Item.objects.all()
 	audit_info = patient.audit_info
+	flag = 0
 	audit_message = ""
 	Item_list = []
 	target = ""
@@ -1120,7 +1127,7 @@ def patient_historic_result(request,pk):
 
 	mchat_item = set_option_to_item(mchat_item,item_score)
 
-	Item_dict = generate_list_dict(Item_list)
+	Item_dict = generate_list_dict(Item_list,flag)
 
 	List_risk = item_risk2list(item_risk,Item_list)
 
@@ -1130,7 +1137,9 @@ def patient_historic_result(request,pk):
 
 
 	if request.method == 'POST':
-		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age':age,'Item_dict':Item_dict, 'List_risk' : List_risk , 'adic_info_list':adic_info_list},request=request)
+		flag = 1
+		Item_dict = generate_list_dict(Item_list,flag)
+		html_string = render_to_string('testM/patient_historic_result.html', {'followUpItem': followUpItem,'mchat_item': mchat_item,'patient': patient,'audit_message': audit_message,'age':age,'Item_dict':Item_dict, 'List_risk' : List_risk , 'adic_info_list':adic_info_list, 'flag' : flag},request=request)
 		html = HTML(string=html_string,base_url=request.build_absolute_uri())
 		namepdf = "mchat_" + str(patient.patient).replace(" ","_") + str(patient.date_test) + ".pdf"
 		target = "/tmp/" + namepdf
@@ -1147,7 +1156,7 @@ def patient_historic_result(request,pk):
 
 	return render(request, 'testM/patient_historic_result.html',{'followUpItem': followUpItem,'mchat_item': mchat_item,
 		'patient': patient,'audit_message': audit_message,'age': age,
-		'Item_dict':Item_dict,'List_risk' : List_risk, 'form' : form, 'adic_info_list': adic_info_list})
+		'Item_dict':Item_dict,'List_risk' : List_risk, 'form' : form, 'adic_info_list': adic_info_list,'flag' : flag})
 @login_required
 def graphics(request):
 	dict_n = count_positive_mchat()
@@ -1205,7 +1214,7 @@ def result_docx(request,pk):
 
 	mchat_item = set_option_to_item(mchat_item,item_score)
 
-	Item_dict = generate_list_dict(Item_list)
+	Item_dict = generate_list_dict(Item_list,0)
 
 	List_risk = item_risk2list(item_risk,Item_list)
 
@@ -1338,7 +1347,7 @@ def result_docx_historic(request,pk):
 
 	mchat_item = set_option_to_item(mchat_item,item_score)
 
-	Item_dict = generate_list_dict(Item_list)
+	Item_dict = generate_list_dict(Item_list,0)
 
 	List_risk = item_risk2list(item_risk,Item_list)
 
