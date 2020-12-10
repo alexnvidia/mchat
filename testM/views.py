@@ -751,7 +751,7 @@ def generate_list_dict(Item_list):
 	list_dict = []
 
 	for i in Item_list:
-		list_dict.append({"question_id":str(i.question_id),"static":"testM/item"+str(i.question_id)+".png"})
+		list_dict.append({"question_id":str(i.question_id),"static":"/static/testM/item"+str(i.question_id)+".png"})
 	return list_dict
 
 
