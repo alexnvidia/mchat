@@ -17,7 +17,7 @@ Lista de errores:
 
 	-DONE También añadir opción de descarga en RTF u otro formato editable.(Se exporta en formato docx, añadir tambien las imagenes del flujo conflictivo)
 
-	-TODO Dar opción de añadir contenido adicional al informe de resultados.
+	-DONE Dar opción de añadir contenido adicional al informe de resultados.
 
 
 
