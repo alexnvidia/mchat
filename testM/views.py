@@ -979,7 +979,7 @@ def save_custom_quest(request,pk,question_id):
 		if(split_validate(question,question_form,question_id) == True):
 			question = parse_custom_quest(question,question_form,question_id)
 			Patient.objects.update_or_create(pk = pk, defaults={'custom_quest': question,})
-			message = "Se añadió: " + question[2:(len(question))] + " como pregunta personalizada"
+			message = "Se añadió: " + question_form + " como pregunta personalizada"
 		else:
 			message = 'Ya introdujo esta pregunta anteriormente'
 	return JsonResponse(
