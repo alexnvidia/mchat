@@ -27,7 +27,7 @@
     		<div class="d-none" id="{{ form.question.id_for_label }}" >
     		<h1 style="border-top: 5px solid lightblue; box-shadow: 2px 2px 4px #3691b0"></h1>
     		<p style="word-break: break-all;font-size:20px"> {{ form.question.value }}</p>    		
-	        <p style="word-break: break-all;font-size:20px"> {{ form.option }}  </p>       
+	        <div style="word-break: break-all"> {{ form.option }}  </div>       
 	        {{ form.option.errors }}
 	        <div class="alert alert-warning alert-dismissible">
 		      <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -41,7 +41,7 @@
     	{% elif form.question_group.value == "AUDIT" %}
     		<div class="d-none" id="{{ form.question_group.value }}">
     		<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
-	        <p style="word-break: break-all;font-size:20px">{{ form.extra_option }}</p>       
+	        <p style="word-break: break-all">{{ form.extra_option }}</p>       
 	        {{ form.option.errors }}
 	        </div>
 	    {% else %}
@@ -51,14 +51,14 @@
 	    	<h1 style="border-top: 5px solid lightblue; box-shadow: 2px 2px 4px #3691b0"></h1>
 	    	<span class="badge badge-secondary" style="font-size:20px">{{ form.question_item.value }}</span><br>
 	    	<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
-	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p>
+	        <div style="word-break: break-all">{{ form.option }}</div>
             </div>
 	        {{ form.option.errors }}
 	        
 	    	{% else %}
             <div id="{{ form.question_group.value }}">
 	    	<p style="word-break: break-all;font-size:20px">{{ form.question.value }}</p>
-	        <p style="word-break: break-all;font-size:20px">{{ form.option }}</p> 
+	        <div style="word-break: break-all">{{ form.option }}</div> 
             </div>     
 	        {{ form.option.errors }}
 	        {% endif %}
@@ -88,25 +88,50 @@
 
 
 
-    <div class="container-sm py-4 d-none" id="divQuest" >
-    <div class="mx-auto shadow p-4 mb-4 bg-white my-5">
-      <div class="col-md-9 mx-auto">
-        <div>
-                   
-          <form method="POST" class="form-group" id="form_customq" action="{% url 'mchats:save_custom_quest' patient.pk request.session.question_id %}">{% csrf_token %}
-                {{ customform }}
-                <button id="buttonCustom" type="submit" class="btn btn-info form-control mt3 my-2" name="custom">Guardar Pregunta</button>
+    
 
-            </form>
+      <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Pregunta Personalizada</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          A continuacíón puede introducir una pregunta personalizada en referencia a "Otro(Describa)". Al pulsar en guardar se almacenará y se mostrará en el informe final. <p class="small"><strong>Nota: Esto no guarda la respuesta elegida sobre "Otro(Describa)", las respuestas elegidas se guardan una vez se pulsa el botón de Siguiente.</strong></p>
+
+          <div class="mx-auto shadow p-4 mb-4 bg-white my-5">
+              <div class="col-md-9 mx-auto">
+                <div>
+                           
+                  <form method="POST" class="form-group" id="form_customq" action="{% url 'mchats:save_custom_quest' patient.pk request.session.question_id %}">{% csrf_token %}
+                        {{ customform }}
+                        <button id="buttonCustom" type="submit" class="btn btn-info form-control mt3 my-2" name="custom">Guardar Pregunta</button>
+
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div id="divUndoQuest" class="p-4 mb-4">
+        <a id="undoClick" href="{% url 'mchats:undo_custom_quest' patient.pk request.session.question_id %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que quiere descartar la pregunta guardada perteneciente a 'Otro(Describa)'"><span class="fas fa-check"> Descartar pregunta personalizada</a>
+        
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        
       </div>
     </div>
-  </div>
-
-    <div id="divUndoQuest" class="d-none">
-        <a id="undoClick" href="{% url 'mchats:undo_custom_quest' patient.pk request.session.question_id %}" class="btn btn-outline-primary" data-toggle="tooltip" title="Al pulsar confirma que quiere descartar la pregunta guardada"><span class="fas fa-check"> Descartar pregunta personalizada</a>
-        
-    </div>
+  </div>  
 
 
     

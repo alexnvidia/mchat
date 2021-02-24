@@ -262,7 +262,7 @@ jQuery(document).ready(function(){
 		  				listN.push(other_element);
 		  				}
 		  			if(other_element == 'form-10-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}		  			
 		  			
 		  	});
@@ -318,7 +318,7 @@ jQuery(document).ready(function(){
 		  		}
 
 		  		if(this_element == 'form-10-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}		
 
 		  		
@@ -472,7 +472,7 @@ jQuery(document).ready(function(){
 		  			jQuery("#id_form-7-question").removeClass('d-none');
 		  		}
 		  		if(other_element == 'form-6-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
 
         		
@@ -514,7 +514,7 @@ jQuery(document).ready(function(){
 		  		}
 
 		  		if(this_element == 'form-6-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}		
         		
   			});
@@ -941,7 +941,7 @@ jQuery(document).ready(function(){
 		  		}
 
 		  		if(other_element == 'form-5-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
         		
   			});
@@ -990,7 +990,7 @@ jQuery(document).ready(function(){
 		  		}
 
 		  		if(this_element == 'form-5-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  			jQuery("#myModal").modal();
 		  			}
 
 
@@ -1271,7 +1271,7 @@ jQuery(document).ready(function(){
 		  		}
 
 		  		if(this_element == 'form-9-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
 		  				  		
   			});
@@ -1296,7 +1296,7 @@ jQuery(document).ready(function(){
 		  				}	
 
 		  				if(other_element == 'form-9-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  				}	  			
 		  		  		
 		  	
@@ -1544,7 +1544,7 @@ jQuery(document).ready(function(){
 		  	jQuery("input").click(function(){
 			  	jQuery("#buttonnext").prop("disabled",false);
 			  	if(jQuery(this).attr("name") == 'form-6-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
         		
   			});
@@ -1659,7 +1659,7 @@ jQuery(document).ready(function(){
 		  	jQuery("input").click(function(){
 		  		jQuery("#buttonnext").prop("disabled",false);
 		  		if(jQuery(this).attr("name") == 'form-4-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
   				
   			});
@@ -1823,7 +1823,7 @@ jQuery(document).ready(function(){
 		  				}
 
 		  			if(other_element == 'form-3-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
   			});
 
@@ -1878,7 +1878,7 @@ jQuery(document).ready(function(){
 		  		}
 
 		  		if(this_element == 'form-3-option'){
-		  				jQuery("#divQuest,#divUndoQuest").removeClass('d-none');
+		  				jQuery("#myModal").modal();
 		  			}
   			});
 

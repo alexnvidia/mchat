@@ -16,8 +16,8 @@
   border: none;
   color: #FFFFFF;
   text-align: center;
-  font-size: 28px;
-  padding: 20px;
+  font-size: 20px;
+  padding: 10px;
   width: 200px;
   transition: all 0.5s;
   cursor: pointer;
@@ -127,7 +127,7 @@
         </div>
 
         <div class="w3-panel w3-pale-red w3-leftbar w3-border-red w3-padding-16 w3-margin-left">
-        <h1 class="text-center "> Flujos que indican riesgo de TEA</h2>
+        <h2 class="text-center "> Flujos que indican riesgo de TEA</h2>
         <ul class="list-group list-group-flush">
         {% if List_risk|length > 0 %}
         
@@ -146,11 +146,11 @@
 
         
 
-        <h1 class="text-center w3-padding-16 w3-margin-left"> Todos los flujos Realizados</h2>
+        <h2 class="text-center w3-padding-16 w3-margin-left"> Todos los flujos Realizados</h2>
         {% if flag == 1 %}
           {% for i in Item_dict %}
           <div id="item_{{ i.question_id }}" class="text-center w3-padding-16 w3-margin-left"> 
-            <h2 class="text-center">Flujo del Item {{ i.question_id }}</h1>
+            <h2 class="text-center">Flujo del Item {{ i.question_id }}</h2>
 
             <img src="file://{{ i.static }}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
           </div>
@@ -158,7 +158,7 @@
         {% else %}
           {% for i in Item_dict %}
           <div id="item_{{ i.question_id }}" class="text-center w3-padding-16 w3-margin-left"> 
-            <h2 class="text-center">Flujo del Item {{ i.question_id }}</h1>
+            <h2 class="text-center">Flujo del Item {{ i.question_id }}</h2>
 
             <img src="{% static i.static %}" class="rounded" style="width:50%" alt="Flujo Item {{ i.question_id }}" >
           </div>
@@ -184,52 +184,69 @@
             </div>
           {% endif %}
         </div>
-
-        <div class="w3-panel w3-light-blue w3-leftbar w3-border-grey w3-padding-16 w3-margin-left">
-        <h1 class="text-center"> Contenido Adicional</h2>
-        <ul class="list-group list-group-flush">
-          {% if patient.adic_info %}
-          
-          
-            {% for l in adic_info_list %}
-            <li style="word-break: break-all;font-size:20px"> {{ l }}</li>
-            {% endfor %}
-          {% else %}
-            <li style="font-size:20px"> No se ha añadido contenido adicional </li>
-          {% endif %}
-          </ul>
+        <div class="w3-card-4 w3-padding-16 w3-margin-left">
+          <div class="w3-panel w3-light-blue w3-leftbar w3-border-grey w3-padding-16 w3-margin-left">
+          <h2 class="text-center w3-padding-16 w3-margin-left"> Contenido Adicional</h2>
+          <ul class="list-group list-group-flush">
+            {% if patient.adic_info %}
+            
+            
+              {% for l in adic_info_list %}
+              <li style="word-break: break-all;font-size:20px"> {{ l }}</li>
+              {% endfor %}
+            {% else %}
+              <li style="font-size:20px"> No se ha añadido contenido adicional </li>
+            {% endif %}
+            </ul>
+            </div>
           </div>
         
 
-         
-          <form method="POST" id="form_adicional" class="form-group w3-padding-16 w3-margin-left" action="{% url 'mchats:save_adicional_info' patient.pk %}">{% csrf_token %}
-            {{ form }}
-            <div class="text-center " style="bottom: 8px">     
-            <button type="submit" class="w3-button w3-circle w3-teal" style="vertical-align:middle;font-size:20px">+</button> 
-            </div>        
-          </form>
-        
+         {% if flag == 0 %}
+          <div class="w3-card-4 w3-padding-16 w3-margin-left">
+        <div class="w3-container w3-padding-16 w3-margin-left">
+          <h2>Añadir contenido adicional</h2>
+        </div>
+        <form method="POST" id="form_adicional" class="form-group w3-padding-16 w3-margin-left" action="{% url 'mchats:save_adicional_info' patient.pk %}">{% csrf_token %}
+        {{ form }}
+        <div class="text-center " style="bottom: 8px">        
+          <button type="submit" class="w3-button w3-circle w3-teal" style="vertical-align:middle;font-size:20px">+</button>
+        </div>
+          
+        </form>
+        </div>
+        {% endif %}
 
 
-    
-    <form method="POST" class="form-group">{% csrf_token %}
-      <div class="w3-padding-16 w3-margin-left" style="bottom: 8px">        
-        <button type="submit" class="button" style="vertical-align:middle"><span>Descargar pdf de resultados del niño/a</span> </button>
+    {% if flag == 0 %}
+
+    <div class="w3-row-padding w3-padding-16 w3-margin-left">
+      <form method="POST" class="form-group">{% csrf_token %}
+      <div class="w3-quarter">
+             
+        <button type="submit" class="button" ><span>Descargar pdf</span> </button>
       </div>
           
     </form>
+
    
 
     <form method="POST" class="form-group" action="{% url 'mchats:result_docxH' patient.pk %}">{% csrf_token %}
-      <div class="text-center w3-padding-16 w3-margin-left" style="bottom: 8px">        
-        <button type="submit" class="button" style="vertical-align:middle"><span>Descargar DOCX de resultados del niño/a</span> </button>
+      <div class="w3-third">
+              
+        <button type="submit" class="button"  ><span>Descargar DOCX</span> </button>
       </div>
+    
           
     </form>
+  
+    </div>
 
     <div class="text-center w3-padding-16 w3-margin-left">
            <a href="{% url 'mchats:patients' %}" class="w3-button w3-teal"> Volver</a>
     </div>
+
+    {% endif %}
 
     <script src="{% static 'js/result_script.js' %}"></script>
   

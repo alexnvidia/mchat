@@ -3,8 +3,8 @@
 		{% block content %}
 		{% load static %}
 		{% if patient_list %}
-		<div  id="divAlert2" class="my-5">     
-		      <div class="alert alert-primary alert-dismissible fade show my-3">
+		<div  id="divAlert2" class="my-5" >     
+		      <div class="alert alert-primary alert-dismissible fade show my-3" >
 		      <button type="button" class="close" data-dismiss="alert">&times;</button>
 		      <strong>¡IMPORTANTE!</strong> Si tiene dudas de como se realiza la primera etapa o segunda etapa del test 
 		      puede revisar la guía de uso situada en la cabecera de esta página.
@@ -12,20 +12,23 @@
     		</div>
 
     		<h2 class="my-5 text-center"> Lista de niños/as disponibles para realizar el test</h2>
+    		<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-info text-center" style="font-size:24px"><span class="fas fa-plus">Añadir niño/a</a>
+
+    		
 		<div class="table-responsive p3 my-3">
 		 		<table class="table table-info table-hover">
 				    <thead class="thead-dark">
 				      <tr>
-				      	<th class="text-center">Id del niño/a</th>
-				        <th class="text-center">Nombre</th>
-				        <th class="text-center">Apellidos</th>
-				        <th class="text-center">Test</th>
-				        <th class="text-center">Resultados(1ª y 2º etapa)</th>				        
-				        <th class="text-center">Positivo en el test M-CHAT-R/F</th>
-				        <th class="text-center">Riesgo de TEA</th>
-				        <th class="text-center">Histórico</th>
-				        <th class="text-center">Test Finalizado</th>
-				        <th class="text-center">Gestión</th>
+				      	<th class="text-center" style="font-size:18px">Id del niño/a</th>
+				        <th class="text-center" style="font-size:18px">Nombre</th>
+				        <th class="text-center" style="font-size:18px">Apellidos</th>
+				        <th class="text-center" style="font-size:18px">Test</th>
+				        <th class="text-center" style="font-size:18px">Resultados(1ª y 2º etapa)</th>			        
+				        <th class="text-center" style="font-size:18px">Positivo en el test M-CHAT-R/F</th>
+				        <th class="text-center" style="font-size:18px">Riesgo de TEA</th>
+				        <th class="text-center" style="font-size:18px">Histórico</th>
+				        <th class="text-center" style="font-size:18px">Test Finalizado</th>
+				        <th class="text-center" style="font-size:18px">Gestión</th>
 				      </tr>
 				    </thead>
 				    <tbody>
@@ -38,7 +41,9 @@
 				        	<td class="text-center py-5">{{ patient.name|title }}</td>
 				        	<td class="text-center py-5">{{ patient.subname|title }}</td>					
 				       		<td class="text-center py-5">
-				       		<a href="{% url 'mchats:mchat_start' patient.pk %}" class="btn btn-outline-primary my-2"><span class="fas fa-play">M-CHAT-R(Primera etapa)</a>
+
+				       		<a href="#" class="btn btn-outline-primary my-2" data-toggle="popover" title="<h1><code>Primera etapa</code></h1>" data-content="<h5> <strong>A continuación vamos a hacerle una serie de preguntas sobre su hijo/a. Tenga en cuenta cual es el comportamiento habitual de su hijo/a. En el caso en el que haya visto a su hijo/a comportarse algunas veces de alguna de las maneras descritas, por favor responda No. </strong></h5> <a href='{% url 'mchats:mchat_start' patient.pk %}' type='button' class='btn btn-primary'>Continuar</a>"><span class="fas fa-play">M-CHAT-R(Primera etapa)</a>
+
 				       		{% if patient.mchat_score >= 3 and patient.mchat_score <= 7 %}
 				       		<a href="{% url 'mchats:followup_mchat' patient.pk %}" class="btn btn-outline-primary"><span class="fas fa-play">M-CHAT-R/F(Etapa de seguimiento)</a>
 				       		{% endif %}
@@ -83,10 +88,12 @@
 		</div>
 
 
-			<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-info text-center" style="font-size:24px"><span class="fas fa-plus">Añadir niño/a</a>
+
+
+			
 			{% else %}
 			<div class="text-center my-5">
-					<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary text-center" style="font-size:24px"><span class="fas fa-plus">Añadir Paciente</a>
+					<a href="{% url 'mchats:patient_create' %}" class="btn btn-outline-primary text-center" style="font-size:24px"><span class="fas fa-plus">Añadir niño/a</a>
 			</div>
 			
 			<div class="alert alert-info my-3" style=" box-shadow: 2px 2px 4px Black;background-image: url({% static 'testM/no_patient.png' %}); opacity: 0.7;">
@@ -96,6 +103,8 @@
 			</div>
 			
 			{% endif %}
+
+
 
 			
 			<script src="{% static 'js/patient_list_script.js' %}"></script>

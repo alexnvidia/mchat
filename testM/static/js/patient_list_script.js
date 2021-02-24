@@ -1,4 +1,5 @@
 jQuery(document).ready(function animt(){
+	jQuery('[data-toggle="popover"]').popover({html: true});
 			  jQuery("#divAlert2").hover(function(){
 			    
 			  },
