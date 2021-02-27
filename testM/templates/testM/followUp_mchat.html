@@ -14,12 +14,16 @@
     {% for object in objects %}
     <div class="my-3" style="background-color: lightblue; box-shadow: 2px 2px 4px #3691b0;padding: 25px;">
     	
-    <p class="my-3" style="word-break: break-all;font-size:30px">Item {{ object.question }}</p>
+    <p class="my-3" style="word-break: break-all;font-size:24px">Item {{ object.question }}</p>
 
     </div>
       
     {% endfor %}
 
+    <div class="alert alert-warning alert-dismissible fade show my-3">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Si no está familiarizado con la entrevista de seguimiento es conveniente revisar el flujo que se muestra en la figura de la parte inferior de la página.</strong> 
+    </div>
     <form method="POST" class="form-group">{% csrf_token %}
     	{{ formset.management_form }}
     	{% for form in formset %}
@@ -150,107 +154,107 @@
             </div>
     
     
-    <div id="item_1" class="my-3 d-none"> 
+    <div id="item_1" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 1</h1>
 
-        <img src="{% static 'testM/item1.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item1.png' %}" class="rounded" alt="Flujo Item 1" >
     </div>
-    <div id="item_2" class="my-3 py-3 d-none"> 
+    <div id="item_2" class="my-3 py-3 d-none text-center rounded-lg"> 
 
         <h1 class="text-center">Flujo del Item 2</h1>
 
         <img src="{% static 'testM/item2.png' %}" class="rounded" alt="Flujo Item 2" >
 
     </div>
-    <div id="item_3" class="my-3 d-none"> 
+    <div id="item_3" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 3</h1>
 
-        <img src="{% static 'testM/item3.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item3.png' %}" class="rounded" alt="Flujo Item 3" >
     </div>
-    <div id="item_4" class="my-3 d-none"> 
+    <div id="item_4" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 4</h1>
 
-        <img src="{% static 'testM/item4.png' %}" class="rounded" alt="Flujo Item 2" > 
+        <img src="{% static 'testM/item4.png' %}" class="rounded" alt="Flujo Item 4" > 
     </div>
-    <div id="item_5" class="my-3 d-none"> 
+    <div id="item_5" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 5</h1>
 
-        <img src="{% static 'testM/item5.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item5.png' %}" class="rounded" alt="Flujo Item 5" >
     </div>
-    <div id="item_6" class="my-3 d-none"> 
+    <div id="item_6" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 6</h1>
 
-        <img src="{% static 'testM/item6.png' %}" class="rounded" alt="Flujo Item 2" > 
+        <img src="{% static 'testM/item6.png' %}" class="rounded" alt="Flujo Item 6" > 
     </div>
-    <div id="item_7" class="my-3 d-none"> 
+    <div id="item_7" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 7</h1>
 
-        <img src="{% static 'testM/item7.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item7.png' %}" class="rounded" alt="Flujo Item 7" >
     </div>
-    <div id="item_8" class="my-3 d-none"> 
+    <div id="item_8" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 8</h1>
 
-        <img src="{% static 'testM/item8.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item8.png' %}" class="rounded" alt="Flujo Item 8" >
     </div>
-    <div id="item_9" class="my-3 d-none"> 
+    <div id="item_9" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 9</h1>
 
-        <img src="{% static 'testM/item9.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item9.png' %}" class="rounded" alt="Flujo Item 9" >
     </div>
-    <div id="item_10" class="my-3 d-none"> 
+    <div id="item_10" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 10</h1>
 
-        <img src="{% static 'testM/item10.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item10.png' %}" class="rounded" alt="Flujo Item 10" >
     </div>
-    <div id="item_11" class="my-3 d-none"> 
+    <div id="item_11" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 11</h1>
 
-        <img src="{% static 'testM/item11.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item11.png' %}" class="rounded" alt="Flujo Item 11" >
     </div>
-    <div id="item_12" class="my-3 d-none"> 
+    <div id="item_12" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 12</h1>
 
-        <img src="{% static 'testM/item12.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item12.png' %}" class="rounded" alt="Flujo Item 12" >
     </div>
-    <div id="item_13" class="my-3 d-none"> 
+    <div id="item_13" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 13</h1>
 
-        <img src="{% static 'testM/item13.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item13.png' %}" class="rounded" alt="Flujo Item 13" >
     </div>
-    <div id="item_14" class="my-3 d-none"> 
+    <div id="item_14" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 14</h1>
 
-        <img src="{% static 'testM/item14.png' %}" class="rounded" alt="Flujo Item 2" > 
+        <img src="{% static 'testM/item14.png' %}" class="rounded" alt="Flujo Item 14" > 
     </div>
-    <div id="item_15" class="my-3 d-none"> 
+    <div id="item_15" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 15</h1>
 
-        <img src="{% static 'testM/item15.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item15.png' %}" class="rounded" alt="Flujo Item 15" >
     </div>
-    <div id="item_16" class="my-3 d-none"> 
+    <div id="item_16" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 16</h1>
 
-        <img src="{% static 'testM/item16.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item16.png' %}" class="rounded" alt="Flujo Item 16" >
     </div>
-    <div id="item_17" class="my-3 d-none"> 
+    <div id="item_17" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 17</h1>
 
-        <img src="{% static 'testM/item17.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item17.png' %}" class="rounded" alt="Flujo Item 17" >
     </div>
-    <div id="item_18" class="my-3 d-none"> 
+    <div id="item_18" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 18</h1>
 
-        <img src="{% static 'testM/item18.png' %}" class="rounded" alt="Flujo Item 2" > 
+        <img src="{% static 'testM/item18.png' %}" class="rounded" alt="Flujo Item 18" > 
     </div>
-    <div id="item_19" class="my-3 d-none"> 
+    <div id="item_19" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 19</h1>
 
-        <img src="{% static 'testM/item19.png' %}" class="rounded" alt="Flujo Item 2" >
+        <img src="{% static 'testM/item19.png' %}" class="rounded" alt="Flujo Item 19" >
     </div>
-    <div id="item_20" class="my-3 d-none"> 
+    <div id="item_20" class="my-3 py-3 d-none text-center rounded-lg"> 
     <h1 class="text-center">Flujo del Item 20</h1>
 
-        <img src="{% static 'testM/item20.png' %}" class="rounded" alt="Flujo Item 2" > 
+        <img src="{% static 'testM/item20.png' %}" class="rounded" alt="Flujo Item 20" > 
     </div>
     
  {% else %}

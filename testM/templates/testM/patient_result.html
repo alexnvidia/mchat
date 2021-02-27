@@ -95,7 +95,7 @@
           {% for m in mchat_item %}
               
               {% if m.option == True %}                
-                <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: Si </li><br>
+                <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: Sí </li><br>
               {% else %}
               <li style="word-break: break-all;font-size:20px">{{ m.question }} - Usted respondió: No </li><br>
               {% endif %}
@@ -112,7 +112,7 @@
             {% for f in followUpItem %}
                 
                 {% if f.option == True %}
-                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Si / Item:{{ f.item }} </li><br>                
+                  <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: Sí / Item:{{ f.item }} </li><br>                
                 {% elif f.option == False %}
                 <li  style="word-break: break-all;font-size:20px">{{ f.question }} - Usted respondió: No / Item:{{ f.item }}</li><br>
 
@@ -229,7 +229,7 @@
       <form method="POST" class="form-group">{% csrf_token %}
       <div class="w3-quarter">
              
-        <button type="submit" class="button" ><span>Descargar pdf</span> </button>
+        <button type="submit" class="button" ><span>Descargar Informe en pdf</span> </button>
       </div>
           
     </form>
@@ -239,7 +239,7 @@
     <form method="POST" class="form-group" action="{% url 'mchats:result_docx' patient.pk %}">{% csrf_token %}
       <div class="w3-third">
               
-        <button type="submit" class="button"  ><span>Descargar DOCX</span> </button>
+        <button type="submit" class="button"  ><span>Descargar Informe en DOCX</span> </button>
       </div>
     
           

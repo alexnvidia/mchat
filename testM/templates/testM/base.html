@@ -90,11 +90,11 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item pr-2">
             {% if user.is_authenticated %}
-              <a class="nav-link btn btn-secondary" href="{% url 'mchats:graphic_mchat' %}">Análisis de resultados</a>
+              <a class="nav-link btn btn-secondary" href="{% url 'mchats:graphic_mchat' %}">Gráfico casos evaluados</a>
               {% endif %}
             </li>
             <li class="nav-item pr-2">
-              <a id="guide" class="nav-link btn btn-secondary" href="{% url 'mchats:guide_mchat' %}">M-CHAT-R/F: Guía de uso</a>
+              <a id="guide" class="nav-link btn btn-secondary" href="{% url 'mchats:guide_mchat' %}">Guía de uso</a>
             </li>      
           </ul>
           <ul class="navbar-nav">
@@ -130,7 +130,7 @@
     
     
        
-    <div class="content container my-5">
+    <div class="container py-5  bg-light rounded-lg ">
 
             {% block content %}
 

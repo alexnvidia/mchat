@@ -82,6 +82,10 @@ jQuery(document).ready(function(){
 			  	}
 		  	jQuery("#item_1").removeClass('d-none');
 
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas.");
+		  	}
+
 		  	jQuery("input[value='True']").click(function(){
   				other_element = jQuery(this).attr("name");
 		  			jQuery("#buttonnext").prop("disabled",false);
@@ -178,7 +182,10 @@ jQuery(document).ready(function(){
 			  	else{
 			  		jQuery("#buttonnext").prop("disabled",true);
 			  	}
-		  	
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a la pregunta 1 y 2, o No a ambas.");
+		  	}
+
 		  	jQuery("input[value='True'][name!=form-2-option]").click(function(){
 		    	jQuery("#buttonnext").prop("disabled",false);
 		  	});
@@ -246,7 +253,10 @@ jQuery(document).ready(function(){
 			  	}
 
 
-			  
+			  if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a cualquier pregunta o No a ambas.");
+		  		}
+
 		  	jQuery("#item_3").removeClass('d-none');
 		  	jQuery("input[value='True']").click(function(){
 		    	jQuery("#buttonnext").prop("disabled",false);
@@ -353,6 +363,10 @@ jQuery(document).ready(function(){
 			  	else{
 			  		jQuery("#buttonnext").prop("disabled",true);
 			  	}
+
+			  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna pregunta, o No a todas.");
+		  	}
 		  	jQuery("#item_4").removeClass('d-none');
 
 		  	jQuery("input[value='True']").click(function(){
@@ -452,6 +466,9 @@ jQuery(document).ready(function(){
 
 
 		  	jQuery("#item_5").removeClass('d-none');
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna pregunta de los ejemplos \"Pasa\",No a todas las preguntas de ejemplos \"No pasa\", Sí a alguna pregunta de ejemplos \"No Pasa\" y resonder N0 o Sí a la pregunta 8 .");
+		  	}
 		  	jQuery("input[value='True'][name!=form-0-option][name!=form-1-option][name!=form-7-option]").click(function(){
 		  		this_element = jQuery(this);
 		  		other_element = jQuery(this).attr("name");
@@ -570,7 +587,13 @@ jQuery(document).ready(function(){
 			  	}
 			  	else{
 			  		jQuery("#buttonnext").prop("disabled",true);
-			  	}	  	
+			  	}	  
+
+
+			  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna pregunta y responder Sí o No a la pregunta 5 o No a todas.");
+		  	}
+
 		  	jQuery("input[value='True'][name!=form-4-option]").click(function(){
 		  		this_element = jQuery(this);
 		  		other_element = jQuery(this).attr("name");
@@ -673,6 +696,10 @@ jQuery(document).ready(function(){
 			  		jQuery("#buttonnext").prop("disabled",true);
 			  	}	
 		  	jQuery("#item_7").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna pregunta de los ejemplos \"Pasa\" y responder Sí o No a la pregunta 5,No a todas o responder Sí o No a la pregunta 6.");
+		  	}
 		  	jQuery("input[value='True'][name!=form-4-option][name!=form-5-option]").click(function(){
 		  		this_element = jQuery(this);
 		  		other_element = jQuery(this).attr("name");
@@ -801,6 +828,10 @@ jQuery(document).ready(function(){
 			  	}		  	
 		  	jQuery("#item_8").removeClass('d-none');
 		  	jQuery("div[id=PASA]").addClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \" Siguiente \" u \" Obtener resultado \" estará activo cuando responda No a alguna pregunta 1, No a todas las de ejemplos \" Pasa\" o Si a cualquier pregunta de ejemplos \" Pasa\" y Sí o No a la pregunta 9 ");
+		  	}
 		  	jQuery("input[value='True'][name!=form-0-option][name!=form-8-option]").click(function(){
 		  		this_element = jQuery(this)
 		  		other_element = jQuery(this).attr("name");
@@ -917,6 +948,11 @@ jQuery(document).ready(function(){
 			  	}
 
 		  	jQuery("#item_9").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \" Siguiente \" u \" Obtener resultado \" estará activo cuando responda No a todas las preguntas o Sí cualquier pregunta de ejemplos \" Pasa\"  y Sí o No a la pregunta 9 ");
+		  	}
+
 		  	jQuery("input[value='True'][name!=form-6-option]").click(function(){
 		  		this_element = jQuery(this)
 		  		other_element = jQuery(this).attr("name");
@@ -1034,6 +1070,10 @@ jQuery(document).ready(function(){
 			  	}
 		  	jQuery("#item_10").removeClass('d-none');
 
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas.");
+		  	}
+
 		  	jQuery("input[value='True']").click(function(){
   				jQuery("#buttonnext").prop("disabled",false);
   				other_element = jQuery(this).attr("name");
@@ -1131,6 +1171,10 @@ jQuery(document).ready(function(){
 			  		jQuery("#buttonnext").prop("disabled",true);
 			  	}
 		  	jQuery("#item_11").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas.");
+		  	}
 
 		  	jQuery("input[value='True']").click(function(){
   				jQuery("#buttonnext").prop("disabled",false);
@@ -1239,6 +1283,10 @@ jQuery(document).ready(function(){
 
 		  	jQuery("#item_12").removeClass('d-none');
 		  	jQuery("div[id=PASA],[id=NOPASA]").addClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas o Sí a alguna de las preguntas de ejemplos \" Pasa y No pasa\".");
+		  	}
 
 		  	jQuery("input[value='True'][name!=form-10-option][name!=form-11-option][name!=form-12-option][name!=form-13-option][name!=form-14-option]").click(function(){
 		  		
@@ -1359,6 +1407,10 @@ jQuery(document).ready(function(){
 		  	if (jQuery("input").is(":checked") == true){
 		  		jQuery("#buttonnext").prop("disabled",false);
 		  	}
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí o No a alguna de estas preguntas.");
+		  	}
 		  	jQuery("input").click(function(){
   				jQuery("#buttonnext").prop("disabled",false);
   			});
@@ -1398,7 +1450,12 @@ jQuery(document).ready(function(){
 			  		jQuery("#buttonnext").prop("disabled",true);
 			  	}
 		  	
-		  	jQuery("#item_14").removeClass('d-none');		  	
+		  	jQuery("#item_14").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a 2 o más de alguna de estas preguntas, o responda Sí o No a la pregunta 7 y 8.");
+		  	}		 
+
 		  	jQuery("input[value='True'][name!=form-6-option][name!=form-7-option]").click(function(){
 		  		other_element = jQuery(this);
 
@@ -1541,6 +1598,11 @@ jQuery(document).ready(function(){
 		  	}
 
 		  	jQuery("#item_15").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a dos o más de alguna de estas preguntas o responda Sí a una o ninguna de estas preguntas.");
+		  	}
+
 		  	jQuery("input").click(function(){
 			  	jQuery("#buttonnext").prop("disabled",false);
 			  	if(jQuery(this).attr("name") == 'form-6-option'){
@@ -1581,6 +1643,10 @@ jQuery(document).ready(function(){
 		  		jQuery("#buttonnext").prop("disabled",true);
 		  	}
 		  	jQuery("#item_16").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas.");
+		  	}
 
 		  	jQuery("input[value='True']").click(function(){
   				jQuery("#buttonnext").prop("disabled",false);
@@ -1656,6 +1722,10 @@ jQuery(document).ready(function(){
 
 		  	jQuery("#item_17").removeClass('d-none');
 
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas o No a todas.");
+		  	}
+
 		  	jQuery("input").click(function(){
 		  		jQuery("#buttonnext").prop("disabled",false);
 		  		if(jQuery(this).attr("name") == 'form-4-option'){
@@ -1673,6 +1743,10 @@ jQuery(document).ready(function(){
 		  		jQuery("#buttonnext").prop("disabled",false);
 		  	}
 		  	jQuery("#item_18").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de las preguntas 3, 4 ó 5, responder No a la pregunta 2 o responder No a la pregunta 3, 4 y 5.");
+		  	}
 
 		  	jQuery("#id_form-0-option_1").click(function(){
 		  		this_element = jQuery(this)
@@ -1733,6 +1807,9 @@ jQuery(document).ready(function(){
 		  		jQuery("#buttonnext").prop("disabled",false);
 		  	}
 		  	jQuery("#item_19").removeClass('d-none');
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a la pregunta 1 o 2, o responder Sí o No a la pregunta 3.");
+		  	}
 		  	jQuery("#id_form-0-option_1").click(function(){
 		  		this_element = jQuery(this)
 		  		jQuery("#buttonnext").prop("disabled",true);
@@ -1806,6 +1883,10 @@ jQuery(document).ready(function(){
 		  	var listE = [];
 
 		  	jQuery("#item_20").removeClass('d-none');
+
+		  	if(jQuery("#buttonnext").is(":disabled") == true){
+		  		alert("El botón de \"Siguiente\" estará activo cuando responda Sí a alguna de estas preguntas o No a todas.");
+		  	}
 
 
 		  	jQuery("input[value='True']").click(function(){

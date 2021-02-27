@@ -8,7 +8,7 @@ import datetime
 from datetime import date
 
 #constantes
-SI_NO_CHOICES = ((True,'Si'),(False,'No'))
+SI_NO_CHOICES = ((True,'Sí'),(False,'No'))
 AUDIT_INFO = [
     (2, 'Audicion normal'),
     (3, 'Audicion por debajo de lo normal'),

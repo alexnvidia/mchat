@@ -224,7 +224,7 @@
       <form method="POST" class="form-group">{% csrf_token %}
       <div class="w3-quarter">
              
-        <button type="submit" class="button" ><span>Descargar pdf</span> </button>
+        <button type="submit" class="button" ><span>Descargar Informe en pdf</span> </button>
       </div>
           
     </form>
@@ -234,7 +234,7 @@
     <form method="POST" class="form-group" action="{% url 'mchats:result_docxH' patient.pk %}">{% csrf_token %}
       <div class="w3-third">
               
-        <button type="submit" class="button"  ><span>Descargar DOCX</span> </button>
+        <button type="submit" class="button"  ><span>Descargar Informe en DOCX</span> </button>
       </div>
     
           

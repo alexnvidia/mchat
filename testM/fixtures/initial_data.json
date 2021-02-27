@@ -36,7 +36,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "PASA",
-      "question": "4. Mira si el padre señala y dice \"mira\"!"
+      "question": "4. Mira si el/la padre/madre señala y dice \"mira\"!"
     }
   },
   {
@@ -44,9 +44,9 @@
     "pk": 5,
     "fields": {
       "item": 1,
-      "question_item": "",
+      "question_item": "Ejemplos de \"No Pasa\"",
       "question_group": "NOPASA",
-      "question": "5. Ignora al padre"
+      "question": "5. Ignora al/la padre/madre"
     }
   },
   {
@@ -66,7 +66,7 @@
       "item": 1,
       "question_item": "",
       "question_group": "NOPASA",
-      "question": "7. Mira al dedo del padre"
+      "question": "7. Mira al dedo del padre/madre"
     }
   },
   {
@@ -114,7 +114,7 @@
     "pk": 12,
     "fields": {
       "item": 3,
-      "question_item": "Alguna vez...",
+      "question_item": "Ejemplos en que \"Pasa\" - Alguna vez...",
       "question_group": "PASA",
       "question": "1. ¿Finge beber de una taza de juguete?"
     }
@@ -224,7 +224,7 @@
     "pk": 23,
     "fields": {
       "item": 4,
-      "question_item": "le gusta subirse a ...",
+      "question_item": "Ejemplos en que \"Pasa\" - le gusta subirse a ...",
       "question_group": "PASA",
       "question": "1. ¿... escaleras?"
     }
@@ -264,7 +264,7 @@
     "pk": 27,
     "fields": {
       "item": 5,
-      "question_item": "¿Alguna vez...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Alguna vez...",
       "question_group": "PASA",
       "question": "1. ¿Se mira las manos?"
     }
@@ -284,9 +284,9 @@
     "pk": 29,
     "fields": {
       "item": 5,
-      "question_item": "¿Alguna vez...",
+      "question_item": "Ejemplos en que \"No Pasa\" - ¿Alguna vez...",
       "question_group": "NOPASA",
-      "question": "3. ¿Mueve sus dedos cerca de sus ojos"
+      "question": "3. ¿Mueve sus dedos cerca de sus ojos?"
     }
   },
   {
@@ -394,7 +394,7 @@
     "pk": 41,
     "fields": {
       "item": 7,
-      "question_item": "Alguna vez si hijo/a le quiere mostrar a usted algo interesante como por ejemplo... ",
+      "question_item": "Ejemplos en que \"Pasa\" - Alguna vez si hijo/a le quiere mostrar a usted algo interesante como por ejemplo... ",
       "question_group": "PASA",
       "question": "1. ¿... un avión en el cielo?"
     }
@@ -464,7 +464,7 @@
     "pk": 48,
     "fields": {
       "item": 8,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Su hijo/a...",
       "question_group": "PASA",
       "question": "2. ¿Juega con el otro niño?"
     }
@@ -544,7 +544,7 @@
     "pk": 56,
     "fields": {
       "item": 9,
-      "question_item": "¿Su hijo/a le trae a usted a veces...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Su hijo/a le trae a usted a veces...",
       "question_group": "PASA",
       "question": "1. ¿Una foto o un juguete solo para mostrárselo?"
     }
@@ -614,7 +614,7 @@
     "pk": 63,
     "fields": {
       "item": 10,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Su hijo/a...",
       "question_group": "PASA",
       "question": "1. ¿Levanta la vista?"
     }
@@ -644,7 +644,7 @@
     "pk": 66,
     "fields": {
       "item": 10,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"No Pasa\" - ¿Su hijo/a...",
       "question_group": "NOPASA",
       "question": "4. No responde"
     }
@@ -684,9 +684,9 @@
     "pk": 70,
     "fields": {
       "item": 11,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Su hijo/a...",
       "question_group": "PASA",
-      "question": "1. ¿Sonríe cuando usted sonríe"
+      "question": "1. ¿Sonríe cuando usted sonríe?"
     }
   },
   {
@@ -696,7 +696,7 @@
       "item": 11,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "2. Sonríe cuando usted entra a la habitación"
+      "question": "2. ¿Sonríe cuando usted entra a la habitación?"
     }
   },
   {
@@ -706,7 +706,7 @@
       "item": 11,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "3. Sonríe cuando usted regresa"
+      "question": "3. ¿Sonríe cuando usted regresa?"
     }
   },
   {
@@ -714,7 +714,7 @@
     "pk": 73,
     "fields": {
       "item": 11,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"No Pasa\" - ¿Su hijo/a...",
       "question_group": "NOPASA",
       "question": "4. ¿Siempre está sonriendo?"
     }
@@ -844,7 +844,7 @@
     "pk": 86,
     "fields": {
       "item": 12,
-      "question_item": "Su hijo/a...",
+      "question_item": "Ejemplos en que \"Pasa\" - Su hijo/a...",
       "question_group": "PASA",
       "question": "11. Se cubre los oídos con calma"
     }
@@ -864,7 +864,7 @@
     "pk": 88,
     "fields": {
       "item": 12,
-      "question_item": "¿Si hijo/a...",
+      "question_item": "Ejemplos en que \"No Pasa\" - ¿Si hijo/a...",
       "question_group": "NOPASA",
       "question": "13. Grita"
     }
@@ -904,7 +904,7 @@
     "pk": 92,
     "fields": {
       "item": 14,
-      "question_item": "¿Su hijo/a le mira a los ojos cuando...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Su hijo/a le mira a los ojos cuando...",
       "question_group": "PASA",
       "question": "1. ¿Necesita algo?"
     }
@@ -926,7 +926,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "3. Cuando come?"
+      "question": "3. ¿Cuando come?"
     }
   },
   {
@@ -936,7 +936,7 @@
       "item": 14,
       "question_item": " ",
       "question_group": "PASA",
-      "question": "4. Le cambia el pañal?"
+      "question": "4. ¿Le cambia el pañal?"
     }
   },
   {
@@ -1054,7 +1054,7 @@
     "pk": 107,
     "fields": {
       "item": 16,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"Pasa\" - ¿Su hijo/a...",
       "question_group": "PASA",
       "question": "1. ¿Mira al objeto que usted está mirando?"
     }
@@ -1084,7 +1084,7 @@
     "pk": 110,
     "fields": {
       "item": 16,
-      "question_item": "¿Su hijo/a...",
+      "question_item": "Ejemplos en que \"No Pasa\" - ¿Su hijo/a...",
       "question_group": "NOPASA",
       "question": "4. ¿Lo ignora a usted?"
     }
