@@ -443,6 +443,7 @@ jQuery(document).ready(function(){
 
 		  	case 5:
 		  	var listE = [];
+		  	var listN = [];
 
 		  	jQuery("input[name!=form-0-option][name!=form-1-option][name!=form-7-option]").each(function( index ) {
 			  	if(jQuery(this).is(":checked") == true){
@@ -546,19 +547,32 @@ jQuery(document).ready(function(){
 
   			jQuery("input[value='True'][name=form-0-option],input[value='True'][name=form-1-option]").click(function(){
   				other_element = jQuery(this).attr("name")
-  				jQuery("input[name!=form-0-option][name!=form-1-option]").prop("checked",false)
-		  		jQuery("#buttonnext").prop("disabled",false);
-		  		jQuery("#id_form-7-question").addClass('d-none');
-		  		jQuery("div[id=NOPASA]").addClass('d-none');
-		  		jQuery("#span_5").remove();     		
+
+  				if(listN.indexOf(other_element) == -1){
+  					listN.push(other_element);
+  					jQuery("div[id=NOPASA]").addClass('d-none');
+  					jQuery("input[name!=form-0-option][name!=form-1-option]").prop("checked",false)
+		  			jQuery("#buttonnext").prop("disabled",false);
+		  			jQuery("#id_form-7-question").addClass('d-none');		  		
+		  			jQuery("#span_5").remove(); 
+  				}
+  				
+  				    		
   			});
 
   			jQuery("input[value='False'][name=form-0-option],input[value='False'][name=form-1-option]").click(function(){
-  				if(other_element == jQuery(this).attr("name")){
-  					jQuery("#buttonnext").prop("disabled",true);
-		  			jQuery("#id_form-7-question").addClass('d-none');
-		  			jQuery("div[id=NOPASA]").removeClass('d-none');  
-  				}
+  					
+  				if(listN.indexOf(jQuery(this).attr("name")) != -1){
+  					listN.splice(listN.indexOf(jQuery(this).attr("name")), 1);
+  					if(listN.length <= 0){
+  						jQuery("#buttonnext").prop("disabled",true);
+		  				jQuery("#id_form-7-question").addClass('d-none');
+  						jQuery("div[id=NOPASA]").removeClass('d-none');
+  					}
+		  			 
+
+  				} 
+  				
 		  		      		
   			});			  	
 		  	break;
