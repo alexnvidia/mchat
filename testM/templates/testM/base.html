@@ -104,7 +104,7 @@
                 Hola {{ user.first_name }} <spam class='far fa-address-card' style='font-size:36px'></spam> 
               </a>
 
-              <div class="dropdown-menu">
+              <div class="dropdown-menu dropdown-menu-right">
               {% block profile %}
                 <a class="dropdown-item" href="{% url 'mchats:user_profile' request.user.pk %}">Ver perfil</a>
                 <a href="{% url 'mchats:profile_update' request.user.pk %}" class="dropdown-item" >Editar Perfil</a>
